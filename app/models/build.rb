@@ -1,4 +1,6 @@
 class Build < ActiveRecord::Base
+  include AASM
+
   belongs_to :repository
   attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
