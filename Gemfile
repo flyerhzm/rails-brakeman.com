@@ -19,6 +19,7 @@ gem 'gravtastic'
 
 gem 'octokit'
 gem 'git'
+gem 'brakeman'
 
 gem 'daemons'
 gem 'delayed_job_active_record'
@@ -48,8 +49,6 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
-
-  gem 'brakeman'
 end
 
 group :test do
