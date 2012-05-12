@@ -16,6 +16,12 @@ class RepositoriesController < ApplicationController
     @repository = Repository.find(params[:id])
   end
 
+  def show
+    @repository = Repository.find(params[:id])
+    @build = @repository.builds.last
+    redirect_to [@repository, @build]
+  end
+
   def sync
     payload = ActiveSupport::JSON.decode(params[:payload])
     repository = Repository.where(html_url: payload["repository"]["url"]).first

@@ -1,7 +1,7 @@
 class Build < ActiveRecord::Base
   include AASM
 
-  belongs_to :repository
+  belongs_to :repository, :counter_cache => 1
   attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
   before_create :set_position
@@ -32,6 +32,10 @@ class Build < ActiveRecord::Base
     end
   end
 
+  def analyze_file
+    analyze_path + "/brakeman.html"
+  end
+
   def analyze
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
@@ -48,6 +52,7 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     complete!
     self.repository.touch(:last_build_at)
+    remove_brakeman_header
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
@@ -66,7 +71,9 @@ class Build < ActiveRecord::Base
       Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
     end
 
-    def analyze_file
-      analyze_path + "/brakeman.html"
+    def remove_brakeman_header
+      content = File.read(analyze_file)
+      content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, "")
+      File.write(analyze_file, content)
     end
 end

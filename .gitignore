@@ -17,3 +17,4 @@
 config/github.yml
 config/mailers.yml
 .sass-cache/
+/builds

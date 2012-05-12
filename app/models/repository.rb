@@ -1,7 +1,7 @@
 class Repository < ActiveRecord::Base
   has_many :builds
   attr_accessible :description, :fork, :github_id, :github_name, :git_url, :name, :private, :pushed_at
-  before_create :sync_github
+  before_create :sync_github, :touch_last_build_at
 
   def clone_url
     private? ? ssh_url : git_url
@@ -28,5 +28,9 @@ class Repository < ActiveRecord::Base
       self.fork = repo.fork
       self.pushed_at = repo.pushed_at
       true
+    end
+
+    def touch_last_build_at
+      last_build_at = Time.now
     end
 end
