@@ -61,5 +61,13 @@ module RailsBrakemanCom
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.after_initialize do
+      class ExceptionNotifier
+        class Notifier < ActionMailer::Base
+          mailer_account "exception.notifier"
+        end
+      end
+    end
   end
 end
