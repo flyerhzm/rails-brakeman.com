@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
+  validates_uniqueness_of :github_uid
+
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
       user

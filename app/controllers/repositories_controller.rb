@@ -34,8 +34,10 @@ class RepositoriesController < ApplicationController
   def show
     @repository = Repository.find(params[:id])
     @build = @repository.builds.last
-    @active_class_name = "current"
-    render 'builds/show'
+    if @build
+      @active_class_name = "current"
+      render 'builds/show' and return
+    end
   end
 
   def sync

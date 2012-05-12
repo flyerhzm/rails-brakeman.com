@@ -1,0 +1,7 @@
+= render 'builds/header'
+
+.hint
+  %p There is no any build for this repository yet.
+  %p
+    Make sure you already add WebHook Url "http://rails-brakeman.com/" to
+    = link_to "your github repository admin page", "#{@repository.html_url}/admin/hooks#generic_minibucket", target: "_blank"
