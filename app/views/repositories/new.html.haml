@@ -1,3 +1,6 @@
+%h2 Create a repository
+
 = simple_form_for(@repository, :html => {:class => 'form-vertical' }) do |form|
-  = form.input :github_name
-  = form.submit
+  = form.input :github_name, input_html: {class: "span5"}
+  .form-actions
+    = form.submit class: "btn btn-primary"

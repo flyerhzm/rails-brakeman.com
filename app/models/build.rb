@@ -1,7 +1,7 @@
 class Build < ActiveRecord::Base
   include AASM
 
-  belongs_to :repository, :counter_cache => 1
+  belongs_to :repository, :counter_cache => true
   attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
   before_create :set_position
@@ -57,6 +57,10 @@ class Build < ActiveRecord::Base
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
   handle_asynchronously :analyze
+
+  def short_commit_id
+    last_commit_id[0..6]
+  end
 
   protected
     def set_position

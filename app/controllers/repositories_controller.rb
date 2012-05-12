@@ -16,10 +16,20 @@ class RepositoriesController < ApplicationController
     @repository = Repository.find(params[:id])
   end
 
+  def update
+    @repository = Repository.find(params[:id])
+    if @repository.update_attributes(params[:repository])
+      redirect_to [:edit, @repository], :notice => "Repository updated successfully"
+    else
+      render :edit
+    end
+  end
+
   def show
     @repository = Repository.find(params[:id])
     @build = @repository.builds.last
-    redirect_to [@repository, @build]
+    @active_class_name = "current"
+    render 'builds/show'
   end
 
   def sync

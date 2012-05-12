@@ -3,6 +3,12 @@ class BuildsController < ApplicationController
 
   def show
     @build = @repository.builds.find(params[:id])
+    @active_class_name = "build"
+  end
+
+  def index
+    @builds = @repository.builds
+    @active_class_name = "history"
   end
 
   protected

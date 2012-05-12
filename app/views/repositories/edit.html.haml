@@ -1,6 +1,9 @@
+%h2 Edit a repository
+
 = simple_form_for(@repository, :html => {:class => 'form-horizontal' }) do |form|
-  = form.input :github_name
-  = form.input :git_url
-  = form.input :name
-  = form.input :description
-  = form.submit
+  = form.input :github_name, input_html: {class: "span5"}
+  = form.input :git_url, input_html: {class: "span5"}
+  = form.input :name, input_html: {class: "span5"}
+  = form.input :description, input_html: {class: "span5"}
+  .form-actions
+    = form.submit class: "btn btn-primary"

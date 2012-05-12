@@ -16,6 +16,9 @@
 
   %body
     = render 'shared/header'
+    #flash
+      .container-fluid
+        = notice_message
     .container-fluid
       .row-fluid
         .span3= render 'shared/sidebar'

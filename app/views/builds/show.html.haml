@@ -1,5 +1,6 @@
-%h2= link_to @repository.github_name, @repository.html_url
-%p= @repository.description
+= render 'builds/header'
 
 .build
+  = render 'builds/tabs'
+
   = render :inline => File.read(@build.analyze_file)
