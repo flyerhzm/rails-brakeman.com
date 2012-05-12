@@ -1,5 +1,7 @@
 = render 'builds/header'
 
+= link_to 'Edit Repository', [:edit, @repository], class: "edit btn btn-primary pull-right"
+
 .hint
   %p There is no any build for this repository yet.
   %p

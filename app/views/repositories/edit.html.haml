@@ -1,5 +1,12 @@
 %h2 Edit a repository
 
+= link_to 'Show Builds', @repository, :class => "edit btn btn-primary pull-right"
+
+.hint
+  %p
+    Make sure you already add WebHook Url "http://rails-brakeman.com/" to
+    = link_to "your github repository admin page", "#{@repository.html_url}/admin/hooks#generic_minibucket", target: "_blank"
+
 = simple_form_for(@repository, :html => {:class => 'form-horizontal' }) do |form|
   = form.input :github_name, input_html: {class: "span5"}
   = form.input :git_url, input_html: {class: "span5"}
