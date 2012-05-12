@@ -41,7 +41,7 @@ class Build < ActiveRecord::Base
     Brakeman.run({
       :app_path => "#{analyze_path}/#{repository.name}",
       :output_formats => :html,
-      :output_files => analyze_file
+      :output_files => [analyze_file]
     })
     end_time = Time.now
     self.duration = end_time - start_time
