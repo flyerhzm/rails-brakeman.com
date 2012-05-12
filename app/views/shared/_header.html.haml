@@ -1,0 +1,11 @@
+%header.navbar.navbar-fixed-top
+  .navbar-inner
+    .container-fluid
+      %a.brand(href="#") Rails Brakeman
+      .container.nav-collapse
+        %ul.nav.pull-right
+          - if current_user
+            %li= link_to "Sign out", destroy_user_session_path, method: :delete
+            %li.avatar= image_tag current_user.gravatar_url size: 24, secure: true
+          - else
+            %li= link_to "Sign in with Github", user_omniauth_authorize_path(:github)
