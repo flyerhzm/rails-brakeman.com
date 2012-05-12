@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512014615) do
+ActiveRecord::Schema.define(:version => 20120512044605) do
+
+  create_table "repositories", :force => true do |t|
+    t.integer  "github_id"
+    t.string   "github_name"
+    t.string   "name"
+    t.string   "description"
+    t.string   "git_url"
+    t.boolean  "private"
+    t.boolean  "fork"
+    t.datetime "pushed_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -29,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120512014615) do
     t.string   "github_uid"
     t.string   "nickname"
     t.string   "name"
+    t.string   "github_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -17,6 +17,8 @@ gem 'oa-core'
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 
+gem 'octokit'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

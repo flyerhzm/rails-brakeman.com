@@ -1,0 +1,6 @@
+= simple_form_for(@repository, :html => {:class => 'form-horizontal' }) do |form|
+  = form.input :github_name
+  = form.input :git_url
+  = form.input :name
+  = form.input :description
+  = form.submit
