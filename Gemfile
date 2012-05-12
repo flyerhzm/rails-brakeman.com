@@ -37,6 +37,17 @@ end
 
 gem 'jquery-rails'
 
+group :production do
+  gem 'therubyracer'
+end
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano_colors'
+
+  gem 'brakeman'
+end
+
 group :test do
   gem 'rspec'
   gem 'rspec-rails'
