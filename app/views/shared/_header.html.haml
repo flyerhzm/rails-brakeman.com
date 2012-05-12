@@ -1,7 +1,7 @@
 %header.navbar.navbar-fixed-top
   .navbar-inner
     .container-fluid
-      %a.brand(href="#") Rails Brakeman
+      = link_to "Rails Brakeman", root_path, class: "brand"
       .container.nav-collapse
         %ul.nav.pull-right
           - if current_user
