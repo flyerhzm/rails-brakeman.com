@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20120512090522) do
     t.datetime "last_build_at"
     t.string   "html_url"
     t.string   "ssh_url"
-    t.string   "builds_count"
+    t.integer  "builds_count"
   end
 
   create_table "users", :force => true do |t|
