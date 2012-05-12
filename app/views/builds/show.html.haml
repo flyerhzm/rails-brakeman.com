@@ -1,6 +1,8 @@
 = render 'builds/header'
 
 .build
-  = render 'builds/tabs'
+  - if @build.try(:completed?)
+    = render 'builds/tabs'
+    = render 'builds/info'
 
-  = render :inline => File.read(@build.analyze_file)
+    = render :inline => File.read(@build.analyze_file)
