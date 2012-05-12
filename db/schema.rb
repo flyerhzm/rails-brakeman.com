@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512090522) do
+ActiveRecord::Schema.define(:version => 20120512132956) do
 
   create_table "builds", :force => true do |t|
     t.integer  "repository_id"
@@ -53,12 +53,13 @@ ActiveRecord::Schema.define(:version => 20120512090522) do
     t.boolean  "private"
     t.boolean  "fork"
     t.datetime "pushed_at"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.datetime "last_build_at"
     t.string   "html_url"
     t.string   "ssh_url"
-    t.integer  "builds_count"
+    t.integer  "builds_count",  :default => 0
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
@@ -74,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20120512090522) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "github_uid"
+    t.integer  "github_uid"
     t.string   "nickname"
     t.string   "name"
     t.string   "github_token"

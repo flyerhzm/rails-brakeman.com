@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     @build = build
     @repository = @build.repository
 
-    mail(to: @repository.recipient_emails,
+    mail(to: @repository.user.email,
          subject: "[rails-brakeman] #{@repository.github_name} build ##{@build.position}")
   end
 end
