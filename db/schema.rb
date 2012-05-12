@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512044605) do
+ActiveRecord::Schema.define(:version => 20120512063239) do
+
+  create_table "builds", :force => true do |t|
+    t.integer  "repository_id"
+    t.string   "last_commit_id"
+    t.string   "last_commit_message"
+    t.integer  "position"
+    t.integer  "duration"
+    t.datetime "finished_at"
+    t.string   "branch"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "builds", ["repository_id"], :name => "index_builds_on_repository_id"
 
   create_table "repositories", :force => true do |t|
     t.integer  "github_id"
@@ -22,8 +36,11 @@ ActiveRecord::Schema.define(:version => 20120512044605) do
     t.boolean  "private"
     t.boolean  "fork"
     t.datetime "pushed_at"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "last_build_at"
+    t.string   "html_url"
+    t.string   "ssh_url"
   end
 
   create_table "users", :force => true do |t|
