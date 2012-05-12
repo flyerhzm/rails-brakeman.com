@@ -15,4 +15,5 @@
 /tmp
 
 config/github.yml
+config/mailers.yml
 .sass-cache/
