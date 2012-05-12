@@ -52,6 +52,7 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     complete!
     self.repository.touch(:last_build_at)
+    UserMailer.notify_build_success(self).deliver
     remove_brakeman_header
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
