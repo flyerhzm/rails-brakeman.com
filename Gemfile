@@ -18,6 +18,7 @@ gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 
 gem 'octokit'
+gem 'git'
 
 gem 'daemons'
 gem 'delayed_job_active_record'

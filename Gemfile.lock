@@ -88,6 +88,7 @@ GEM
     faraday_middleware (0.8.7)
       faraday (>= 0.7.4, < 0.9)
     fastercsv (1.5.4)
+    git (1.2.5)
     gravtastic (3.2.6)
     haml (3.1.5)
     hashie (1.2.0)
@@ -236,6 +237,7 @@ DEPENDENCIES
   exception_notification
   factory_girl
   factory_girl_rails
+  git
   gravtastic
   haml
   jquery-rails
