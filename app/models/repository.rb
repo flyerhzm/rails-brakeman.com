@@ -1,4 +1,5 @@
 class Repository < ActiveRecord::Base
+  has_many :builds
   attr_accessible :description, :fork, :github_id, :github_name, :git_url, :name, :private, :pushed_at
   before_create :sync_github
 
