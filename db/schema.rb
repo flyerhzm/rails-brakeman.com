@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512082828) do
+ActiveRecord::Schema.define(:version => 20120512084245) do
 
   create_table "builds", :force => true do |t|
     t.integer  "repository_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120512082828) do
     t.datetime "last_build_at"
     t.string   "html_url"
     t.string   "ssh_url"
+    t.string   "builds_count"
   end
 
   create_table "users", :force => true do |t|
