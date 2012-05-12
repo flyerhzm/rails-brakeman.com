@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512063239) do
+ActiveRecord::Schema.define(:version => 20120512082828) do
 
   create_table "builds", :force => true do |t|
     t.integer  "repository_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120512063239) do
     t.string   "branch"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.string   "aasm_state"
   end
 
   add_index "builds", ["repository_id"], :name => "index_builds_on_repository_id"
