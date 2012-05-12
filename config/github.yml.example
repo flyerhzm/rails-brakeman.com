@@ -1,0 +1,7 @@
+development:
+  key: YOUR_KEY
+  secret: YOUR_SECRET
+
+test:
+  key: YOUR_KEY
+  secret: YOUR_SECRET

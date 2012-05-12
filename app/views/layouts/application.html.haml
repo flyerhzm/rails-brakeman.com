@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %title Rails Brakeman Service
+    = stylesheet_link_tag "application"
+    = csrf_meta_tags
+  %body
+    .notice= notice
+    .alert= alert
+
+    - if user_signed_in?
+      = current_user.nickname
+    - else
+      = link_to "Sign in with Github", user_omniauth_authorize_path(:github)
+    = yield
+    = javascript_include_tag "application"

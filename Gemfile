@@ -9,6 +9,10 @@ gem 'mysql2'
 
 gem 'simple_form'
 gem 'haml'
+gem 'omniauth', '1.0.2'
+gem 'omniauth-github'
+gem 'devise'
+gem 'oa-core'
 
 # Gems used only for assets and not required
 # in production environments by default.
