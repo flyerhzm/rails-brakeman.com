@@ -48,9 +48,6 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     complete!
     self.repository.touch(:last_build_at)
-  rescue => e
-    ExceptionNotifier::Notifier.background_exception_notification(e)
-    fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
