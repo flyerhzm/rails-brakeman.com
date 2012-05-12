@@ -23,6 +23,9 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'aasm'
 
+gem 'exception_notification'
+gem 'multiple_mailers'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

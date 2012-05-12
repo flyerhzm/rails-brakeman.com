@@ -49,6 +49,7 @@ class Build < ActiveRecord::Base
     complete!
     self.repository.touch(:last_build_at)
   rescue => e
+    ExceptionNotifier::Notifier.background_exception_notification(e)
     fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
