@@ -49,14 +49,28 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
+
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-livereload'
+  gem 'guard-delayed'
+  gem 'guard-annotate'
 end
 
 group :test do
+  gem 'spork', '1.0.0.rc3'
+  gem 'spork-rails'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'factory_girl_rails'
+
+  gem 'simplecov', :require => false
+
+  gem 'guard-spork'
+  gem 'guard-rspec'
 end
 
 # To use ActiveModel has_secure_password
