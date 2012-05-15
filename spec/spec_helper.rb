@@ -30,8 +30,6 @@ Spork.prefork do
     config.include Support::BuildHelper
     config.include Support::DelayedJobHelper
 
-    config.include Devise::TestHelpers, type: :controller
-
     config.before(:each) do
       DatabaseCleaner.start
     end

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe RepositoriesController do
   before do
-    user = FactoryGirl.create(:user, nickname: "flyerhzm")
-    sign_in user
+    @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
+    controller.stubs(:current_user).returns(@user)
     Repository.any_instance.stubs(:sync_github)
-    @repository = FactoryGirl.create(:repository, user: user)
+    @repository = FactoryGirl.build_stubbed(:repository, user: @user)
   end
 
   context "GET :new" do
@@ -43,6 +43,7 @@ describe RepositoriesController do
 
   context "GET :edit" do
     it "should assign repository" do
+      @user.expects(:repositories).returns(stub('repository', find: @repository))
       get :edit, id: @repository.id
       response.should be_ok
       assigns(:repository).should == @repository
@@ -51,27 +52,33 @@ describe RepositoriesController do
 
   context "PUT :update" do
     it "should redirecrt to edit page if update successfully" do
-      Repository.any_instance.expects(:update_attributes).returns(true)
+      @user.expects(:repositories).returns(stub('repository', find: @repository))
+      @repository.expects(:update_attributes).returns(true)
       put :update, id: @repository.id
       response.should redirect_to([:edit, @repository])
     end
 
     it "should render edit page if update failed" do
-      Repository.any_instance.expects(:update_attributes).returns(false)
+      @user.expects(:repositories).returns(stub('repository', find: @repository))
+      @repository.expects(:update_attributes).returns(false)
       put :update, id: @repository.id
       response.should render_template(:edit)
     end
   end
 
   context "GET :show" do
-    it "shoud assign repository" do
+    it "shoud assign repository without build" do
+      Repository.expects(:find).returns(@repository)
+      @repository.expects(:builds).returns(stub('build', last: nil))
       get :show, id: @repository.id
       response.should be_ok
       assigns(:repository).should_not be_nil
     end
 
     it "should assign build if repository has build" do
-      FactoryGirl.create(:build, repository: @repository)
+      Repository.expects(:find).returns(@repository)
+      build = FactoryGirl.build_stubbed(:build)
+      @repository.expects(:builds).returns(stub('build', last: build))
       get :show, id: @repository.id
       response.should render_template("builds/show")
       assigns(:build).should_not be_nil
