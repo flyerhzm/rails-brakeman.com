@@ -2,11 +2,14 @@
 
 FactoryGirl.define do
   factory :repository do
-    github_id 1
-    github_name "MyString"
-    name "MyString"
-    description "MyString"
-    github_url "MyString"
+    sequence(:github_id) { |n| n }
+    association(:user)
+    github_name "flyerhzm/test"
+    name "test"
+    description "test"
+    git_url "git://github.com/flyerhzm/test.git"
+    ssh_url "git@github.com:flyerhzm/test.git"
+    html_url "https://github.com/flyerhzm/test"
     private false
     fork false
     pushed_at "2012-05-12 11:27:19"

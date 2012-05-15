@@ -63,11 +63,16 @@ group :test do
   gem 'spork-rails'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'mocha'
+  gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'factory_girl_rails'
 
   gem 'simplecov', :require => false
+
+  gem 'fakefs', :require => 'fakefs/safe'
+  gem 'webmock'
 
   gem 'guard-spork'
   gem 'guard-rspec'

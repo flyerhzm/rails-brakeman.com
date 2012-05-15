@@ -6,9 +6,10 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
+  require 'webmock/rspec'
   require 'simplecov'
 
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   Devise.stretches = 1
   Rails.logger.level = 4
@@ -16,9 +17,28 @@ Spork.prefork do
   SimpleCov.start 'rails'
 
   RSpec.configure do |config|
+    config.mock_with :mocha
+
+    config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+    config.use_transactional_fixtures = true
+
     config.treat_symbols_as_metadata_keys_with_true_values = true
     config.run_all_when_everything_filtered = true
     config.filter_run :focus
+
+    config.include Support::BuildHelper
+    config.include Support::DelayedJobHelper
+
+    config.include Devise::TestHelpers, type: :controller
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
   end
 end
 

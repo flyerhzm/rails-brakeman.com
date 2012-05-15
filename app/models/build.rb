@@ -54,6 +54,9 @@ class Build < ActiveRecord::Base
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self).deliver
     remove_brakeman_header
+  rescue => e
+    ExceptionNotifier::Notifier.background_exception_notification(e)
+    fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
