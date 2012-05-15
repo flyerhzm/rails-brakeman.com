@@ -1,0 +1,16 @@
+development:
+  common: &common
+    address: 'smtp.gmail.com'
+    port: 587
+    domain: 'rails-brakeman.com'
+    authentication: 'plain'
+
+  notification:
+    <<: *common
+    user_name: 'notification@rails-brakeman.com'
+    password: ''
+
+  exception.notifier:
+    <<: *common
+    user_name: 'exception.notifier@rails-brakeman.com'
+    password: ''
