@@ -6,6 +6,8 @@ class Repository < ActiveRecord::Base
 
   validates_uniqueness_of :github_id
 
+  scope :latest, where("builds_count > 0").order("last_build_at desc")
+
   def clone_url
     private? ? ssh_url : git_url
   end

@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_latest_repositories
-    @latest_repositories = Repository.where("builds_count > 0").order("last_build_at desc").limit(10)
+    @latest_repositories = Repository.latest.limit(10)
   end
 end
