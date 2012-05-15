@@ -77,4 +77,37 @@ describe RepositoriesController do
       assigns(:build).should_not be_nil
     end
   end
+
+  context "POST :sync" do
+    let(:hook_json) { File.read(Rails.root.join("spec/fixtures/github_hook.json")) }
+    let(:last_message) {
+      {
+        "id" => "473d12b3ca40a38f12620e31725922a9d88b5386",
+        "url" => "https://github.com/railsbp/rails-bestpractices.com/commit/473d12b3ca40a38f12620e31725922a9d88b5386",
+        "author" => {
+          "email" => "flyerhzm@gmail.com",
+          "name" => "Richard Huang"
+        },
+        "message" => "copy config yaml files for travis",
+        "timestamp" => "2011-12-25T20:36:34+08:00"
+      }
+    }
+
+    it "should generate build" do
+      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      repository.expects(:generate_build).with("master", last_message)
+      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      response.should be_ok
+      response.body.should == "success"
+    end
+
+    it "should not generate build if url does not exist" do
+      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([])
+      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      response.should be_ok
+      response.body.should == "not authenticate"
+    end
+  end
 end

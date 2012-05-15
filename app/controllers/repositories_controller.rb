@@ -1,4 +1,6 @@
 class RepositoriesController < ApplicationController
+  skip_before_filter :set_current_user, :load_latest_repositories, :only => :sync
+
   def new
     @repository = current_user.repositories.new
   end
