@@ -19,6 +19,10 @@ class Repository < ActiveRecord::Base
     end
   end
 
+  def to_param
+    "#{id}-#{github_name.parameterize}"
+  end
+
   protected
     def sync_github
       client = Octokit::Client.new(oauth_token: User.current.github_token)
