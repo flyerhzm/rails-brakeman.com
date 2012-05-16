@@ -11,7 +11,7 @@ describe Repository do
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
     end
 
-    subject { Factory(:repository, github_name: "railsbp/railsbp.com") }
+    subject { FactoryGirl.create(:repository, github_name: "railsbp/railsbp.com") }
 
     its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
     its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
