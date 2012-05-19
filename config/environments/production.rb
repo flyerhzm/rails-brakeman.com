@@ -70,4 +70,12 @@ RailsBrakemanCom::Application.configure do
     :email_prefix => "[rails-brakeman.com] ",
     :sender_address => %{"Application Error" <exception.notifier@rails-brakeman.com>},
     :exception_recipients => %w{flyerhzm@rails-brakeman.com}
+
+  config.after_initialize do
+    class ExceptionNotifier
+      class Notifier < ActionMailer::Base
+        mailer_account "exception.notifier"
+      end
+    end
+  end
 end
