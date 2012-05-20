@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: repositories
+#
+#  id                   :integer(4)      not null, primary key
+#  github_id            :integer(4)
+#  github_name          :string(255)
+#  name                 :string(255)
+#  description          :string(255)
+#  git_url              :string(255)
+#  private              :boolean(1)
+#  fork                 :boolean(1)
+#  pushed_at            :datetime
+#  created_at           :datetime        not null
+#  updated_at           :datetime        not null
+#  last_build_at        :datetime
+#  html_url             :string(255)
+#  ssh_url              :string(255)
+#  builds_count         :integer(4)      default(0)
+#  user_id              :integer(4)
+#  authentication_token :string(255)
+#
+
 class Repository < ActiveRecord::Base
   has_many :builds, :dependent => :destroy
   belongs_to :user
