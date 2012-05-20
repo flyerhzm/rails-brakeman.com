@@ -1,3 +1,9 @@
+PATH
+  remote: /Users/huangrichard/Sites/contact_us
+  specs:
+    contact_us (0.3.0)
+      rails (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -278,6 +284,7 @@ DEPENDENCIES
   capistrano
   capistrano_colors
   coffee-rails (~> 3.2.1)
+  contact_us!
   daemons
   database_cleaner
   delayed_job_active_record

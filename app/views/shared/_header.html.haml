@@ -3,6 +3,8 @@
     .container-fluid
       = link_to "Rails Brakeman", root_path, class: "brand"
       .container.nav-collapse
+        %ul.nav
+          %li= link_to 'Contact', new_contact_path
         %ul.nav.pull-right
           - if current_user
             %li= link_to "Create Repository", new_repository_path

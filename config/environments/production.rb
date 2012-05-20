@@ -72,6 +72,12 @@ RailsBrakemanCom::Application.configure do
     :exception_recipients => %w{flyerhzm@rails-brakeman.com}
 
   config.after_initialize do
+    if ContactUs.const_defined? :ContactMailer
+      class ContactUs::ContactMailer
+        mailer_account "notification"
+      end
+    end
+
     class ExceptionNotifier
       class Notifier < ActionMailer::Base
         mailer_account "exception.notifier"
