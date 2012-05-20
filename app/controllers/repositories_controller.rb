@@ -1,5 +1,6 @@
 class RepositoriesController < ApplicationController
   skip_before_filter :set_current_user, :load_latest_repositories, :only => :sync
+  before_filter :force_input_email, only: [:new, :create]
 
   def new
     @repository = current_user.repositories.new
@@ -60,5 +61,9 @@ class RepositoriesController < ApplicationController
       client = Octokit::Client.new(oauth_token: current_user.github_token)
       collaborators = client.collaborators(github_name)
       collaborators && collaborators.any? { |collaborator| collaborator.id == current_user.github_uid }
+    end
+
+    def force_input_email
+      raise UserNoEmailException if current_user.fakemail?
     end
 end

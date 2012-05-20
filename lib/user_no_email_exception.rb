@@ -1,0 +1,2 @@
+class UserNoEmailException < Exception
+end

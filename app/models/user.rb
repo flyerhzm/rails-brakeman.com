@@ -39,17 +39,13 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :github_uid
 
   def self.find_for_github_oauth(data)
-    if user = User.find_by_github_uid(data.uid)
-      user
-    else # Create a user with a stub password.
-      user = User.new(:email => data.info.email, :password => Devise.friendly_token[0, 20])
-      user.github_uid = data.uid
-      user.github_token = data.credentials.token
-      user.name = data.info.name
-      user.nickname = data.info.nickname
+    user = User.find_by_github_uid(data.uid)
+    unless user
+      user = User.new
+      import_github_data(user, data)
       user.save
-      user
     end
+    user
   end
 
   def self.new_with_session(params, session)
@@ -67,4 +63,18 @@ class User < ActiveRecord::Base
   def self.current=(user)
     Thread.current[:user] = user
   end
+
+  def fakemail?
+    email =~ /@fakemail.com/
+  end
+
+  protected
+    def self.import_github_data(user, data)
+      user.email = data.info.email || "#{data.info.nickname}@fakemail.com"
+      user.password = Devise.friendly_token[0, 20]
+      user.github_uid = data.uid
+      user.github_token = data.credentials.token
+      user.name = data.info.name
+      user.nickname = data.info.nickname
+    end
 end
