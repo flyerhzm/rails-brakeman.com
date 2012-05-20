@@ -16,6 +16,7 @@
 
   %body
     = render 'shared/header'
+    %section#share= render "shared/addthis"
     #flash
       .container-fluid
         = notice_message
@@ -25,4 +26,4 @@
         .span9
           = yield
     = render 'shared/footer'
-    = javascript_include_tag "application"
+    = javascript_include_tag "application", "http://s7.addthis.com/js/250/addthis_widget.js#pubid=flyerhzm"
