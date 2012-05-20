@@ -17,7 +17,7 @@ gem 'oa-core'
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 
-gem 'octokit'
+gem 'octokit', :git => "git://github.com/flyerhzm/octokit"
 gem 'git'
 gem 'brakeman'
 
@@ -57,6 +57,7 @@ group :development do
   gem 'guard-rails'
   gem 'guard-livereload'
   gem 'guard-delayed'
+  gem 'annotate', '2.4.1.beta1'
   gem 'guard-annotate'
 end
 

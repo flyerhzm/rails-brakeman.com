@@ -29,6 +29,7 @@ Spork.prefork do
 
     config.include Support::BuildHelper
     config.include Support::DelayedJobHelper
+    config.include Support::CallbackHelper
 
     config.before(:each) do
       DatabaseCleaner.start

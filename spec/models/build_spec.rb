@@ -3,9 +3,7 @@ require 'spec_helper'
 describe Build do
   it { should belong_to(:repository) }
 
-  before do
-    Repository.any_instance.stubs(:sync_github)
-  end
+  before { skip_repository_callbacks }
 
   let(:repository) { FactoryGirl.create(:repository) }
   subject { FactoryGirl.create(:build, repository: repository) }

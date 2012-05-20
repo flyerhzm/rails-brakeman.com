@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe RepositoriesController do
   before do
+    skip_repository_callbacks
     @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
     controller.stubs(:current_user).returns(@user)
-    Repository.any_instance.stubs(:sync_github)
     @repository = FactoryGirl.build_stubbed(:repository, user: @user)
   end
 

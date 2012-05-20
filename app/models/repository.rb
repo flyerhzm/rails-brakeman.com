@@ -25,7 +25,8 @@ class Repository < ActiveRecord::Base
   has_many :builds, :dependent => :destroy
   belongs_to :user
   attr_accessible :description, :fork, :github_id, :github_name, :git_url, :name, :private, :pushed_at
-  before_create :sync_github, :touch_last_build_at
+  before_create :reset_authentication_token, :sync_github, :touch_last_build_at
+  after_create :setup_github_hook
 
   validates_uniqueness_of :github_id
 
@@ -62,7 +63,18 @@ class Repository < ActiveRecord::Base
       true
     end
 
+    def reset_authentication_token
+      self.authentication_token = Devise.friendly_token
+    end
+
     def touch_last_build_at
       last_build_at = Time.now
+    end
+
+    def setup_github_hook
+      client = Octokit::Client.new(oauth_token: User.current.github_token)
+      #client.create_hook(self.github_name, "rails-brakeman", {:rails_brakeman_url => "http://rails-brakeman.com", :token => self.authentication_token})
+      client.create_hook(self.github_name, "web", {:url => "http://rails-brakeman.com?token=#{self.authentication_token}"})
+      true
     end
 end

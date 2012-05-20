@@ -4,8 +4,9 @@ describe Repository do
   it { should have_many :builds }
   it { should belong_to :user }
 
-  context "with sync_github" do
+  context "#sync_github" do
     before do
+      skip_repository_callbacks(:except => :sync_github)
       User.current = FactoryGirl.create(:user)
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
@@ -23,10 +24,8 @@ describe Repository do
     its(:github_id) { should == 2860164 }
   end
 
-  context "without sync_github" do
-    before do
-      Repository.any_instance.stubs(:sync_github)
-    end
+  context "stub callbacks" do
+    before { skip_repository_callbacks }
 
     subject { FactoryGirl.create(:repository) }
 
