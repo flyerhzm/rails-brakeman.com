@@ -1,0 +1,6 @@
+%h2 Account Settings
+
+= simple_form_for current_user, url: registration_path(current_user), html: {class: "form-horizontal", method: :put} do |form|
+  = form.input :email, hint: "We promise we won't share your email with anyone. It's only used to receive notifications", input_html: {class: "span5"}
+  .form-actions
+    = form.submit class: "btn btn-primary"

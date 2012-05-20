@@ -85,7 +85,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "61b8ffa690572ab6876e4c3bf8f58acba8c535c8f7b785a71cb86f027b96b0701da4da39daadbfb6530ac3ccb2dbf0e2915436af9cdbb40e207bba25340df9fc"
+  # config.pepper = "bf5b76b49f391daee3add02a8dfb2be0685836a785d70716ca9c0888024a01a3188b29e3023e6f6579224e8b4adc376f05d0e2cffd17b28485ff87109c88597b"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -210,6 +210,7 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
+  # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   GITHUB_CONFIG = YAML.load_file(Rails.root.join('config', 'github.yml'))[Rails.env]
   config.omniauth :github, GITHUB_CONFIG['key'], GITHUB_CONFIG['secret'], :scope => 'repo'
 
@@ -217,8 +218,9 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
+  config.warden do |manager|
+    manager.failure_app   = Devise::CustomFailure
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
-  # end
+  end
 end
