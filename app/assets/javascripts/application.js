@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require_tree .
+//= require twitter/bootstrap/bootstrap-popover
+//= require twitter/bootstrap/bootstrap-tooltip
+
+//= require addthis
+//= require bootstrap
+//= require builds
+//= require repositories
+//= require google_analytics
