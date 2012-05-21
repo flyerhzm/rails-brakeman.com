@@ -28,7 +28,7 @@ gem 'aasm'
 gem 'multiple_mailers'
 gem 'exception_notification'
 
-gem 'contact_us', :path => '/Users/huangrichard/Sites/contact_us'
+gem 'contact_us', :git => 'git://github.com/flyerhzm/contact_us'
 
 # Gems used only for assets and not required
 # in production environments by default.

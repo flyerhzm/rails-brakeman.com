@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/flyerhzm/contact_us
+  revision: aba28c6742e47e0ee645ab097e2381b20cc09530
+  specs:
+    contact_us (0.3.0)
+      rails (>= 3.0.0)
+
+GIT
   remote: git://github.com/flyerhzm/octokit
   revision: cd9f657df44482def075731bb7abbb5fdd2cd9f8
   specs:
@@ -8,12 +15,6 @@ GIT
       faraday_middleware (~> 0.8)
       hashie (~> 1.2)
       multi_json (~> 1.3)
-
-PATH
-  remote: /Users/huangrichard/Sites/contact_us
-  specs:
-    contact_us (0.3.0)
-      rails (>= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
