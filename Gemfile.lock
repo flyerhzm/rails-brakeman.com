@@ -162,6 +162,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta-tags (1.2.6)
+      actionpack
     metaclass (0.0.1)
     mime-types (1.18)
     mocha (0.11.4)
@@ -314,6 +316,7 @@ DEPENDENCIES
   haml
   high_voltage
   jquery-rails
+  meta-tags
   mocha
   multiple_mailers
   mysql2

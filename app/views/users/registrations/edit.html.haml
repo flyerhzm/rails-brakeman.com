@@ -1,3 +1,5 @@
+- title "#{current_user.nickname} Account Settings"
+
 %h2 Account Settings
 
 = simple_form_for current_user, url: registration_path(current_user), html: {class: "form-horizontal", method: :put} do |form|

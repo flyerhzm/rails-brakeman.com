@@ -31,6 +31,8 @@ gem 'exception_notification'
 gem 'contact_us', :git => 'git://github.com/flyerhzm/contact_us'
 gem 'high_voltage'
 
+gem 'meta-tags', :require => 'meta_tags'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

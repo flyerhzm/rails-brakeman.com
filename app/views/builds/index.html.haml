@@ -1,4 +1,6 @@
-= render 'header'
+- title "Repository #{@repository.github_name} builds history"
+
+%h2= link_to @repository.github_name, @repository.html_url
 
 .build
   = render 'tabs'
