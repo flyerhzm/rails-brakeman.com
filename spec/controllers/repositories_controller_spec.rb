@@ -5,6 +5,7 @@ describe RepositoriesController do
     skip_repository_callbacks
     @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
     controller.stubs(:current_user).returns(@user)
+    controller.stubs(:authenticate_user!).returns(true)
     @repository = FactoryGirl.build_stubbed(:repository, user: @user)
   end
 
