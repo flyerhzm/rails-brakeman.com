@@ -48,6 +48,7 @@ class RepositoriesController < ApplicationController
     payload = ActiveSupport::JSON.decode(params[:payload])
     repository = Repository.where(html_url: payload["repository"]["url"]).first
     render text: "not authenticate" and return unless repository
+    render text: "not authenticate" and return unless repository.authentication_token == params["token"]
 
     repository.generate_build(payload["ref"].split("/").last, payload["commits"].last)
     render text: "success"

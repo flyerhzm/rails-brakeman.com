@@ -102,12 +102,21 @@ describe RepositoriesController do
     }
 
     it "should generate build" do
-      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       repository.expects(:generate_build).with("master", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
       response.body.should == "success"
+    end
+
+    it "should not generate build if toekn is wrong" do
+      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      repository.expects(:generate_build).with("master", last_message)
+      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      response.should be_ok
+      response.body.should == "not authenticate"
     end
 
     it "should not generate build if url does not exist" do
