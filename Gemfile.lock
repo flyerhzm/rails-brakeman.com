@@ -195,6 +195,8 @@ GEM
       omniauth (~> 1.0)
     orm_adapter (0.0.7)
     polyglot (0.3.3)
+    quiet_assets (1.0.1)
+      railties (~> 3.1)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -324,6 +326,7 @@ DEPENDENCIES
   octokit!
   omniauth (= 1.0.2)
   omniauth-github
+  quiet_assets
   rails (= 3.2.3)
   rspec
   rspec-rails

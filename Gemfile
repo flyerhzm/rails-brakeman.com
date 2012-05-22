@@ -62,6 +62,8 @@ group :development do
   gem 'guard-delayed'
   gem 'annotate', '2.4.1.beta1'
   gem 'guard-annotate'
+
+  gem 'quiet_assets'
 end
 
 group :test do
