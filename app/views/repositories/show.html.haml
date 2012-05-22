@@ -1,4 +1,4 @@
-= render 'builds/header'
+%h2= link_to @repository.github_name, @repository.html_url
 
 = link_to 'Edit Repository', [:edit, @repository], class: "edit btn btn-primary pull-right"
 
