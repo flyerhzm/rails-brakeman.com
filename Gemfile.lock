@@ -142,6 +142,7 @@ GEM
       spork (>= 0.8.4)
     haml (3.1.5)
     hashie (1.2.0)
+    high_voltage (1.1.1)
     highline (1.6.12)
     hike (1.2.1)
     httpauth (0.1)
@@ -311,6 +312,7 @@ DEPENDENCIES
   guard-rspec
   guard-spork
   haml
+  high_voltage
   jquery-rails
   mocha
   multiple_mailers

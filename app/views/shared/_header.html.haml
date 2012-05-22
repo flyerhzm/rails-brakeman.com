@@ -4,6 +4,8 @@
       = link_to "Rails Brakeman", root_path, class: "brand"
       .container.nav-collapse
         %ul.nav
+          %li= link_to 'Home', root_path
+          %li= link_to 'About', page_path("about")
           %li= link_to 'Contact', new_contact_path
         %ul.nav.pull-right
           - if current_user
