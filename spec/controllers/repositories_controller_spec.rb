@@ -7,10 +7,15 @@ describe RepositoriesController do
     controller.stubs(:current_user).returns(@user)
     controller.stubs(:authenticate_user!).returns(true)
     @repository = FactoryGirl.build_stubbed(:repository, user: @user)
+
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    @controller.stubs(:current_ability).returns(@ability)
   end
 
   context "GET :new" do
     it "should assign repository" do
+      @ability.can :new, Repository
       get :new
       response.should be_ok
       assigns(:repository).should_not be_nil
@@ -19,6 +24,7 @@ describe RepositoriesController do
 
   context "POST :create" do
     it "should redirect to edit page if create successfully" do
+      @ability.can :create, Repository
       controller.stubs(:own_repository?).returns(true)
       controller.stubs(:org_repository?).returns(true)
       post :create, repository: {github_name:"flyerhzm/test"}
@@ -27,6 +33,7 @@ describe RepositoriesController do
     end
 
     it "should render new page if create failed" do
+      @ability.can :create, Repository
       controller.stubs(:own_repository?).returns(true)
       controller.stubs(:org_repository?).returns(true)
       Repository.any_instance.stubs(:save).returns(false)
@@ -35,6 +42,7 @@ describe RepositoriesController do
     end
 
     it "should redirect ot new if user is not owner" do
+      @ability.can :create, Repository
       controller.stubs(:own_repository?).returns(false)
       controller.stubs(:org_repository?).returns(false)
       post :create, repository: {github_name:"flyerhzm/test"}
@@ -44,7 +52,8 @@ describe RepositoriesController do
 
   context "GET :edit" do
     it "should assign repository" do
-      @user.expects(:repositories).returns(stub('repository', find: @repository))
+      @ability.can :edit, Repository
+      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
       get :edit, id: @repository.id
       response.should be_ok
       assigns(:repository).should == @repository
@@ -53,14 +62,16 @@ describe RepositoriesController do
 
   context "PUT :update" do
     it "should redirecrt to edit page if update successfully" do
-      @user.expects(:repositories).returns(stub('repository', find: @repository))
+      @ability.can :update, Repository
+      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
       @repository.expects(:update_attributes).returns(true)
       put :update, id: @repository.id
       response.should redirect_to([:edit, @repository])
     end
 
     it "should render edit page if update failed" do
-      @user.expects(:repositories).returns(stub('repository', find: @repository))
+      @ability.can :update, Repository
+      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
       @repository.expects(:update_attributes).returns(false)
       put :update, id: @repository.id
       response.should render_template(:edit)
@@ -69,6 +80,7 @@ describe RepositoriesController do
 
   context "GET :show" do
     it "shoud assign repository without build" do
+      @ability.can :read, Repository
       Repository.expects(:find).returns(@repository)
       @repository.expects(:builds).returns(stub('build', last: nil))
       get :show, id: @repository.id
@@ -77,6 +89,7 @@ describe RepositoriesController do
     end
 
     it "should assign build if repository has build" do
+      @ability.can :read, Repository
       Repository.expects(:find).returns(@repository)
       build = FactoryGirl.build_stubbed(:build)
       @repository.expects(:builds).returns(stub('build', last: build))

@@ -1,5 +1,6 @@
 class RepositoriesController < ApplicationController
-  skip_before_filter :set_current_user, :load_latest_repositories, :only => :sync
+  load_and_authorize_resource except: :sync
+  skip_before_filter :set_current_user, :load_latest_repositories, only: :sync
   before_filter :authenticate_user!, except: [:show, :sync]
   before_filter :force_input_email, only: [:new, :create]
 
@@ -23,11 +24,9 @@ class RepositoriesController < ApplicationController
   end
 
   def edit
-    @repository = current_user.repositories.find(params[:id])
   end
 
   def update
-    @repository = current_user.repositories.find(params[:id])
     if @repository.update_attributes(params[:repository])
       redirect_to [:edit, @repository], :notice => "Repository updated successfully"
     else
@@ -36,7 +35,6 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Repository.find(params[:id])
     @build = @repository.builds.last
     if @build
       @active_class_name = "current"

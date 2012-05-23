@@ -1,8 +1,8 @@
 class BuildsController < ApplicationController
+  load_and_authorize_resource
   before_filter :load_repository
 
   def show
-    @build = @repository.builds.find(params[:id])
     @active_class_name = "build"
   end
 

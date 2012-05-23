@@ -13,6 +13,7 @@ gem 'omniauth', '1.0.2'
 gem 'omniauth-github'
 gem 'devise'
 gem 'oa-core'
+gem 'cancan'
 
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
