@@ -7,7 +7,7 @@ class BuildsController < ApplicationController
   end
 
   def index
-    @builds = @repository.builds
+    @builds = @repository.builds.completed
     @active_class_name = "history"
   end
 
