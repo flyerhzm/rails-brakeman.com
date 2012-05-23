@@ -22,7 +22,7 @@ describe BuildsController do
     it "should assign builds" do
       build1 = FactoryGirl.build_stubbed(:build)
       build2 = FactoryGirl.build_stubbed(:build)
-      @repository.expects(:builds).returns([build1, build2])
+      @repository.expects(:builds).returns(stub('builds', completed: [build1, build2]))
       get :index, repository_id: @repository.id
       response.should be_ok
       assigns(:builds).should == [build1, build2]
