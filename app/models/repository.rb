@@ -19,6 +19,7 @@
 #  builds_count         :integer(4)      default(0)
 #  user_id              :integer(4)
 #  authentication_token :string(255)
+#  visible              :boolean(1)      default(TRUE)
 #
 
 class Repository < ActiveRecord::Base
