@@ -21,6 +21,9 @@ class RepositoriesController < ApplicationController
       flash[:error] = "Only the repository owner can create a repository."
       redirect_to :action => :new
     end
+  rescue Octokit::NotFound
+    flash[:error] = "There is no such repository or you don't have access to such repository on githbub"
+    redirect_to action: :new
   end
 
   def edit
