@@ -180,6 +180,7 @@ GEM
     net-ssh (2.3.0)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    newrelic_rpm (3.3.4.1)
     oa-core (0.3.2)
     oauth2 (0.6.1)
       faraday (~> 0.7)
@@ -324,6 +325,7 @@ DEPENDENCIES
   mocha
   multiple_mailers
   mysql2
+  newrelic_rpm
   oa-core
   octokit!
   omniauth (= 1.0.2)
