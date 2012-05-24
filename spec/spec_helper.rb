@@ -7,6 +7,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'webmock/rspec'
+  require 'email_spec'
   require 'simplecov'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -27,6 +28,8 @@ Spork.prefork do
     config.run_all_when_everything_filtered = true
     config.filter_run :focus
 
+    config.include(EmailSpec::Helpers)
+    config.include(EmailSpec::Matchers)
     config.include Support::BuildHelper
     config.include Support::DelayedJobHelper
     config.include Support::CallbackHelper
