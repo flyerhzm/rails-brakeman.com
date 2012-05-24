@@ -29,7 +29,7 @@ class Repository < ActiveRecord::Base
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :setup_github_hook
 
-  validates_uniqueness_of :github_id
+  validates_uniqueness_of :github_name
 
   scope :latest, where("builds_count > 0").order("last_build_at desc")
 
