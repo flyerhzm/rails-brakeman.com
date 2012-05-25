@@ -78,8 +78,7 @@ class Repository < ActiveRecord::Base
 
     def setup_github_hook
       client = Octokit::Client.new(oauth_token: User.current.github_token)
-      #client.create_hook(self.github_name, "rails-brakeman", {:rails_brakeman_url => "http://rails-brakeman.com", :token => self.authentication_token})
-      client.create_hook(self.github_name, "web", {:url => "http://rails-brakeman.com?token=#{self.authentication_token}"})
+      client.create_hook(self.github_name, "railsbrakeman", {:rails_brakeman_url => "http://rails-brakeman.com", :token => self.authentication_token})
       true
     end
 end
