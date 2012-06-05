@@ -18,7 +18,7 @@ gem 'cancan'
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 
-gem 'octokit', :git => "git://github.com/flyerhzm/octokit"
+gem 'octokit'
 gem 'git'
 gem 'brakeman'
 
@@ -29,7 +29,7 @@ gem 'aasm'
 gem 'multiple_mailers'
 gem 'exception_notification'
 
-gem 'contact_us', :git => 'git://github.com/flyerhzm/contact_us'
+gem 'contact_us', '0.4.0.beta'
 gem 'high_voltage'
 
 gem 'meta-tags', :require => 'meta_tags'
