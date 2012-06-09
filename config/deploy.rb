@@ -32,6 +32,8 @@ after  "deploy:restart", "delayed_job:start"
 after "deploy:stop",  "delayed_job:stop"
 after "deploy:start", "delayed_job:start"
 
+after "deploy:symlink", "deploy:update_crontab:db"
+
 namespace :config do
   task :init do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
@@ -49,5 +51,12 @@ namespace :deploy do
     migrate
     cleanup
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+
+  namespace :update_crontab do
+    desc "Update the crontab file on db server"
+    task :db, :roles => :db do
+      run "cd #{release_path} && bundle exec whenever --update-crontab -f config/schedule/db.rb -i rails-brakeman.com-db"
+    end
   end
 end
