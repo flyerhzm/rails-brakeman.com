@@ -1,5 +1,14 @@
 .well.sidebar-nav
-  %ul.nav.nav-list
-    %li.nav-header Repository
+  %h3 Public Repositories
+  %ul.repositories
     - @latest_repositories.each do |repository|
-      %li= link_to repository.github_name, repository
+      %li{:class => cycle("odd", "even")}
+        = link_to repository.name, repository, :class => 'current'
+        - if repository.builds_count > 0
+          = link_to "##{repository.builds.last.position}", [repository, repository.builds.last], :class => 'build'
+          %p
+            %span Duration:
+            %span #{repository.builds.last.duration} secs
+            ,
+            %span Finished:
+            %span #{time_ago_in_words(repository.last_build_at)} ago
