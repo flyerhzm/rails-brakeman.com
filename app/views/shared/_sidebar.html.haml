@@ -6,7 +6,7 @@
         = link_to repository.name, repository, :class => 'current'
         - if repository.builds_count > 0
           = link_to "##{repository.builds.last.position}", [repository, repository.builds.last], :class => 'build'
-          %p
+          %div
             %span Duration:
             %span #{repository.builds.last.duration} secs
             ,
