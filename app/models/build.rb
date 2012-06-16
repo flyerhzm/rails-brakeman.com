@@ -7,7 +7,7 @@
 #  last_commit_id      :string(255)
 #  last_commit_message :string(255)
 #  position            :integer(4)
-#  duration            :integer(4)
+#  duration            :integer(4)      default(0)
 #  finished_at         :datetime
 #  branch              :string(255)
 #  created_at          :datetime        not null

@@ -11,18 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120523122626) do
+ActiveRecord::Schema.define(:version => 20120616135723) do
 
   create_table "builds", :force => true do |t|
     t.integer  "repository_id"
     t.string   "last_commit_id"
     t.string   "last_commit_message"
     t.integer  "position"
-    t.integer  "duration"
+    t.integer  "duration",            :default => 0
     t.datetime "finished_at"
     t.string   "branch"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "aasm_state"
   end
 
