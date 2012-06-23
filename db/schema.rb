@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616135723) do
+ActiveRecord::Schema.define(:version => 20120623123753) do
 
   create_table "builds", :force => true do |t|
     t.integer  "repository_id"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(:version => 20120616135723) do
     t.string   "authentication_token"
     t.boolean  "visible",              :default => true
   end
+
+  add_index "repositories", ["user_id"], :name => "index_repositories_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
