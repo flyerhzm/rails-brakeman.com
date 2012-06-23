@@ -20,7 +20,7 @@ set :rake, "bundle exec rake"
 
 role :web, "app.rails-brakeman.com"                          # Your HTTP server, Apache/etc
 role :app, "app.rails-brakeman.com"                          # This may be the same as your `Web` server
-role :db,  "db.rails-brakeman.com", :primary => true # This is where Rails migrations will run
+role :db,  "db.rails-brakeman.com", primary: true # This is where Rails migrations will run
 role :delayed_job, 'db.rails-brakeman.com'
 set :delayed_job_server_role, :delayed_job
 
@@ -47,7 +47,7 @@ end
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
+  task :restart, roles: :app, except: { no_release: true } do
     migrate
     cleanup
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
@@ -55,7 +55,7 @@ namespace :deploy do
 
   namespace :update_crontab do
     desc "Update the crontab file on db server"
-    task :db, :roles => :db do
+    task :db, roles: :db do
       run "cd #{release_path} && bundle exec whenever --update-crontab -f config/schedule/db.rb -i rails-brakeman.com-db"
     end
   end

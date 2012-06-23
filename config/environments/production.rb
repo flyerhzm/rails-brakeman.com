@@ -64,12 +64,12 @@ RailsBrakemanCom::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  config.action_mailer.default_url_options = { :host => "rails-brakeman.com", :protocol => "http" }
+  config.action_mailer.default_url_options = { host: "rails-brakeman.com" }
 
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[rails-brakeman.com] ",
-    :sender_address => %{"Application Error" <exception.notifier@rails-brakeman.com>},
-    :exception_recipients => %w{flyerhzm@rails-brakeman.com}
+    email_prefix: "[rails-brakeman.com] ",
+    sender_address: %{"Application Error" <exception.notifier@rails-brakeman.com>},
+    exception_recipients: %w{flyerhzm@rails-brakeman.com}
 
   config.after_initialize do
     if ContactUs.const_defined? :ContactMailer

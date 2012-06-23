@@ -23,7 +23,7 @@
 #
 
 class Repository < ActiveRecord::Base
-  has_many :builds, :dependent => :destroy
+  has_many :builds, dependent: :destroy
   belongs_to :user
   attr_accessible :description, :fork, :github_id, :github_name, :git_url, :html_url, :ssh_url, :name, :private, :visible, :pushed_at
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
@@ -78,7 +78,7 @@ class Repository < ActiveRecord::Base
 
     def setup_github_hook
       client = Octokit::Client.new(oauth_token: User.current.github_token)
-      client.create_hook(self.github_name, "railsbrakeman", {:rails_brakeman_url => "http://rails-brakeman.com", :token => self.authentication_token})
+      client.create_hook(self.github_name, "railsbrakeman", {rails_brakeman_url: "http://rails-brakeman.com", token: self.authentication_token})
       true
     end
 end

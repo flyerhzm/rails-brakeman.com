@@ -19,7 +19,7 @@ class RepositoriesController < ApplicationController
       end
     else
       flash[:error] = "Only the repository owner can create a repository."
-      redirect_to :action => :new
+      redirect_to action: :new
     end
   rescue URI::InvalidURIError, Octokit::NotFound
     flash[:error] = "There is no such repository or you don't have access to such repository on github"
@@ -31,7 +31,7 @@ class RepositoriesController < ApplicationController
 
   def update
     if @repository.update_attributes(params[:repository])
-      redirect_to [:edit, @repository], :notice => "Repository updated successfully"
+      redirect_to [:edit, @repository], notice: "Repository updated successfully"
     else
       render :edit
     end

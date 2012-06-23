@@ -18,13 +18,13 @@
 class Build < ActiveRecord::Base
   include AASM
 
-  belongs_to :repository, :counter_cache => true
+  belongs_to :repository, counter_cache: true
   attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
   before_create :set_position
   after_destroy :remove_analyze_file
 
-  scope :completed, where(:aasm_state => "completed")
+  scope :completed, where(aasm_state: "completed")
 
   aasm do
     state :scheduled, initial: true
@@ -60,9 +60,9 @@ class Build < ActiveRecord::Base
     g = Git.clone(repository.clone_url, repository.name)
     Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
     Brakeman.run({
-      :app_path => "#{analyze_path}/#{repository.name}",
-      :output_formats => :html,
-      :output_files => [analyze_file]
+      app_path: "#{analyze_path}/#{repository.name}",
+      output_formats: :html,
+      output_files: [analyze_file]
     })
     end_time = Time.now
     self.duration = end_time - start_time

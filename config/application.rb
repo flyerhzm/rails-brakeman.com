@@ -4,7 +4,7 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -12,8 +12,8 @@ end
 module RailsBrakemanCom
   class Application < Rails::Application
     config.generators do |g|
-      g.test_framework :rspec, :views => false, :fixture => true
-      g.fixture_replacement :factory_girl, :dir => 'spec/factories'
+      g.test_framework :rspec, views: false, fixture: true
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.form_builder :simple_form
       g.template_engine :haml
     end
