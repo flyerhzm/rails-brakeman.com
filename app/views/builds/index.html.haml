@@ -3,7 +3,7 @@
 %h2= link_to @repository.github_name, @repository.html_url
 
 .build
-  = render 'tabs'
+  = render 'tabs', repository: @repository, active_class_name: @active_class_name
 
   %table.table.table-striped.table-condensed
     %thead

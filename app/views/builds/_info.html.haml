@@ -1,13 +1,13 @@
 %dl
   %dt Build
-  %dd #{@build.position}
+  %dd #{build.position}
   %dt Duration
-  %dd #{@build.duration} secs
+  %dd #{build.duration} secs
   %dt Finished
-  %dd #{time_ago_in_words(@build.updated_at)} ago
+  %dd #{time_ago_in_words(build.updated_at)} ago
   %dt Branch
-  %dd #{@build.branch}
+  %dd #{build.branch}
   %dt Commit
-  %dd#commit_id #{@build.short_commit_id}
+  %dd#commit_id #{build.short_commit_id}
   %dt Message
-  %dd.message #{@build.last_commit_message}
+  %dd.message #{build.last_commit_message}
