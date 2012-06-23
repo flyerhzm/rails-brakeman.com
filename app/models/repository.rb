@@ -33,6 +33,8 @@ class Repository < ActiveRecord::Base
 
   scope :latest, where("builds_count > 0").order("last_build_at desc")
 
+  delegate :email, to: :user, prefix: true
+
   def clone_url
     private? ? ssh_url : git_url
   end
