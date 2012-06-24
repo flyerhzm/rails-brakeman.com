@@ -6,6 +6,9 @@
     %td Build ##{@build.position}
     %td= link_to repository_build_url(@repository, @build), repository_build_url(@repository, @build)
   %tr
+    %td Warnings count
+    %td= @build.warnings_count
+  %tr
     %td Commit
     %td #{@build.short_commit_id} (#{@build.branch})
   %tr

@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
     @repository = @build.repository
 
     mail(to: @repository.user_email,
-         subject: "[rails-brakeman] #{@repository.github_name} build ##{@build.position}")
+         subject: "[rails-brakeman] #{@repository.github_name} build ##{@build.position} warnings count #{@build.warnings_count}")
   end
 
   def notify_repository_privacy(repository)
