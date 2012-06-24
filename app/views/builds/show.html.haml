@@ -4,7 +4,7 @@
 
 .build
   - if @build.try(:completed?)
-    = render 'tabs', repository: @repository, build: @build, active_class_name: @active_class_name
-    = render 'info', build: @build
+    = render 'builds/tabs', repository: @repository, build: @build, active_class_name: @active_class_name
+    = render 'builds/info', build: @build
 
     = render inline: File.read(@build.analyze_file)
