@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe BuildsController do
   before do
-    @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
-    controller.stubs(:current_user).returns(@user)
+    stubs_current_user
+
     @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
     Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
 

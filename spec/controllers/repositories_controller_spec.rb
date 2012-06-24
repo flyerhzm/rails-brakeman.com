@@ -3,9 +3,7 @@ require 'spec_helper'
 describe RepositoriesController do
   before do
     skip_repository_callbacks
-    @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
-    controller.stubs(:current_user).returns(@user)
-    controller.stubs(:authenticate_user!).returns(true)
+    stubs_current_user
     @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
 
     add_ability
