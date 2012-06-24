@@ -8,7 +8,9 @@ RailsBrakemanCom::Application.routes.draw do
   resources :repositories, only: [:show, :new, :create, :edit, :update] do
     resources :builds, only: [:show, :index]
   end
+end
 
+RailsBrakemanCom::Application.routes.append do
   constraints user_name: /[^\/]+/, repository_name: /[^\/]+/ do
     get ":user_name/:repository_name", to: "repositories#show", as: :user_repo
     get ":user_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
