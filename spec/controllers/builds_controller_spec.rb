@@ -3,10 +3,7 @@ require 'spec_helper'
 describe BuildsController do
   before do
     stubs_current_user
-
     @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
-    Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
-
     add_ability
   end
 
@@ -22,6 +19,7 @@ describe BuildsController do
       end
 
       it "should redirect with repository_id" do
+        Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
         get :show, id: @build.id, repository_id: @repository.id
         response.should redirect_to("/flyerhzm/rails-brakeman.com/builds/#{@build.id}")
       end
@@ -50,6 +48,7 @@ describe BuildsController do
 
   context "GET :index" do
     it "should redirect with repository_id" do
+      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
       @repository.expects(:builds).returns(stub('builds', completed: []))
 
       @ability.can :read, Build
