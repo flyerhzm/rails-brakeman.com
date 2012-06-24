@@ -4,7 +4,7 @@ describe BuildsController do
   before do
     @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
     controller.stubs(:current_user).returns(@user)
-    @repository = FactoryGirl.build_stubbed(:repository)
+    @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
     Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
 
     @ability = Object.new
@@ -13,34 +13,74 @@ describe BuildsController do
   end
 
   context "GET :show" do
-    it "should assign build" do
-      @ability.can :read, Build
-      build = FactoryGirl.build_stubbed(:build)
-      Build.expects(:find).with(build.id.to_s).returns(build)
-      get :show, id: build.id, repository_id: @repository.id
-      response.should be_ok
-      assigns(:build).should == build
+    context "with ability" do
+      before do
+        @build = FactoryGirl.build_stubbed(:build)
+        builds = []
+        @repository.expects(:builds).returns(builds)
+        builds.expects(:find).with(@build.id.to_s).returns(@build)
+
+        @ability.can :read, Build
+      end
+
+      it "should redirect with repository_id" do
+        get :show, id: @build.id, repository_id: @repository.id
+        response.should redirect_to("/flyerhzm/rails-brakeman.com/builds/#{@build.id}")
+      end
+
+      it "should assign build with user_name and repository_name" do
+        @user = FactoryGirl.build_stubbed(:user)
+        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
+        repositories = []
+        @user.expects(:repositories).returns(repositories)
+        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+
+        get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
+        response.should be_ok
+        assigns(:build).should == @build
+      end
     end
 
     it "should no access if repository is non visible" do
       @repository = FactoryGirl.build_stubbed(:repository, visible: false)
       Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
-      build = FactoryGirl.build_stubbed(:build)
-      Build.expects(:find).with(build.id.to_s).returns(build)
-      get :show, id: build.id, repository_id: @repository.id
+      @user = FactoryGirl.build_stubbed(:user)
+      User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
+      repositories = []
+      @user.expects(:repositories).returns(repositories)
+      repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+      @build = FactoryGirl.build_stubbed(:build)
+      builds = []
+      @repository.expects(:builds).returns(builds)
+      builds.expects(:find).with(@build.id.to_s).returns(@build)
+      get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should_not be_ok
     end
   end
 
   context "GET :index" do
-    it "should assign builds" do
+    it "should redirect with repository_id" do
+      @repository.expects(:builds).returns(stub('builds', completed: []))
+
       @ability.can :read, Build
-      build1 = FactoryGirl.build_stubbed(:build)
-      build2 = FactoryGirl.build_stubbed(:build)
-      @repository.expects(:builds).returns(stub('builds', completed: [build1, build2]))
       get :index, repository_id: @repository.id
+      response.should redirect_to("/flyerhzm/rails-brakeman.com/builds")
+    end
+
+    it "should assign builds" do
+      @user = FactoryGirl.build_stubbed(:user)
+      User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
+      repositories = []
+      @user.expects(:repositories).returns(repositories)
+      repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+      @build1 = FactoryGirl.build_stubbed(:build)
+      @build2 = FactoryGirl.build_stubbed(:build)
+      @repository.expects(:builds).returns(stub('builds', completed: [@build1, @build2]))
+
+      @ability.can :read, Build
+      get :index, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should be_ok
-      assigns(:builds).should == [build1, build2]
+      assigns(:builds).should == [@build1, @build2]
     end
   end
 end
