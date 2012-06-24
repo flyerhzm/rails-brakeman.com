@@ -8,9 +8,7 @@ describe RepositoriesController do
     controller.stubs(:authenticate_user!).returns(true)
     @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
 
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    @controller.stubs(:current_ability).returns(@ability)
+    add_ability
   end
 
   context "GET :new" do
@@ -88,13 +86,10 @@ describe RepositoriesController do
       end
 
       it "shoud assign repository with user_name and reposiory_name" do
-        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
-        repositories = []
-        @user.expects(:repositories).returns(repositories)
-        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+        expects_user_and_repository
+        @repository.expects(:builds).returns(stub('build', last: nil))
 
         @ability.can :read, Repository
-        @repository.expects(:builds).returns(stub('build', last: nil))
         get :show, user_name: @user.nickname, repository_name: @repository.name
         response.should be_ok
         assigns(:repository).should_not be_nil
@@ -103,10 +98,7 @@ describe RepositoriesController do
 
     context "with build" do
       it "should assign build" do
-        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
-        repositories = []
-        @user.expects(:repositories).returns(repositories)
-        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+        expects_user_and_repository
         build = FactoryGirl.build_stubbed(:build)
         @repository.expects(:builds).returns(stub('build', last: build))
 

@@ -31,6 +31,7 @@ Spork.prefork do
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)
     config.include Support::BuildHelper
+    config.include Support::ControllerHelper
     config.include Support::DelayedJobHelper
     config.include Support::CallbackHelper
 

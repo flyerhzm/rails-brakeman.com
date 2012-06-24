@@ -7,9 +7,7 @@ describe BuildsController do
     @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
     Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
 
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    @controller.stubs(:current_ability).returns(@ability)
+    add_ability
   end
 
   context "GET :show" do
@@ -29,11 +27,7 @@ describe BuildsController do
       end
 
       it "should assign build with user_name and repository_name" do
-        @user = FactoryGirl.build_stubbed(:user)
-        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
-        repositories = []
-        @user.expects(:repositories).returns(repositories)
-        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+        expects_user_and_repository
 
         get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
         response.should be_ok
@@ -43,16 +37,12 @@ describe BuildsController do
 
     it "should no access if repository is non visible" do
       @repository = FactoryGirl.build_stubbed(:repository, visible: false)
-      Repository.stubs(:find).with(@repository.id.to_s).returns(@repository)
-      @user = FactoryGirl.build_stubbed(:user)
-      User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
-      repositories = []
-      @user.expects(:repositories).returns(repositories)
-      repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+      expects_user_and_repository
       @build = FactoryGirl.build_stubbed(:build)
       builds = []
       @repository.expects(:builds).returns(builds)
       builds.expects(:find).with(@build.id.to_s).returns(@build)
+
       get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should_not be_ok
     end
@@ -68,11 +58,8 @@ describe BuildsController do
     end
 
     it "should assign builds" do
-      @user = FactoryGirl.build_stubbed(:user)
-      User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
-      repositories = []
-      @user.expects(:repositories).returns(repositories)
-      repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+      expects_user_and_repository
+
       @build1 = FactoryGirl.build_stubbed(:build)
       @build2 = FactoryGirl.build_stubbed(:build)
       @repository.expects(:builds).returns(stub('builds', completed: [@build1, @build2]))
