@@ -6,7 +6,7 @@ describe RepositoriesController do
     @user = FactoryGirl.build_stubbed(:user, nickname: "flyerhzm")
     controller.stubs(:current_user).returns(@user)
     controller.stubs(:authenticate_user!).returns(true)
-    @repository = FactoryGirl.build_stubbed(:repository, user: @user)
+    @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
 
     @ability = Object.new
     @ability.extend(CanCan::Ability)
@@ -79,23 +79,42 @@ describe RepositoriesController do
   end
 
   context "GET :show" do
-    it "shoud assign repository without build" do
-      @ability.can :read, Repository
-      Repository.expects(:find).returns(@repository)
-      @repository.expects(:builds).returns(stub('build', last: nil))
-      get :show, id: @repository.id
-      response.should be_ok
-      assigns(:repository).should_not be_nil
+    context "without build" do
+      it "should redirect with id" do
+        @ability.can :read, Repository
+        Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
+        get :show, id: @repository.id
+        response.should redirect_to("/flyerhzm/rails-brakeman.com")
+      end
+
+      it "shoud assign repository with user_name and reposiory_name" do
+        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
+        repositories = []
+        @user.expects(:repositories).returns(repositories)
+        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+
+        @ability.can :read, Repository
+        @repository.expects(:builds).returns(stub('build', last: nil))
+        get :show, user_name: @user.nickname, repository_name: @repository.name
+        response.should be_ok
+        assigns(:repository).should_not be_nil
+      end
     end
 
-    it "should assign build if repository has build" do
-      @ability.can :read, Repository
-      Repository.expects(:find).returns(@repository)
-      build = FactoryGirl.build_stubbed(:build)
-      @repository.expects(:builds).returns(stub('build', last: build))
-      get :show, id: @repository.id
-      response.should render_template("builds/show")
-      assigns(:build).should_not be_nil
+    context "with build" do
+      it "should assign build" do
+        User.expects(:where).with(nickname: "flyerhzm").returns(stub('users', first: @user))
+        repositories = []
+        @user.expects(:repositories).returns(repositories)
+        repositories.expects(:where).with(name: "rails-brakeman.com").returns(stub('repositories', first: @repository))
+        build = FactoryGirl.build_stubbed(:build)
+        @repository.expects(:builds).returns(stub('build', last: build))
+
+        @ability.can :read, Repository
+        get :show, user_name: @user.nickname, repository_name: @repository.name
+        response.should render_template("builds/show")
+        assigns(:build).should_not be_nil
+      end
     end
   end
 

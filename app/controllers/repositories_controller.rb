@@ -1,4 +1,5 @@
 class RepositoriesController < ApplicationController
+  before_filter :load_resource, only: :show
   load_and_authorize_resource except: :sync
   skip_before_filter :set_current_user, :load_latest_repositories, only: :sync
   before_filter :authenticate_user!, except: [:show, :sync]
@@ -38,6 +39,8 @@ class RepositoriesController < ApplicationController
   end
 
   def show
+    redirect_to "/#{@repository.user.nickname}/#{@repository.name}", status: 301 and return if @redirect
+
     @build = @repository.builds.last
     if @build
       @active_class_name = "current"
@@ -60,6 +63,16 @@ class RepositoriesController < ApplicationController
   end
 
   protected
+    def load_resource
+      if params[:user_name] && params[:repository_name]
+        @user = User.where(nickname: params[:user_name]).first
+        @repository = @user.repositories.where(name: params[:repository_name]).first
+      elsif params[:id]
+        @repository = Repository.find(params[:id])
+        @redirect = true
+      end
+    end
+
     def own_repository?(github_name)
       github_name.include?("/") && github_name.split("/").first == current_user.nickname
     end

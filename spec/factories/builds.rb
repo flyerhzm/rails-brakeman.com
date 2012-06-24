@@ -9,5 +9,6 @@ FactoryGirl.define do
     duration 1
     finished_at "2012-05-12 13:00:26"
     branch "master"
+    warnings_count 0
   end
 end

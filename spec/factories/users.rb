@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:github_uid) { |i| i }
     sequence(:email) { |i| "user#{i}@gmail.com" }
+    sequence(:nickname) { |i| "user#{i}" }
     password "testtest"
     password_confirmation "testtest"
   end
