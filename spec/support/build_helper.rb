@@ -9,7 +9,13 @@ module Support
       Git.expects(:clone).with("git://github.com/flyerhzm/test.git", "test")
       Dir.expects(:chdir).with("test")
 
-      Brakeman.expects(:run).with(:app_path => "#{path}/test", :output_formats => :html, :output_files => ["#{path}/brakeman.html"])
+      checks = stub
+      checks.expects(:all_warnings).returns([])
+      tracker = stub
+      tracker.expects(:checks).returns(checks)
+      Brakeman.expects(:run).
+               with(:app_path => "#{path}/test", output_formats: :html, output_files: ["#{path}/brakeman.html"]).
+               returns(tracker)
 
       Build.any_instance.expects(:remove_brakeman_header)
       FileUtils.expects(:rm_rf).with("#{path}/test")

@@ -59,12 +59,13 @@ class Build < ActiveRecord::Base
     FileUtils.cd(analyze_path)
     g = Git.clone(repository.clone_url, repository.name)
     Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
-    Brakeman.run({
+    tracker = Brakeman.run({
       app_path: "#{analyze_path}/#{repository.name}",
       output_formats: :html,
       output_files: [analyze_file]
     })
     end_time = Time.now
+    self.warnings_count = tracker.checks.all_warnings.size
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
