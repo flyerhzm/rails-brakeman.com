@@ -20,3 +20,4 @@ config/mailers.yml
 /builds
 /bin
 /coverage
+brakeman.html
