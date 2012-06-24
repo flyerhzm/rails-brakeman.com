@@ -10,8 +10,8 @@ RailsBrakemanCom::Application.routes.draw do
   end
 
   constraints user_name: /[^\/]+/, repository_name: /[^\/]+/ do
-    get ":user_name/:repository_name", to: "repositories#show"
-    get ":user_name/:repository_name/builds", to: "builds#index"
-    get ":user_name/:repository_name/builds/:id", to: "builds#show"
+    get ":user_name/:repository_name", to: "repositories#show", as: :user_repo
+    get ":user_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
+    get ":user_name/:repository_name/builds/:id", to: "builds#show", as: :user_repo_build
   end
 end

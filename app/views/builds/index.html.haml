@@ -16,7 +16,7 @@
     %tbody
       - @builds.each do |build|
         %tr
-          %td= link_to "##{build.position}", [@repository, build]
+          %td= link_to "##{build.position}", user_repo_build_path(user_name: @repository.user.nickname, repository_name: @repository.name, id: build.id)
           %td= build.short_commit_id
           %td= build.last_commit_message
           %td #{build.duration} sec

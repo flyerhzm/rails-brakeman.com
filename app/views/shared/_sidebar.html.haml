@@ -2,10 +2,10 @@
   %h3 Public Repositories
   %ul.repositories
     - @latest_repositories.each do |repository|
-      %li{:class => cycle("odd", "even")}
-        = link_to repository.name, repository, :class => 'current'
+      %li{class: cycle("odd", "even")}
+        = link_to repository.name, repository, class: 'current'
         - if repository.builds_count > 0
-          = link_to "##{repository.builds.last.position}", [repository, repository.builds.last], :class => 'build'
+          = link_to "##{repository.builds.last.position}", user_repo_build_path(user_name: repository.user.nickname, repository_name: repository.name, id: repository.builds.last.id), class: 'build'
           %div
             %span Duration:
             %span #{repository.builds.last.duration} secs
