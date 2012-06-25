@@ -39,7 +39,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    redirect_to "/#{@repository.user.nickname}/#{@repository.name}", status: 301 and return if @redirect
+    redirect_to user_repo_path(user_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if @redirect
 
     @build = @repository.builds.last
     if @build

@@ -5,13 +5,13 @@ class BuildsController < ApplicationController
   authorize_resource
 
   def show
-    redirect_to "/#{@repository.user.nickname}/#{@repository.name}/builds/#{params[:id]}", status: 301 and return if @redirect
+    redirect_to user_repo_build_path(user_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: 301 and return if @redirect
 
     @active_class_name = "build"
   end
 
   def index
-    redirect_to "/#{@repository.user.nickname}/#{@repository.name}/builds", status: 301 and return if @redirect
+    redirect_to user_repo_builds_path(user_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if @redirect
 
     @active_class_name = "history"
   end
