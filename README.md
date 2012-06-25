@@ -2,6 +2,8 @@
 
 [![Build Status](https://secure.travis-ci.org/flyerhzm/rails-brakeman.com.png)](http://travis-ci.org/flyerhzm/rails-brakeman.com)
 
+[![Security Status](http://rails-brakeman.com/flyerhzm/rails-brakeman.com.png)](http://rails-brakeman.com/flyerhzm/rails-brakeman.com)
+
 [![Coderwall Endorse](http://api.coderwall.com/flyerhzm/endorsecount.png)](http://coderwall.com/flyerhzm)
 
 [![Click here to lend your support to: rails-brakeman.com and make a donation at www.pledgie.com !](https://www.pledgie.com/campaigns/17431.png?  skin_name=chrome)](http://www.pledgie.com/campaigns/17431)
