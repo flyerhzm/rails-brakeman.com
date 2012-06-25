@@ -37,16 +37,19 @@ describe Build do
 
   context "#badge_status" do
     it "should be passing" do
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed", warnings_count: 0)
       build.badge_state.should == "passing"
     end
 
     it "should be failing" do
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "failed")
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed", warnings_count: 1)
       build.badge_state.should == "failing"
     end
 
     it "should be unknown" do
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "failed")
+      build.badge_state.should == "unknown"
+
       build = FactoryGirl.build_stubbed(:build, aasm_state: "scheduled")
       build.badge_state.should == "unknown"
 
