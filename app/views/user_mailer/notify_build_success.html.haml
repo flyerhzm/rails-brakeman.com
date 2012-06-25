@@ -4,7 +4,7 @@
     %td= @repository.github_name
   %tr
     %td Build ##{@build.position}
-    %td= link_to user_repo_build_url(user_name: @repository.user.nickname, repository_name: @repository_name, id: @build.id), user_repo_build_url(user_name: @repository.user.nickname, repository_name: @repository_name, id: @build.id)
+    %td= link_to user_repo_build_url(user_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), user_repo_build_url(user_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id)
   %tr
     %td Warnings count
     %td= @build.warnings_count
