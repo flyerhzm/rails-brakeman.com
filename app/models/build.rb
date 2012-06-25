@@ -17,6 +17,7 @@
 
 class Build < ActiveRecord::Base
   include AASM
+  BADGE_STATES = {completed: "passing", failed: "failing", scheduled: "unknown", running: "unknown"}
 
   belongs_to :repository, counter_cache: true
   attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
@@ -82,6 +83,10 @@ class Build < ActiveRecord::Base
 
   def short_commit_id
     last_commit_id[0..6]
+  end
+
+  def badge_state
+    BADGE_STATES[aasm_state.to_sym]
   end
 
   protected

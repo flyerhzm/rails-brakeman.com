@@ -35,6 +35,26 @@ describe Build do
   its(:analyze_file) { should == Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s }
   its(:short_commit_id) { should == "1234567" }
 
+  context "#badge_status" do
+    it "should be passing" do
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
+      build.badge_state.should == "passing"
+    end
+
+    it "should be failing" do
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "failed")
+      build.badge_state.should == "failing"
+    end
+
+    it "should be unknown" do
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "scheduled")
+      build.badge_state.should == "unknown"
+
+      build = FactoryGirl.build_stubbed(:build, aasm_state: "running")
+      build.badge_state.should == "unknown"
+    end
+  end
+
   context "#run!" do
     before do
       @build = FactoryGirl.create(:build)

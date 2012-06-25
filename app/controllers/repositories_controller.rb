@@ -42,9 +42,13 @@ class RepositoriesController < ApplicationController
     redirect_to user_repo_path(user_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if @redirect
 
     @build = @repository.builds.last
-    if @build
-      @active_class_name = "current"
-      render 'builds/show' and return
+    if request.format == "image/png"
+      send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
+    else
+      if @build
+        @active_class_name = "current"
+        render 'builds/show' and return
+      end
     end
   end
 

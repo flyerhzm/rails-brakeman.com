@@ -106,6 +106,20 @@ describe RepositoriesController do
         assigns(:build).should_not be_nil
       end
     end
+
+    context "png", focus: true do
+      it "should send_file with badge" do
+        expects_user_and_repository
+        build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
+        @repository.expects(:builds).returns(stub('build', last: build))
+
+        controller.expects(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
+        controller.stubs(:render)
+
+        @ability.can :read, Repository
+        get :show, user_name: @user.nickname, repository_name: @repository.name, format: "png"
+      end
+    end
   end
 
   context "POST :sync" do
