@@ -3,7 +3,7 @@
   %ul.repositories
     - @latest_repositories.each do |repository|
       %li{class: cycle("odd", "even")}
-        = link_to repository.name, repository, class: 'current'
+        = link_to repository.name, user_repo_path(owner_name: repository.owner_name, repository_name: repository.name), class: 'current'
         - if repository.builds_count > 0
           = link_to "##{repository.builds.last.position}", user_repo_build_path(owner_name: repository.owner_name, repository_name: repository.name, id: repository.builds.last.id), class: 'build'
           %div
