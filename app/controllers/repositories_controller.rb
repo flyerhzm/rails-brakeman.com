@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
   before_filter :load_resource, only: :show
-  load_and_authorize_resource except: :sync
+  load_and_authorize_resource except: [:show, :sync]
   skip_before_filter :set_current_user, only: :sync
   before_filter :authenticate_user!, except: [:show, :sync]
   before_filter :force_input_email, only: [:new, :create]
@@ -39,12 +39,13 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    redirect_to user_repo_path(user_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if @redirect
+    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
 
     @build = @repository.builds.last
     if request.format == "image/png"
       send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
     else
+      authorize! :read, @repository
       if @build
         @active_class_name = "current"
         render 'builds/show' and return
@@ -68,12 +69,10 @@ class RepositoriesController < ApplicationController
 
   protected
     def load_resource
-      if params[:user_name] && params[:repository_name]
-        @user = User.where(nickname: params[:user_name]).first
-        @repository = @user.repositories.where(name: params[:repository_name]).first
+      if params[:owner_name] && params[:repository_name]
+        @repository = Repository.where(github_name: "#{params[:owner_name]}/#{params[:repository_name]}").first
       elsif params[:id]
         @repository = Repository.find(params[:id])
-        @redirect = true
       end
     end
 

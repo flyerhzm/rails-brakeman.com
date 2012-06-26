@@ -24,10 +24,10 @@ describe BuildsController do
         response.should redirect_to("/flyerhzm/rails-brakeman.com/builds/#{@build.id}")
       end
 
-      it "should assign build with user_name and repository_name" do
-        expects_user_and_repository
+      it "should assign build with owner_name and repository_name" do
+        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
 
-        get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
+        get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
         response.should be_ok
         assigns(:build).should == @build
       end
@@ -35,13 +35,13 @@ describe BuildsController do
 
     it "should no access if repository is non visible" do
       @repository = FactoryGirl.build_stubbed(:repository, visible: false)
-      expects_user_and_repository
+      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
       @build = FactoryGirl.build_stubbed(:build)
       builds = []
       @repository.expects(:builds).returns(builds)
       builds.expects(:find).with(@build.id.to_s).returns(@build)
 
-      get :show, id: @build.id, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should_not be_ok
     end
   end
@@ -57,14 +57,14 @@ describe BuildsController do
     end
 
     it "should assign builds" do
-      expects_user_and_repository
+      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
 
       @build1 = FactoryGirl.build_stubbed(:build)
       @build2 = FactoryGirl.build_stubbed(:build)
       @repository.expects(:builds).returns(stub('builds', completed: [@build1, @build2]))
 
       @ability.can :read, Build
-      get :index, user_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      get :index, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should be_ok
       assigns(:builds).should == [@build1, @build2]
     end

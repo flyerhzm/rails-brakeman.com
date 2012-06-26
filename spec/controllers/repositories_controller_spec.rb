@@ -4,7 +4,7 @@ describe RepositoriesController do
   before do
     skip_repository_callbacks
     stubs_current_user
-    @repository = FactoryGirl.build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
+    @repository = FactoryGirl.build_stubbed(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com")
 
     add_ability
   end
@@ -77,18 +77,19 @@ describe RepositoriesController do
   context "GET :show" do
     context "without build" do
       it "should redirect with id" do
-        @ability.can :read, Repository
         Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
+
+        @ability.can :read, Repository
         get :show, id: @repository.id
         response.should redirect_to("/flyerhzm/rails-brakeman.com")
       end
 
-      it "shoud assign repository with user_name and reposiory_name" do
-        expects_user_and_repository
+      it "shoud assign repository with owner_name and reposiory_name" do
+        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         @repository.expects(:builds).returns(stub('build', last: nil))
 
         @ability.can :read, Repository
-        get :show, user_name: @user.nickname, repository_name: @repository.name
+        get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
         response.should be_ok
         assigns(:repository).should_not be_nil
       end
@@ -96,20 +97,20 @@ describe RepositoriesController do
 
     context "with build" do
       it "should assign build" do
-        expects_user_and_repository
+        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         build = FactoryGirl.build_stubbed(:build)
         @repository.expects(:builds).returns(stub('build', last: build))
 
         @ability.can :read, Repository
-        get :show, user_name: @user.nickname, repository_name: @repository.name
+        get :show, owner_name: @user.nickname, repository_name: @repository.name
         response.should render_template("builds/show")
         assigns(:build).should_not be_nil
       end
     end
 
-    context "png", focus: true do
+    context "png" do
       it "should send_file with badge" do
-        expects_user_and_repository
+        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
         @repository.expects(:builds).returns(stub('build', last: build))
 
@@ -117,7 +118,7 @@ describe RepositoriesController do
         controller.stubs(:render)
 
         @ability.can :read, Repository
-        get :show, user_name: @user.nickname, repository_name: @repository.name, format: "png"
+        get :show, owner_name: @user.nickname, repository_name: @repository.name, format: "png"
       end
     end
   end

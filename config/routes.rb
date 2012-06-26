@@ -11,11 +11,11 @@ RailsBrakemanCom::Application.routes.draw do
 end
 
 RailsBrakemanCom::Application.routes.append do
-  constraints user_name: /[^\/]+/, repository_name: /[^\/]+/ do
-    get ":user_name/:repository_name.png", to: "repositories#show", format: :png
+  constraints owner_name: /[^\/]+/, repository_name: /[^\/]+/ do
+    get ":owner_name/:repository_name.png", to: "repositories#show", format: :png
 
-    get ":user_name/:repository_name", to: "repositories#show", as: :user_repo
-    get ":user_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
-    get ":user_name/:repository_name/builds/:id", to: "builds#show", as: :user_repo_build
+    get ":owner_name/:repository_name", to: "repositories#show", as: :user_repo
+    get ":owner_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
+    get ":owner_name/:repository_name/builds/:id", to: "builds#show", as: :user_repo_build
   end
 end

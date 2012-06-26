@@ -5,25 +5,23 @@ class BuildsController < ApplicationController
   authorize_resource
 
   def show
-    redirect_to user_repo_build_path(user_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: 301 and return if @redirect
+    redirect_to user_repo_build_path(owner_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: 301 and return if params[:repository_id]
 
     @active_class_name = "build"
   end
 
   def index
-    redirect_to user_repo_builds_path(user_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if @redirect
+    redirect_to user_repo_builds_path(owner_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if params[:repository_id]
 
     @active_class_name = "history"
   end
 
   protected
     def load_repository
-      if params[:user_name] && params[:repository_name]
-        @user = User.where(nickname: params[:user_name]).first
-        @repository = @user.repositories.where(name: params[:repository_name]).first
+      if params[:owner_name] && params[:repository_name]
+        @repository = Repository.where(github_name: "#{params[:owner_name]}/#{params[:repository_name]}").first
       elsif params[:repository_id]
         @repository = Repository.find(params[:repository_id])
-        @redirect = true
       end
     end
 
