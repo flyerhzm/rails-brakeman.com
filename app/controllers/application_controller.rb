@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_current_user, :load_latest_repositories
+  before_filter :set_current_user
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -12,9 +12,5 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     User.current = current_user
-  end
-
-  def load_latest_repositories
-    @latest_repositories = Repository.latest.limit(10)
   end
 end

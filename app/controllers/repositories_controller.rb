@@ -1,7 +1,7 @@
 class RepositoriesController < ApplicationController
   before_filter :load_resource, only: :show
   load_and_authorize_resource except: :sync
-  skip_before_filter :set_current_user, :load_latest_repositories, only: :sync
+  skip_before_filter :set_current_user, only: :sync
   before_filter :authenticate_user!, except: [:show, :sync]
   before_filter :force_input_email, only: [:new, :create]
 
