@@ -18,7 +18,7 @@
                 %ul.dropdown-menu
                   - @user.repositories.each do |repository|
                     - unless repository.new_record?
-                      %li= link_to repository.name, user_repo_path(user_name: repository.user.nickname, repository_name: repository.name)
+                      %li= link_to repository.name, user_repo_path(owner_name: repository.owner_name, repository_name: repository.name)
             %li= link_to "Sign out", destroy_user_session_path, method: :delete
             %li.avatar= image_tag @user.gravatar_url size: 24, secure: true
           - else

@@ -1,5 +1,5 @@
 Repository: #{@repository.github_name}
-Build ##{@build.position}: #{user_repo_build_url(user_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id)}
+Build ##{@build.position}: #{user_repo_build_url(owner_name: @repository.owner_name, repository_name: @repository.name, id: @build.id)}
 Warnings count: #{@build.warnings_count}
 Commit: #{@build.short_commit_id} (#{@build.branch})
 Message: #{@build.last_commit_message}

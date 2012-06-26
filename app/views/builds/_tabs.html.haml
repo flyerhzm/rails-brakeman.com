@@ -1,9 +1,9 @@
 = link_to 'Edit Repository', [:edit, repository], class: "edit btn btn-primary"
 %ul.nav.nav-tabs
   %li{class: active_class_name == "current" ? "active" : ""}
-    = link_to "Current", user_repo_path(user_name: repository.user.nickname, repository_name: repository.name)
+    = link_to "Current", user_repo_path(owner_name: repository.owner_name, repository_name: repository.name)
   %li{class: active_class_name == "history" ? "active" : ""}
-    = link_to "History", user_repo_builds_path(user_name: repository.user.nickname, repository_name: repository.name)
+    = link_to "History", user_repo_builds_path(owner_name: repository.owner_name, repository_name: repository.name)
   - if active_class_name == "build"
     %li{class: "active"}
-      = link_to "Build ##{build.position}", user_repo_build_path(user_name: repository.user.nickname, repository_name: repository.name, id: build.id)
+      = link_to "Build ##{build.position}", user_repo_build_path(owner_name: repository.owner_name, repository_name: repository.name, id: build.id)
