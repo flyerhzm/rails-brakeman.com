@@ -38,6 +38,8 @@ gem 'newrelic_rpm'
 
 gem 'whenever', :require => false
 
+gem 'cells'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -76,12 +78,14 @@ group :test do
   gem 'spork-rails'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rspec-cells'
   gem 'mocha'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'email_spec'
+  gem 'capybara'
 
   gem 'simplecov', :require => false
 
