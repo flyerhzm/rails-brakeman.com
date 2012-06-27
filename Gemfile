@@ -9,6 +9,7 @@ gem 'mysql2'
 
 gem 'simple_form'
 gem 'haml'
+gem 'sass'
 gem 'omniauth', '1.0.2'
 gem 'omniauth-github'
 gem 'devise'

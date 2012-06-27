@@ -364,6 +364,7 @@ DEPENDENCIES
   rspec
   rspec-cells
   rspec-rails
+  sass
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form
