@@ -22,19 +22,4 @@ describe UserMailer do
     it { should have_body_text("hello") }
     it { should have_body_text("20 secs") }
   end
-
-  context "#notify_repository_privacy" do
-    before do
-      @user = FactoryGirl.create(:user, email: "flyerhzm@gmail.com")
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/rails-brakeman.com", user: @user)
-    end
-
-    subject { UserMailer.notify_repository_privacy(@repository) }
-    it { should deliver_to("flyerhzm@gmail.com") }
-    it { should have_subject("[rails-brakeman] private repository flyerhzm/rails-brakeman.com on rails-brakeman.com") }
-    it { should have_body_text("We are appreciated that you are using rails-brakeman.com") }
-    it { should have_body_text("your repository flyerhzm/rails-brakeman.com is a private repository on github") }
-    it { should have_body_text("<a href=\"https://github.com/flyerhzm/rails-brakeman.com\">fork rails-brakeman.com on github</a>") }
-    it { should have_body_text("<a href=\"mailto:contact-us@rails-brakeman.com\">contact us</a>") }
-  end
 end
