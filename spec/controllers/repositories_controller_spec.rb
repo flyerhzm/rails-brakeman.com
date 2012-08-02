@@ -84,7 +84,7 @@ describe RepositoriesController do
         response.should redirect_to("/flyerhzm/rails-brakeman.com")
       end
 
-      it "shoud assign repository with owner_name and reposiory_name" do
+      it "shoud assign repository with owner_name and repository_name" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         @repository.expects(:builds).returns(stub('build', last: nil))
 
@@ -92,6 +92,14 @@ describe RepositoriesController do
         get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
         response.should be_ok
         assigns(:repository).should_not be_nil
+      end
+
+      it "should render 404 if owner_name does not exist" do
+        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
+
+        get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+        response.should be_not_found
+        assigns(:repository).should be_nil
       end
     end
 
