@@ -41,6 +41,8 @@ gem 'whenever', :require => false
 
 gem 'cells'
 
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
