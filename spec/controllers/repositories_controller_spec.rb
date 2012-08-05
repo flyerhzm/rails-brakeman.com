@@ -94,7 +94,7 @@ describe RepositoriesController do
         assigns(:repository).should_not be_nil
       end
 
-      it "should render 404 if owner_name does not exist" do
+      it "should render 404 if owner_name or repository_name does not exist" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
 
         get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"

@@ -39,7 +39,6 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    render_404 and return if @repository.nil?
     redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
 
     @build = @repository.builds.last
@@ -73,6 +72,7 @@ class RepositoriesController < ApplicationController
       elsif params[:id]
         @repository = Repository.find(params[:id])
       end
+      render_404 if @repository.nil?
     end
 
     def own_repository?(github_name)

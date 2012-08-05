@@ -23,6 +23,7 @@ class BuildsController < ApplicationController
       elsif params[:repository_id]
         @repository = Repository.find(params[:repository_id])
       end
+      render_404 if @repository.nil?
     end
 
     def load_build

@@ -44,12 +44,18 @@ describe BuildsController do
       get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should_not be_ok
     end
+
+    it "should render 404 if owner_name or repository_name does not exist" do
+      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
+
+      get :show, id: 1, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      response.should be_not_found
+    end
   end
 
   context "GET :index" do
     it "should redirect with repository_id" do
       Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
-      @repository.expects(:builds).returns(stub('builds', completed: []))
 
       @ability.can :read, Build
       get :index, repository_id: @repository.id
@@ -67,6 +73,13 @@ describe BuildsController do
       get :index, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
       response.should be_ok
       assigns(:builds).should == [@build1, @build2]
+    end
+
+    it "should render 404 if owner_name or repository_name does not exist" do
+      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
+
+      get :index, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      response.should be_not_found
     end
   end
 end
