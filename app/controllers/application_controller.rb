@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :set_current_user
+  before_filter :reload_rails_admin, if: :rails_admin_path?
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -9,6 +10,7 @@ class ApplicationController < ActionController::Base
   rescue_from UserNoEmailException do |exception|
     redirect_to edit_user_registration_path, alert: "Your must input your email before creating a repository! It is only used to receive notification."
   end
+
 
   protected
     def render_404(exception = nil)
@@ -25,5 +27,20 @@ class ApplicationController < ActionController::Base
 
     def set_current_user
       User.current = current_user
+    end
+
+  private
+    def reload_rails_admin
+      models = %W(User Build Repository)
+      models.each do |m|
+        RailsAdmin::Config.reset_model(m)
+      end
+      RailsAdmin::Config::Actions.reset
+
+      load("#{Rails.root}/config/initializers/rails_admin.rb")
+    end
+
+    def rails_admin_path?
+      controller_path =~ /rails_admin/ && Rails.env == "development"
     end
 end

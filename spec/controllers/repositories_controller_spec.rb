@@ -178,5 +178,13 @@ describe RepositoriesController do
       response.should be_ok
       response.body.should == "no private repository"
     end
+
+    it "should not generate build if repository is not rails project" do
+      repository = FactoryGirl.build_stubbed(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      response.should be_ok
+      response.body.should == "not rails repository"
+    end
   end
 end

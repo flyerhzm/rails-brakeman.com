@@ -20,6 +20,7 @@
 #  user_id              :integer(4)
 #  authentication_token :string(255)
 #  visible              :boolean(1)      default(TRUE)
+#  rails                :boolean(1)      default(FALSE), not null
 #
 
 class Repository < ActiveRecord::Base

@@ -60,6 +60,7 @@ class RepositoriesController < ApplicationController
     render text: "not authenticate" and return unless repository
     render text: "not authenticate" and return unless repository.authentication_token == params["token"]
     render text: "no private repository" and return if repository.private?
+    render text: "not rails repository" and return unless repository.rails?
 
     repository.generate_build(payload["ref"].split("/").last, payload["commits"].last)
     render text: "success"

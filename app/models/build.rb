@@ -13,6 +13,7 @@
 #  created_at          :datetime        not null
 #  updated_at          :datetime        not null
 #  aasm_state          :string(255)
+#  warnings_count      :integer(4)      default(0), not null
 #
 
 class Build < ActiveRecord::Base
