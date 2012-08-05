@@ -20,6 +20,7 @@ RailsAdmin.config do |config|
   # or for a dynamic name:
   # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }
 
+  config.authorize_with :cancan
 
   #  ==> Global show view settings
   # Display empty fields in show views
@@ -82,17 +83,17 @@ RailsAdmin.config do |config|
   # config.model Build do
   #   # Found associations:
   #     configure :repository, :belongs_to_association   #   # Found columns:
-  #     configure :id, :integer 
-  #     configure :repository_id, :integer         # Hidden 
-  #     configure :last_commit_id, :string 
-  #     configure :last_commit_message, :string 
-  #     configure :position, :integer 
-  #     configure :duration, :integer 
-  #     configure :finished_at, :datetime 
-  #     configure :branch, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :aasm_state, :string 
+  #     configure :id, :integer
+  #     configure :repository_id, :integer         # Hidden
+  #     configure :last_commit_id, :string
+  #     configure :last_commit_message, :string
+  #     configure :position, :integer
+  #     configure :duration, :integer
+  #     configure :finished_at, :datetime
+  #     configure :branch, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :aasm_state, :string
   #     configure :warnings_count, :integer   #   # Sections:
   #   list do; end
   #   export do; end
@@ -103,25 +104,25 @@ RailsAdmin.config do |config|
   # end
   # config.model Repository do
   #   # Found associations:
-  #     configure :user, :belongs_to_association 
+  #     configure :user, :belongs_to_association
   #     configure :builds, :has_many_association   #   # Found columns:
-  #     configure :id, :integer 
-  #     configure :github_id, :integer 
-  #     configure :github_name, :string 
-  #     configure :name, :string 
-  #     configure :description, :string 
-  #     configure :git_url, :string 
-  #     configure :private, :boolean 
-  #     configure :fork, :boolean 
-  #     configure :pushed_at, :datetime 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :last_build_at, :datetime 
-  #     configure :html_url, :string 
-  #     configure :ssh_url, :string 
-  #     configure :builds_count, :integer 
-  #     configure :user_id, :integer         # Hidden 
-  #     configure :authentication_token, :string 
+  #     configure :id, :integer
+  #     configure :github_id, :integer
+  #     configure :github_name, :string
+  #     configure :name, :string
+  #     configure :description, :string
+  #     configure :git_url, :string
+  #     configure :private, :boolean
+  #     configure :fork, :boolean
+  #     configure :pushed_at, :datetime
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :last_build_at, :datetime
+  #     configure :html_url, :string
+  #     configure :ssh_url, :string
+  #     configure :builds_count, :integer
+  #     configure :user_id, :integer         # Hidden
+  #     configure :authentication_token, :string
   #     configure :visible, :boolean   #   # Sections:
   #   list do; end
   #   export do; end
@@ -133,23 +134,23 @@ RailsAdmin.config do |config|
   # config.model User do
   #   # Found associations:
   #     configure :repositories, :has_many_association   #   # Found columns:
-  #     configure :id, :integer 
-  #     configure :email, :string 
-  #     configure :password, :password         # Hidden 
-  #     configure :password_confirmation, :password         # Hidden 
-  #     configure :reset_password_token, :string         # Hidden 
-  #     configure :reset_password_sent_at, :datetime 
-  #     configure :remember_created_at, :datetime 
-  #     configure :sign_in_count, :integer 
-  #     configure :current_sign_in_at, :datetime 
-  #     configure :last_sign_in_at, :datetime 
-  #     configure :current_sign_in_ip, :string 
-  #     configure :last_sign_in_ip, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :github_uid, :integer 
-  #     configure :nickname, :string 
-  #     configure :name, :string 
+  #     configure :id, :integer
+  #     configure :email, :string
+  #     configure :password, :password         # Hidden
+  #     configure :password_confirmation, :password         # Hidden
+  #     configure :reset_password_token, :string         # Hidden
+  #     configure :reset_password_sent_at, :datetime
+  #     configure :remember_created_at, :datetime
+  #     configure :sign_in_count, :integer
+  #     configure :current_sign_in_at, :datetime
+  #     configure :last_sign_in_at, :datetime
+  #     configure :current_sign_in_ip, :string
+  #     configure :last_sign_in_ip, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :github_uid, :integer
+  #     configure :nickname, :string
+  #     configure :name, :string
   #     configure :github_token, :string   #   # Sections:
   #   list do; end
   #   export do; end

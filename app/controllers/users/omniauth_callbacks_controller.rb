@@ -13,7 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     else
       session["devise.github_data"] = env["omniauth.auth"]
-      redirect_to root_path
+      redirect_to '/'
     end
   end
 end

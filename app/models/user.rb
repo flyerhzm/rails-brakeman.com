@@ -19,6 +19,7 @@
 #  nickname               :string(255)
 #  name                   :string(255)
 #  github_token           :string(255)
+#  admin                  :boolean(1)      default(FALSE), not null
 #
 
 class User < ActiveRecord::Base
