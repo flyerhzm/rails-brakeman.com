@@ -155,7 +155,7 @@ describe RepositoriesController do
       response.body.should == "success"
     end
 
-    it "should not generate build if toekn is wrong" do
+    it "should not generate build if token is wrong" do
       repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
