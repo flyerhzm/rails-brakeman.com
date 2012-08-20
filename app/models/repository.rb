@@ -32,7 +32,7 @@ class Repository < ActiveRecord::Base
 
   validates_uniqueness_of :github_name
 
-  scope :latest, where("builds_count > 0").order("last_build_at desc")
+  scope :latest, where("visible = true and builds_count > 0").order("last_build_at desc")
 
   delegate :email, to: :user, prefix: true
 
