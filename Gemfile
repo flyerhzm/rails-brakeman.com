@@ -64,6 +64,7 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
+  gem 'rvm-capistrano'
 
   gem 'guard'
   gem 'guard-bundler'

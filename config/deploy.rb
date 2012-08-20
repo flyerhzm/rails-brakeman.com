@@ -2,7 +2,6 @@ require 'capistrano_colors'
 require 'bundler/capistrano'
 require "delayed/recipes"
 
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails-brakeman.com'
 set :rvm_type, :user
