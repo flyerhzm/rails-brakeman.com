@@ -43,7 +43,11 @@ class RepositoriesController < ApplicationController
 
     @build = @repository.builds.last
     if request.format == "image/png"
-      send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
+      if @build
+        send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
+      else
+        send_file Rails.root.join("public/images/unknown.png"), type: 'image/png', disposition: 'inline'
+      end
     else
       authorize! :read, @repository
       if @build
