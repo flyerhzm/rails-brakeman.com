@@ -69,10 +69,10 @@ class Build < ActiveRecord::Base
     self.warnings_count = tracker.checks.all_warnings.size
     self.duration = end_time - start_time
     self.finished_at = end_time
-    complete!
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self).deliver
     remove_brakeman_header
+    complete!
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
     fail!
