@@ -41,6 +41,8 @@ class Repository < ActiveRecord::Base
   end
 
   def generate_build(branch, commit)
+    return unless commit
+
     build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"])
     if build.save
       build.run!

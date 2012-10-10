@@ -46,6 +46,10 @@ describe Repository do
         Build.any_instance.expects(:run!)
         subject.generate_build("develop", {"id" => "9876543210", "message" => "commit message"})
       end
+
+      it "should do nothing for nil commit" do
+        subject.generate_build("develop", nil).should be_nil
+      end
     end
   end
 end
