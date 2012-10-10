@@ -86,7 +86,7 @@ describe RepositoriesController do
 
       it "shoud assign repository with owner_name and repository_name" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        @repository.expects(:builds).returns(stub('build', last: nil))
+        @repository.stub_chain(:builds, :completed, :last).returns(nil)
 
         @ability.can :read, Repository
         get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
@@ -107,7 +107,7 @@ describe RepositoriesController do
       it "should assign build" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         build = FactoryGirl.build_stubbed(:build)
-        @repository.expects(:builds).returns(stub('build', last: build))
+        @repository.stub_chain(:builds, :completed, :last).returns(build)
 
         @ability.can :read, Repository
         get :show, owner_name: @user.nickname, repository_name: @repository.name
@@ -120,7 +120,7 @@ describe RepositoriesController do
       it "should send_file with badge" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
         build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
-        @repository.expects(:builds).returns(stub('build', last: build))
+        @repository.stub_chain(:builds, :completed, :last).returns(build)
 
         controller.expects(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
         controller.stubs(:render)

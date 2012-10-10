@@ -41,7 +41,7 @@ class RepositoriesController < ApplicationController
   def show
     redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
 
-    @build = @repository.builds.last
+    @build = @repository.builds.completed.last
     if request.format == "image/png"
       if @build
         send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
