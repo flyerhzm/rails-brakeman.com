@@ -21,7 +21,7 @@ gem 'gravtastic'
 
 gem 'octokit'
 gem 'git'
-gem 'brakeman'
+gem 'brakeman', '~> 1.7.0'
 
 gem 'daemons'
 gem 'delayed_job_active_record'

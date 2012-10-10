@@ -54,7 +54,7 @@ GEM
     bbenezech-nested_form (0.0.6)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.0.4.0)
-    brakeman (1.8.1)
+    brakeman (1.7.1)
       activesupport
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -354,7 +354,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   annotate (= 2.4.1.beta1)
-  brakeman
+  brakeman (~> 1.7.0)
   cancan
   capistrano
   capistrano_colors
