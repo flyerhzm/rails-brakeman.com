@@ -21,7 +21,7 @@ gem 'gravtastic'
 
 gem 'octokit'
 gem 'git'
-gem 'brakeman', '~> 1.7.0'
+gem 'brakeman'
 
 gem 'daemons'
 gem 'delayed_job_active_record'
@@ -30,7 +30,7 @@ gem 'aasm'
 gem 'multiple_mailers'
 gem 'exception_notification'
 
-gem 'contact_us', '0.4.0.beta'
+gem 'contact_us'
 gem 'high_voltage'
 
 gem 'meta-tags', :require => 'meta_tags'
@@ -41,18 +41,18 @@ gem 'whenever', :require => false
 
 gem 'cells'
 
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
 end
 
 gem 'jquery-rails'
