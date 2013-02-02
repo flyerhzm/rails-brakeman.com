@@ -5,7 +5,7 @@ describe SidebarCell do
     context "rendering display without repositories" do
       subject { render_cell(:sidebar, :display) }
 
-      it { should have_selector("h3", :content => "Public Repositories") }
+      it { should have_selector("h3", :text => "Public Repositories") }
     end
 
     context "rendering display with repositories" do
@@ -37,9 +37,9 @@ describe SidebarCell do
 
       it { should have_link("#2") }
       it { should have_content("Duration") }
-      it { should have_selector("span", content: "10 secs") }
+      it { should have_selector("span", text: "10 secs") }
       it { should have_content("Finished") }
-      it { should have_selector("span", content: "less than a minute ago") }
+      it { should have_selector("span", text: "less than a minute ago") }
     end
   end
 
