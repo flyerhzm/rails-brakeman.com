@@ -8,7 +8,7 @@ set :rvm_type, :user
 
 set :application, "rails-brakeman.com"
 set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
-set :rails_env, :production
+set :rails_env, "production"
 set :deploy_to, "/home/huangzhi/sites/rails-brakeman.com/production"
 set :user, "huangzhi"
 set :use_sudo, false
