@@ -18,6 +18,4 @@
 
 //= require addthis
 //= require bootstrap
-//= require builds
-//= require repositories
 //= require google_analytics
