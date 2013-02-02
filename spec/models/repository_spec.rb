@@ -8,7 +8,7 @@ describe Repository do
     before do
       skip_repository_callbacks(:except => :sync_github)
       User.current = FactoryGirl.create(:user)
-      repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
+      repo = MultiJson.decode(File.read(Rails.root.join("spec/fixtures/repository.json").to_s))
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
     end
 
