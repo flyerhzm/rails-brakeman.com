@@ -20,4 +20,5 @@
           %td= build.short_commit_id
           %td= build.last_commit_message
           %td #{build.duration} sec
-          %td #{time_ago_in_words(build.finished_at)} ago
+          %td
+            %abbr.timeago{title: build.finished_at.getutc.iso8601}=build.finished_at.to_s

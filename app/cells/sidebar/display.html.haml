@@ -11,4 +11,5 @@
             %span #{repository.builds.last.duration} secs
             ,
             %span Finished:
-            %span #{time_ago_in_words(repository.last_build_at)} ago
+            %span
+              %abbr.timeago{title: repository.last_build_at.getutc.iso8601}=repository.last_build_at.to_s

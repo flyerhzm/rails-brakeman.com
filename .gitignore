@@ -17,6 +17,7 @@
 config/database.yml
 config/github.yml
 config/mailers.yml
+config/initializers/secret_token.rb
 .sass-cache/
 /builds
 /bin

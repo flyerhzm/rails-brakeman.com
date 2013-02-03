@@ -4,7 +4,8 @@
   %dt Duration
   %dd #{build.duration} secs
   %dt Finished
-  %dd #{time_ago_in_words(build.updated_at)} ago
+  %dd
+    %abbr.timeago{title: build.updated_at.getutc.iso8601}=build.updated_at.to_s
   %dt Branch
   %dd #{build.branch}
   %dt Commit

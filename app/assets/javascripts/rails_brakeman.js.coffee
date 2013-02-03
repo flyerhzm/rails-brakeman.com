@@ -1,0 +1,1 @@
+$("abbr.timeago").timeago()
