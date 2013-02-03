@@ -1,4 +1,4 @@
-after "deploy:update_code", "deploy:update_shared_symlink"
+before "deploy:assets:precompile", "deploy:update_shared_symlink"
 
 namespace :deploy do
   task :update_shared_symlink do
