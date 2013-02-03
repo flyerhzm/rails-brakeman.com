@@ -1,4 +1,4 @@
-before "deploy:update_code", "deploy:update_shared_symlink"
+after "deploy:update_code", "deploy:update_shared_symlink"
 
 namespace :deploy do
   task :update_shared_symlink do
