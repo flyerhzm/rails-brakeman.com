@@ -1,4 +1,5 @@
 RailsBrakemanCom::Application.routes.draw do
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   post '/' => 'repositories#sync'
