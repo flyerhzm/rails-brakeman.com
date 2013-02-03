@@ -39,7 +39,6 @@ describe SidebarCell do
       it { should have_content("Duration") }
       it { should have_selector("span", text: "10 secs") }
       it { should have_content("Finished") }
-      it { should have_selector("span", text: "less than a minute ago") }
     end
   end
 
