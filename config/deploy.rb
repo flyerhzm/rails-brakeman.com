@@ -31,7 +31,7 @@ after  "deploy:restart", "delayed_job:start"
 after "deploy:stop",  "delayed_job:stop"
 after "deploy:start", "delayed_job:start"
 
-after "deploy:symlink", "deploy:update_crontab:db"
+after "deploy:create_symlink", "deploy:update_crontab:db"
 
 namespace :config do
   task :init do
