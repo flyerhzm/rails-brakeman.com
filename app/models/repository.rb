@@ -49,10 +49,6 @@ class Repository < ActiveRecord::Base
     end
   end
 
-  def notify_privacy
-    UserMailer.notify_repository_privacy(self).deliver
-  end
-
   def to_param
     "#{id}-#{github_name.parameterize}"
   end
