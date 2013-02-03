@@ -4,7 +4,6 @@ require "delayed/recipes"
 
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails-brakeman.com'
-set :rvm_type, :user
 
 set :application, "rails-brakeman.com"
 set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
