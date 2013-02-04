@@ -1,6 +1,5 @@
 require 'capistrano_colors'
 require 'bundler/capistrano'
-require 'puma/capistrano'
 
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails-brakeman.com'

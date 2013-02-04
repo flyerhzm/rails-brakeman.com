@@ -234,7 +234,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puma (2.0.0.b4)
+    puma (1.6.3)
       rack (~> 1.2)
     quiet_assets (1.0.1)
       railties (~> 3.1)
