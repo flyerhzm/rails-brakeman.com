@@ -7,7 +7,7 @@ ruby_path = '~/.rvm/rubies/ruby-1.9.3-p194/bin/ruby'
 God.watch do |w|
   w.name = "rails-brakeman-server"
   w.interval = 60.seconds
-  w.start = "cd #{app_path} && bundle exec puma -e production --pid #{app_path}/tmp/pids/#{w.name}.pid"
+  w.start = "cd #{app_path} && bundle exec puma -e production -p 3001 --pid #{app_path}/tmp/pids/#{w.name}.pid"
 
   w.start_grace = 20.seconds
   w.pid_file = "#{app_path}/tmp/pids/#{w.name}.pid"
