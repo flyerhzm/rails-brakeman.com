@@ -26,7 +26,7 @@
 class Repository < ActiveRecord::Base
   has_many :builds, dependent: :destroy
   belongs_to :user
-  attr_accessible :description, :fork, :github_id, :github_name, :git_url, :html_url, :ssh_url, :name, :private, :visible, :pushed_at
+  attr_accessible :description, :fork, :github_id, :github_name, :git_url, :html_url, :ssh_url, :name, :private, :visible, :rails, :pushed_at
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :setup_github_hook
 
