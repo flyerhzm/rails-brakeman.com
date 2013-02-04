@@ -40,6 +40,8 @@ gem 'cells'
 
 gem 'rails_admin'
 
+gem 'puma', '~> 2.0.0.b4'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
