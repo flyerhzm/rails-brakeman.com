@@ -431,7 +431,7 @@ DEPENDENCIES
   octokit
   omniauth
   omniauth-github
-  puma (~> 2.0.0.b4)
+  puma
   quiet_assets
   rails
   rails_admin
