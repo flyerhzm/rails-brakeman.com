@@ -40,7 +40,7 @@ gem 'cells'
 
 gem 'rails_admin'
 
-gem 'puma'
+gem 'puma', '2.0.0.b6'
 
 group :assets do
   gem 'sass-rails'
