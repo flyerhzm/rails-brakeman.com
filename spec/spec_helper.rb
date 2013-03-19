@@ -9,6 +9,10 @@ Spork.prefork do
   require 'webmock/rspec'
   require 'email_spec'
   require 'simplecov'
+  require 'mocha/setup'
+  require 'capybara/rails'
+  require 'capybara/rspec'
+  require 'shoulda/matchers'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 

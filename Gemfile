@@ -30,11 +30,11 @@ gem 'exception_notification'
 gem 'contact_us'
 gem 'high_voltage'
 
-gem 'meta-tags', :require => 'meta_tags'
+gem 'meta-tags', require: 'meta_tags'
 
 gem 'newrelic_rpm'
 
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 gem 'cells'
 
@@ -77,17 +77,17 @@ group :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-cells'
-  gem 'mocha'
-  gem 'shoulda-matchers'
+  gem 'mocha', require: false
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'capybara'
 
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 
-  gem 'fakefs', :require => 'fakefs/safe'
+  gem 'fakefs', require: 'fakefs/safe'
   gem 'webmock'
 
   gem 'guard-spork'
