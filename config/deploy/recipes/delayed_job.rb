@@ -1,7 +1,7 @@
-require "delayed/recipes"
+after  "deploy:restart", "delayed_job:restart"
 
-role :delayed_job, 'db.rails-brakeman.com'
-set :delayed_job_server_role, :delayed_job
-
-before "deploy:restart", "delayed_job:stop"
-after  "deploy:restart", "delayed_job:start"
+namespace :delayed_job do
+  task :restart do
+    run "sudo monit restart delayed_job.rails-brakeman.com"
+  end
+end
