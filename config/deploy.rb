@@ -4,8 +4,6 @@ require 'bundler/capistrano'
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-2.0.0-p0@rails-brakeman.com'
 
-require 'puma/capistrano'
-
 set :application, "rails-brakeman.com"
 set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
 set :rails_env, "production"
@@ -28,5 +26,6 @@ namespace :deploy do
   task :restart, roles: :app, except: { no_release: true } do
     migrate
     cleanup
+    run "sudo monit restart rails-brakeman.com"
   end
 end
