@@ -40,12 +40,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :github_uid
 
   def self.find_for_github_oauth(data)
-    user = User.find_by_github_uid(data.uid)
-    unless user
-      user = User.new
-      import_github_data(user, data)
-      user.save
-    end
+    user = User.find_by_github_uid(data.uid) || User.new
+    import_github_data(user, data)
+    user.save
     user
   end
 
