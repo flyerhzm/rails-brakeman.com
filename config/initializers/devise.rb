@@ -206,7 +206,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   GITHUB_CONFIG = YAML.load_file(Rails.root.join('config', 'github.yml'))[Rails.env]
   OmniAuth.config.logger = Rails.logger
-  config.omniauth :github, GITHUB_CONFIG['key'], GITHUB_CONFIG['secret'], scope: 'repo'
+  config.omniauth :github, GITHUB_CONFIG['key'], GITHUB_CONFIG['secret'], scope: 'public,public_repo'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
