@@ -194,7 +194,7 @@ GEM
     multi_json (1.7.2)
     multipart-post (1.2.0)
     multiple_mailers (1.1.1)
-    mysql2 (0.3.11)
+    mysql2 (0.3.12b6)
     nested_form (0.3.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -430,7 +430,7 @@ DEPENDENCIES
   meta-tags
   mocha
   multiple_mailers
-  mysql2
+  mysql2 (~> 0.3.12b6)
   newrelic_rpm
   oa-core
   octokit
