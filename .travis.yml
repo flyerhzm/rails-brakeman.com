@@ -6,6 +6,6 @@ before_script:
   - "cp config/database.yml.example config/database.yml"
   - "cp config/github.yml.example config/github.yml"
   - "cp config/mailers.yml.example config/mailers.yml"
+  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb"
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
-  - 'echo "RailsBrakemanCom::Application.config.secret_token = '$(bundle exec rake secret)'" > config/initializers/secret_token.rb'
