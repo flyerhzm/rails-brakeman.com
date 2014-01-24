@@ -2,16 +2,18 @@ require 'capistrano_colors'
 require 'bundler/capistrano'
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p0@rails-brakeman.com'
+set :rvm_ruby_string, 'ruby-2.0.0-p353@rails-brakeman.com'
 
 set :application, "rails-brakeman.com"
 set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
 set :rails_env, "production"
-set :deploy_to, "/home/huangzhi/sites/rails-brakeman.com/production"
-set :user, "huangzhi"
+set :deploy_to, "/home/deploy/sites/rails-brakeman.com/production"
+set :user, "deploy"
 set :use_sudo, false
 
 set :scm, :git
+
+ssh_options[:forward_agent] = true
 
 set :rake, "bundle exec rake"
 
