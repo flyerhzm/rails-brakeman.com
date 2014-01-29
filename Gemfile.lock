@@ -235,7 +235,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puma (2.0.0.b6)
+    puma (2.7.1)
       rack (>= 1.1, < 2.0)
     quiet_assets (1.0.1)
       railties (~> 3.1)
@@ -436,7 +436,7 @@ DEPENDENCIES
   octokit
   omniauth
   omniauth-github
-  puma (= 2.0.0.b6)
+  puma
   quiet_assets
   rails
   rails_admin
