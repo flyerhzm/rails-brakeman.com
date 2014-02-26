@@ -34,8 +34,6 @@ gem 'meta-tags', require: 'meta_tags'
 
 gem 'newrelic_rpm'
 
-gem 'whenever', require: false
-
 gem 'cells'
 
 gem 'rails_admin'

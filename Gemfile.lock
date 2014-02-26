@@ -385,9 +385,6 @@ GEM
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
     websocket (1.0.7)
-    whenever (0.8.2)
-      activesupport (>= 2.3.4)
-      chronic (>= 0.6.3)
     xpath (1.0.0)
       nokogiri (~> 1.3)
 
@@ -456,4 +453,3 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier
   webmock
-  whenever
