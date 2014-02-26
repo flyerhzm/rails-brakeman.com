@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.17'
 
-gem 'mysql2', '~> 0.3.12b6'
+gem 'mysql2'
 
 gem 'simple_form'
 gem 'haml'
