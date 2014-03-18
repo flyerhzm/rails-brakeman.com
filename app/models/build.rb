@@ -74,8 +74,8 @@ class Build < ActiveRecord::Base
     remove_brakeman_header
     complete!
   rescue => e
-    ExceptionNotifier::Notifier.background_exception_notification(e)
-    fail!
+    ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+    self.fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
