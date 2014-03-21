@@ -24,7 +24,9 @@ module Support
 
     def build_analyze_failure
       File.expects(:exist?).raises()
-      ExceptionNotifier::Notifier.expects(:background_exception_notification)
+      exception_notification = stub
+      ExceptionNotifier::Notifier.expects(:background_exception_notification).returns(exception_notification)
+      exception_notification.expects(:deliver)
       work_off
     end
   end
