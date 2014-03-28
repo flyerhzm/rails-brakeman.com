@@ -7,12 +7,12 @@ describe Repository do
   context "#sync_github" do
     before do
       skip_repository_callbacks(:except => :sync_github)
-      User.current = FactoryGirl.create(:user)
+      User.current = create(:user)
       repo = MultiJson.decode(File.read(Rails.root.join("spec/fixtures/repository.json").to_s))
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
     end
 
-    subject { FactoryGirl.create(:repository, github_name: "railsbp/railsbp.com") }
+    subject { create(:repository, github_name: "railsbp/railsbp.com") }
 
     its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
     its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
@@ -27,7 +27,7 @@ describe Repository do
   context "stub callbacks" do
     before { skip_repository_callbacks }
 
-    subject { FactoryGirl.create(:repository) }
+    subject { create(:repository) }
 
     context "#clone_url" do
       it "should get ssh_url if private is true" do

@@ -4,7 +4,7 @@ describe RepositoriesController do
   before do
     skip_repository_callbacks
     stubs_current_user
-    @repository = FactoryGirl.build_stubbed(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com")
+    @repository = build_stubbed(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com")
 
     add_ability
   end
@@ -106,7 +106,7 @@ describe RepositoriesController do
     context "with build" do
       it "should assign build" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        build = FactoryGirl.build_stubbed(:build)
+        build = build_stubbed(:build)
         @repository.stub_chain(:builds, :completed, :last).returns(build)
 
         @ability.can :read, Repository
@@ -119,7 +119,7 @@ describe RepositoriesController do
     context "png" do
       it "should send_file with badge" do
         Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        build = FactoryGirl.build_stubbed(:build, aasm_state: "completed")
+        build = build_stubbed(:build, aasm_state: "completed")
         @repository.stub_chain(:builds, :completed, :last).returns(build)
 
         controller.expects(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
@@ -147,7 +147,7 @@ describe RepositoriesController do
     }
 
     it "should generate build" do
-      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       repository.expects(:generate_build).with("master", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
@@ -156,7 +156,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if token is wrong" do
-      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
@@ -164,7 +164,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if url does not exist" do
-      repository = FactoryGirl.build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
+      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
@@ -172,7 +172,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if repository is private" do
-      repository = FactoryGirl.build_stubbed(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build_stubbed(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
@@ -180,7 +180,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if repository is not rails project" do
-      repository = FactoryGirl.build_stubbed(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build_stubbed(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok

@@ -5,9 +5,9 @@ describe UserMailer do
 
   context "#notify_build_success" do
     before do
-      @user = FactoryGirl.create(:user, email: "flyerhzm@gmail.com", nickname: "flyerhzm")
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com", user: @user)
-      @build = FactoryGirl.create(:build, repository: @repository, last_commit_id: "123456789", branch: "develop", last_commit_message: "hello", duration: 20, warnings_count: 2)
+      @user = create(:user, email: "flyerhzm@gmail.com", nickname: "flyerhzm")
+      @repository = create(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com", user: @user)
+      @build = create(:build, repository: @repository, last_commit_id: "123456789", branch: "develop", last_commit_message: "hello", duration: 20, warnings_count: 2)
     end
 
     subject { UserMailer.notify_build_success(@build) }

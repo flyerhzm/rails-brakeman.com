@@ -14,7 +14,7 @@ describe HeaderCell do
     end
 
     context "rendering display with user" do
-      let(:user) { FactoryGirl.build_stubbed(:user) }
+      let(:user) { build_stubbed(:user) }
       subject { render_cell(:header, :display, user) }
 
       it { should have_link("Create Repository") }
@@ -22,11 +22,11 @@ describe HeaderCell do
     end
 
     context "rendering display with user has repositories" do
-      let(:user) { FactoryGirl.build_stubbed(:user) }
+      let(:user) { build_stubbed(:user) }
       subject { render_cell(:header, :display, user) }
       before do
-        @repository1 = FactoryGirl.build_stubbed(:repository)
-        @repository2 = FactoryGirl.build_stubbed(:repository)
+        @repository1 = build_stubbed(:repository)
+        @repository2 = build_stubbed(:repository)
         user.stubs(:repositories).returns([@repository1, @repository2])
       end
 

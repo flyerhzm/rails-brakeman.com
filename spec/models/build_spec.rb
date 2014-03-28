@@ -5,20 +5,20 @@ describe Build do
 
   before { skip_repository_callbacks }
 
-  let(:repository) { FactoryGirl.create(:repository) }
-  subject { FactoryGirl.create(:build, repository: repository) }
+  let(:repository) { create(:repository) }
+  subject { create(:build, repository: repository) }
 
   context "#set_position" do
     it "should get position with 1 for first build" do
-      build = FactoryGirl.create(:build)
+      build = create(:build)
       build.position.should == 1
     end
 
     it "should get +1 position" do
       repository.reload
-      old_position = FactoryGirl.create(:build, repository: repository).position
+      old_position = create(:build, repository: repository).position
       repository.reload
-      new_position = FactoryGirl.create(:build, repository: repository).position
+      new_position = create(:build, repository: repository).position
       new_position.should == old_position + 1
     end
   end
@@ -37,30 +37,30 @@ describe Build do
 
   context "#badge_status" do
     it "should be passing" do
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed", warnings_count: 0)
+      build = build_stubbed(:build, aasm_state: "completed", warnings_count: 0)
       build.badge_state.should == "passing"
     end
 
     it "should be failing" do
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "completed", warnings_count: 1)
+      build = build_stubbed(:build, aasm_state: "completed", warnings_count: 1)
       build.badge_state.should == "failing"
     end
 
     it "should be unknown" do
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "failed")
+      build = build_stubbed(:build, aasm_state: "failed")
       build.badge_state.should == "unknown"
 
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "scheduled")
+      build = build_stubbed(:build, aasm_state: "scheduled")
       build.badge_state.should == "unknown"
 
-      build = FactoryGirl.build_stubbed(:build, aasm_state: "running")
+      build = build_stubbed(:build, aasm_state: "running")
       build.badge_state.should == "unknown"
     end
   end
 
   context "#run!" do
     before do
-      @build = FactoryGirl.create(:build)
+      @build = create(:build)
       @build.run!
     end
 

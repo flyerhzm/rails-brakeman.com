@@ -24,7 +24,7 @@ describe User do
     end
 
     it "should find the user if github_uid is existed" do
-      FactoryGirl.create(:user, github_uid: 12345)
+      create(:user, github_uid: 12345)
       lambda {
         User.find_for_github_oauth(@data)
       }.should_not change(User, :count)

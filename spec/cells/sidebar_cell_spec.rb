@@ -10,8 +10,8 @@ describe SidebarCell do
 
     context "rendering display with repositories" do
       before do
-        @repository1 = FactoryGirl.build_stubbed(:repository)
-        @repository2 = FactoryGirl.build_stubbed(:repository)
+        @repository1 = build_stubbed(:repository)
+        @repository2 = build_stubbed(:repository)
         repositories = [@repository1, @repository2]
         Repository.expects(:latest).returns(repositories)
         repositories.expects(:limit).returns(repositories)
@@ -23,14 +23,14 @@ describe SidebarCell do
     end
 
     context "rendering display with repository has builds" do
-      let(:repository) { FactoryGirl.build_stubbed(:repository, builds_count: 2, last_build_at: Time.now) }
+      let(:repository) { build_stubbed(:repository, builds_count: 2, last_build_at: Time.now) }
       before do
         repositories = [repository]
         Repository.expects(:latest).returns(repositories)
         repositories.expects(:limit).returns(repositories)
 
-        @build1 = FactoryGirl.build_stubbed(:build, position: 1)
-        @build2 = FactoryGirl.build_stubbed(:build, position: 2, duration: 10)
+        @build1 = build_stubbed(:build, position: 1)
+        @build2 = build_stubbed(:build, position: 2, duration: 10)
         repository.stubs(:builds).returns([@build1, @build2])
       end
       subject { render_cell(:sidebar, :display) }

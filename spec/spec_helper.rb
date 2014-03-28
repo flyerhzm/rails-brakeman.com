@@ -22,6 +22,7 @@ Spork.prefork do
   SimpleCov.start 'rails'
 
   RSpec.configure do |config|
+    config.include FactoryGirl::Syntax::Methods
     config.mock_with :mocha
 
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
