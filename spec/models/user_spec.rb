@@ -18,16 +18,12 @@ describe User do
     end
 
     it "should create a new user if github_uid isn't existed" do
-      lambda {
-        User.find_for_github_oauth(@data)
-      }.should change(User, :count).by(1)
+      expect { User.find_for_github_oauth(@data) }.to change(User, :count).by(1)
     end
 
     it "should find the user if github_uid is existed" do
       create(:user, github_uid: 12345)
-      lambda {
-        User.find_for_github_oauth(@data)
-      }.should_not change(User, :count)
+      expect { User.find_for_github_oauth(@data) }.not_to change(User, :count)
     end
   end
 end

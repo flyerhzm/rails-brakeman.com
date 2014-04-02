@@ -6,7 +6,7 @@ describe HomeController do
   context "GET :index" do
     it "should response ok" do
       get :index
-      response.should be_ok
+      expect(response).to be_ok
     end
   end
 end

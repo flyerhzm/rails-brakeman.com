@@ -32,12 +32,12 @@ describe Repository do
     context "#clone_url" do
       it "should get ssh_url if private is true" do
         subject.private = true
-        subject.clone_url.should == subject.ssh_url
+        expect(subject.clone_url).to eq subject.ssh_url
       end
 
       it "should get git_url if private is false" do
         subject.private = false
-        subject.clone_url.should == subject.git_url
+        expect(subject.clone_url).to eq subject.git_url
       end
     end
 
@@ -48,7 +48,7 @@ describe Repository do
       end
 
       it "should do nothing for nil commit" do
-        subject.generate_build("develop", nil).should be_nil
+        expect(subject.generate_build("develop", nil)).to be_nil
       end
     end
   end

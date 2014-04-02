@@ -11,7 +11,7 @@ describe Build do
   context "#set_position" do
     it "should get position with 1 for first build" do
       build = create(:build)
-      build.position.should == 1
+      expect(build.position).to eq 1
     end
 
     it "should get +1 position" do
@@ -19,7 +19,7 @@ describe Build do
       old_position = create(:build, repository: repository).position
       repository.reload
       new_position = create(:build, repository: repository).position
-      new_position.should == old_position + 1
+      expect(new_position).to eq old_position + 1
     end
   end
 
@@ -28,7 +28,7 @@ describe Build do
       FileUtils.mkdir_p(Rails.root.join("builds/flyerhzm/test/commit/1234567890/").to_s)
       FileUtils.touch(Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s)
       subject.destroy
-      File.should_not be_exist(Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s)
+      expect(File).not_to be_exist(Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s)
     end
   end
 
@@ -38,23 +38,23 @@ describe Build do
   context "#badge_status" do
     it "should be passing" do
       build = build_stubbed(:build, aasm_state: "completed", warnings_count: 0)
-      build.badge_state.should == "passing"
+      expect(build.badge_state).to eq "passing"
     end
 
     it "should be failing" do
       build = build_stubbed(:build, aasm_state: "completed", warnings_count: 1)
-      build.badge_state.should == "failing"
+      expect(build.badge_state).to eq "failing"
     end
 
     it "should be unknown" do
       build = build_stubbed(:build, aasm_state: "failed")
-      build.badge_state.should == "unknown"
+      expect(build.badge_state).to eq "unknown"
 
       build = build_stubbed(:build, aasm_state: "scheduled")
-      build.badge_state.should == "unknown"
+      expect(build.badge_state).to eq "unknown"
 
       build = build_stubbed(:build, aasm_state: "running")
-      build.badge_state.should == "unknown"
+      expect(build.badge_state).to eq "unknown"
     end
   end
 
@@ -68,14 +68,14 @@ describe Build do
       build_analyze_success
 
       @build.reload
-      @build.aasm_state.should == "completed"
+      expect(@build.aasm_state).to eq "completed"
     end
 
     it "should fail" do
       build_analyze_failure
 
       @build.reload
-      @build.aasm_state.should == "failed"
+      expect(@build.aasm_state).to eq "failed"
     end
   end
 end
