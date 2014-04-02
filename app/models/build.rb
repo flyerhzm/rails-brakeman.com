@@ -70,7 +70,7 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     self.repository.touch(:last_build_at)
-    UserMailer.notify_build_success(self).deliver
+    UserMailer.notify_build_success(self).deliver if repository.user_email
     remove_brakeman_header
     complete!
   rescue => e
