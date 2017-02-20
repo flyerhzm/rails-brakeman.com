@@ -2,6 +2,6 @@ after  "deploy:restart", "delayed_job:restart"
 
 namespace :delayed_job do
   task :restart, :roles => :db do
-    run "sudo monit restart delayed_job.rails-brakeman.com"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec script/delayed_job restart"
   end
 end

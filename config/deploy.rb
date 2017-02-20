@@ -2,7 +2,7 @@ require 'capistrano_colors'
 require 'bundler/capistrano'
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p353@rails-brakeman.com'
+set :rvm_ruby_string, 'ruby-2.0.0-p648@rails-brakeman.com'
 
 set :application, "rails-brakeman.com"
 set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
@@ -13,13 +13,14 @@ set :use_sudo, false
 
 set :scm, :git
 
+ssh_options[:port] = 12222
 ssh_options[:forward_agent] = true
 
 set :rake, "bundle exec rake"
 
-role :web, "app.rails-brakeman.com"                          # Your HTTP server, Apache/etc
-role :app, "app.rails-brakeman.com"                          # This may be the same as your `Web` server
-role :db,  "db.rails-brakeman.com", primary: true # This is where Rails migrations will run
+role :web, "rails-brakeman.com"                          # Your HTTP server, Apache/etc
+role :app, "rails-brakeman.com"                          # This may be the same as your `Web` server
+role :db,  "rails-brakeman.com", primary: true # This is where Rails migrations will run
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
@@ -28,6 +29,6 @@ namespace :deploy do
   task :restart, roles: :app, except: { no_release: true } do
     migrate
     cleanup
-    run "sudo monit restart rails-brakeman.com"
+    run "cd #{current_path}; kill -HUP `cat tmp/pids/puma.pid`"
   end
 end
