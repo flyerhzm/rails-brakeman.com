@@ -77,7 +77,7 @@ class Repository < ActiveRecord::Base
     end
 
     def touch_last_build_at
-      last_build_at = Time.now
+      self.last_build_at = Time.now
     end
 
     def setup_github_hook
