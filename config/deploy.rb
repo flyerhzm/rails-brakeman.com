@@ -1,34 +1,16 @@
-require 'capistrano_colors'
-require 'bundler/capistrano'
-
-require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p648@rails-brakeman.com'
+set :rvm_type, :user
+set :rvm_ruby_version, '2.3.3'
 
 set :application, "rails-brakeman.com"
-set :repository,  "git@github.com:flyerhzm/rails-brakeman.com.git"
-set :rails_env, "production"
+set :repo_url,  "git@github.com:flyerhzm/rails-brakeman.com.git"
+set :branch, 'master'
 set :deploy_to, "/home/deploy/sites/rails-brakeman.com/production"
-set :user, "deploy"
-set :use_sudo, false
+set :keep_releases, 5
 
-set :scm, :git
+set :linked_files, %w{config/database.yml config/github.yml config/mailers.yml config/secrets.yml}
 
-ssh_options[:port] = 12222
-ssh_options[:forward_agent] = true
+set :linked_dirs, %w{log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
-set :rake, "bundle exec rake"
+set :rails_env, "production"
 
-role :web, "rails-brakeman.com"                          # Your HTTP server, Apache/etc
-role :app, "rails-brakeman.com"                          # This may be the same as your `Web` server
-role :db,  "rails-brakeman.com", primary: true # This is where Rails migrations will run
-
-# If you are using Passenger mod_rails uncomment this:
-namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, roles: :app, except: { no_release: true } do
-    migrate
-    cleanup
-    run "cd #{current_path}; bundle exec puma -q -d -e production -C config/puma/production.rb"
-  end
-end
+set :disallow_pushing, true
