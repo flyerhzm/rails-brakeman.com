@@ -10,4 +10,8 @@ module ApplicationHelper
 
     flash_messages.join("\n").html_safe
   end
+
+  def latest_repositories
+    Repository.latest.limit(10)
+  end
 end

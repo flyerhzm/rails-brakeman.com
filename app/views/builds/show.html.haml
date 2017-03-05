@@ -5,7 +5,7 @@
 .build
   - if @build.try(:completed?)
     = render 'builds/tabs', repository: @repository, build: @build, active_class_name: @active_class_name
-    = link_to image_tag(user_repo_badge_url(owner_name: @repository.owner_name, repository_name: @repository.name)), user_repo_url(owner_name: @repository.owner_name, repository_name: @repository.name)
+    = link_to image_tag(user_repo_url(owner_name: @repository.owner_name, repository_name: @repository.name, format: 'png')), user_repo_url(owner_name: @repository.owner_name, repository_name: @repository.name)
     = render 'builds/info', build: @build
 
     = render inline: File.read(@build.analyze_file)

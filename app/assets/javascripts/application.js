@@ -14,8 +14,6 @@
 //= require jquery_ujs
 //= require jquery.timeago
 //= require twitter/bootstrap
-//= require twitter/bootstrap/bootstrap-popover
-//= require twitter/bootstrap/bootstrap-tooltip
 
 //= require rails_brakeman
 //= require addthis
