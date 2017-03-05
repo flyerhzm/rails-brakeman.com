@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe HomeController do
+RSpec.describe HomeController, type: :controller do
   before { stubs_current_user }
 
   context "GET :index" do

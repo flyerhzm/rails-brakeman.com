@@ -1,32 +1,26 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe BuildsController do
+RSpec.describe BuildsController, type: :controller do
   before do
     stubs_current_user
-    @repository = build_stubbed(:repository, name: "rails-brakeman.com", user: @user)
+    @repository = create(:repository, name: 'rails-brakeman.com', github_name: 'flyerhzm/rails-brakeman.com', user: @user)
     add_ability
   end
 
   context "GET :show" do
     context "with ability" do
       before do
-        @build = build_stubbed(:build)
-        builds = []
-        @repository.expects(:builds).returns(builds)
-        builds.expects(:find).with(@build.id.to_s).returns(@build)
+        @build = create(:build, repository: @repository)
 
         @ability.can :read, Build
       end
 
       it "should redirect with repository_id" do
-        Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
         get :show, id: @build.id, repository_id: @repository.id
         expect(response).to redirect_to("/flyerhzm/rails-brakeman.com/builds/#{@build.id}")
       end
 
       it "should assign build with owner_name and repository_name" do
-        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-
         get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
         expect(response).to be_ok
         expect(assigns(:build)).to eq @build
@@ -34,40 +28,29 @@ describe BuildsController do
     end
 
     it "should no access if repository is non visible" do
-      @repository = build_stubbed(:repository, visible: false)
-      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-      @build = build_stubbed(:build)
-      builds = []
-      @repository.expects(:builds).returns(builds)
-      builds.expects(:find).with(@build.id.to_s).returns(@build)
+      @repository.update(visible: false)
+      @build = create(:build, repository: @repository)
 
       get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
       expect(response).not_to be_ok
     end
 
     it "should render 404 if owner_name or repository_name does not exist" do
-      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
-
-      get :show, id: 1, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      get :show, id: 1, owner_name: "flyerhzm", repository_name: "rails.com"
       expect(response).to be_not_found
     end
   end
 
   context "GET :index" do
     it "should redirect with repository_id" do
-      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
-
       @ability.can :read, Build
       get :index, repository_id: @repository.id
       expect(response).to redirect_to("/flyerhzm/rails-brakeman.com/builds")
     end
 
     it "should assign builds" do
-      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-
-      @build1 = build_stubbed(:build)
-      @build2 = build_stubbed(:build)
-      @repository.expects(:builds).returns(stub('builds', completed: [@build1, @build2]))
+      @build1 = create(:build, repository: @repository, aasm_state: 'completed')
+      @build2 = create(:build, repository: @repository, aasm_state: 'completed')
 
       @ability.can :read, Build
       get :index, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
@@ -76,9 +59,7 @@ describe BuildsController do
     end
 
     it "should render 404 if owner_name or repository_name does not exist" do
-      Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
-
-      get :index, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+      get :index, owner_name: "flyerhzm", repository_name: "rails.com"
       expect(response).to be_not_found
     end
   end

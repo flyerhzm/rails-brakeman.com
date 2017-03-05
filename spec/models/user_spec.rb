@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
-  it { should have_many :repositories }
+RSpec.describe User, type: :model do
+  it { is_expected.to have_many :repositories }
 
   context ".find_for_github_oauth" do
     before do

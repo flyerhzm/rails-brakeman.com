@@ -1,10 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe RepositoriesController do
+RSpec.describe RepositoriesController, type: :controller do
   before do
-    skip_repository_callbacks
     stubs_current_user
-    @repository = build_stubbed(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com")
+    @repository = create(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com", user: @user)
 
     add_ability
   end
@@ -21,27 +20,27 @@ describe RepositoriesController do
   context "POST :create" do
     it "should redirect to edit page if create successfully" do
       @ability.can :create, Repository
-      controller.stubs(:own_repository?).returns(true)
-      controller.stubs(:org_repository?).returns(true)
-      post :create, repository: {github_name:"flyerhzm/test"}
+      allow(controller).to receive(:own_repository?).and_return(true)
+      allow(controller).to receive(:org_repository?).and_return(true)
+      post :create, repository: { github_name: "flyerhzm/test" }
       repository = assigns(:repository)
       expect(response).to redirect_to([:edit, repository])
     end
 
     it "should render new page if create failed" do
       @ability.can :create, Repository
-      controller.stubs(:own_repository?).returns(true)
-      controller.stubs(:org_repository?).returns(true)
-      Repository.any_instance.stubs(:save).returns(false)
-      post :create, repository: {github_name:"flyerhzm/test"}
+      allow(controller).to receive(:own_repository?).and_return(true)
+      allow(controller).to receive(:org_repository?).and_return(true)
+      allow_any_instance_of(Repository).to receive(:save).and_return(false)
+      post :create, repository: { github_name: "flyerhzm/test" }
       expect(response).to render_template(:new)
     end
 
     it "should redirect ot new if user is not owner" do
       @ability.can :create, Repository
-      controller.stubs(:own_repository?).returns(false)
-      controller.stubs(:org_repository?).returns(false)
-      post :create, repository: {github_name:"flyerhzm/test"}
+      allow(controller).to receive(:own_repository?).and_return(false)
+      allow(controller).to receive(:org_repository?).and_return(false)
+      post :create, repository: { github_name: "flyerhzm/test" }
       expect(response).to redirect_to([:new, :repository])
     end
   end
@@ -49,7 +48,6 @@ describe RepositoriesController do
   context "GET :edit" do
     it "should assign repository" do
       @ability.can :edit, Repository
-      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
       get :edit, id: @repository.id
       expect(response).to be_ok
       expect(assigns(:repository)).to eq @repository
@@ -59,17 +57,14 @@ describe RepositoriesController do
   context "PUT :update" do
     it "should redirecrt to edit page if update successfully" do
       @ability.can :update, Repository
-      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
-      @repository.expects(:update_attributes).returns(true)
-      put :update, id: @repository.id
+      put :update, id: @repository.id, repository: { name: 'rails-brakeman.com' }
       expect(response).to redirect_to([:edit, @repository])
     end
 
     it "should render edit page if update failed" do
       @ability.can :update, Repository
-      Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
-      @repository.expects(:update_attributes).returns(false)
-      put :update, id: @repository.id
+      allow_any_instance_of(Repository).to receive(:update_attributes).and_return(false)
+      put :update, id: @repository.id, repository: { name: 'rails-brakeman.com' }
       expect(response).to render_template(:edit)
     end
   end
@@ -77,16 +72,13 @@ describe RepositoriesController do
   context "GET :show" do
     context "without build" do
       it "should redirect with id" do
-        Repository.expects(:find).with(@repository.id.to_s).returns(@repository)
-
         @ability.can :read, Repository
         get :show, id: @repository.id
         expect(response).to redirect_to("/flyerhzm/rails-brakeman.com")
       end
 
       it "shoud assign repository with owner_name and repository_name" do
-        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        @repository.stub_chain(:builds, :completed, :last).returns(nil)
+        create :build, repository: @repository, aasm_state: 'completed'
 
         @ability.can :read, Repository
         get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
@@ -95,9 +87,7 @@ describe RepositoriesController do
       end
 
       it "should render 404 if owner_name or repository_name does not exist" do
-        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: nil))
-
-        get :show, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
+        get :show, owner_name: "flyerhzm", repository_name: "rails.com"
         expect(response).to be_not_found
         expect(assigns(:repository)).to be_nil
       end
@@ -105,9 +95,7 @@ describe RepositoriesController do
 
     context "with build" do
       it "should assign build" do
-        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        build = build_stubbed(:build)
-        @repository.stub_chain(:builds, :completed, :last).returns(build)
+        create :build, repository: @repository, aasm_state: 'completed'
 
         @ability.can :read, Repository
         get :show, owner_name: @user.nickname, repository_name: @repository.name
@@ -118,12 +106,10 @@ describe RepositoriesController do
 
     context "png" do
       it "should send_file with badge" do
-        Repository.expects(:where).with(github_name: "flyerhzm/rails-brakeman.com").returns(stub('repositories', first: @repository))
-        build = build_stubbed(:build, aasm_state: "completed")
-        @repository.stub_chain(:builds, :completed, :last).returns(build)
+        create(:build, repository: @repository, aasm_state: "completed")
 
-        controller.expects(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
-        controller.stubs(:render)
+        expect(controller).to receive(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
+        allow(controller).to receive(:render)
 
         @ability.can :read, Repository
         get :show, owner_name: @user.nickname, repository_name: @repository.name, format: "png"
@@ -145,43 +131,37 @@ describe RepositoriesController do
         "timestamp" => "2011-12-25T20:36:34+08:00"
       }
     }
+    let!(:repository) { create(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com") }
 
     it "should generate build" do
-      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      repository.expects(:generate_build).with("master", last_message)
+      expect_any_instance_of(Repository).to receive(:generate_build).with("master", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "success"
     end
 
     it "should not generate build if token is wrong" do
-      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      post :sync, token: "987654321", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "not authenticate"
     end
 
     it "should not generate build if url does not exist" do
-      repository = build_stubbed(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([])
+      repository.update(html_url: "https://github.com/railsbp/rails-brakeman.com")
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "not authenticate"
     end
 
     it "should not generate build if repository is private" do
-      repository = build_stubbed(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      repository.update(private: true)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "no private repository"
     end
 
     it "should not generate build if repository is not rails project" do
-      repository = build_stubbed(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      repository.update(rails: false)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "not rails repository"

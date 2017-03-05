@@ -1,32 +1,54 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Repository do
-  it { should have_many :builds }
-  it { should belong_to :user }
+RSpec.describe Repository, type: :model do
+  it { is_expected.to have_many :builds }
+  it { is_expected.to belong_to :user }
 
   context "#sync_github" do
     before do
-      skip_repository_callbacks(:except => :sync_github)
       User.current = create(:user)
-      repo = MultiJson.decode(File.read(Rails.root.join("spec/fixtures/repository.json").to_s))
-      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
+      allow_any_instance_of(Repository).to receive(:sync_github).and_call_original
+      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").
+        to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/repository.json")))
     end
 
     subject { create(:repository, github_name: "railsbp/railsbp.com") }
 
-    its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
-    its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
-    its(:ssh_url) { should == "git@github.com:railsbp/railsbp.com.git" }
-    its(:name) { should == "railsbp.com" }
-    its(:description) { should == "railsbp.com" }
-    its(:private) { should be_true }
-    its(:fork) { should be_false }
-    its(:github_id) { should == 2860164 }
+    describe '#html_url' do
+      subject { super().html_url }
+      it { should == "https://github.com/railsbp/railsbp.com" }
+    end
+    describe '#git_url' do
+      subject { super().git_url }
+      it { should == "git://github.com/railsbp/railsbp.com.git" }
+    end
+    describe '#ssh_url' do
+      subject { super().ssh_url }
+      it { should == "git@github.com:railsbp/railsbp.com.git" }
+    end
+    describe '#name' do
+      subject { super().name }
+      it { should == "railsbp.com" }
+    end
+    describe '#description' do
+      subject { super().description }
+      it { should == "railsbp.com" }
+    end
+    describe '#private' do
+      subject { super().private }
+      it { is_expected.to be_truthy }
+    end
+    describe '#fork' do
+      subject { super().fork }
+      it { is_expected.to be_falsey }
+    end
+    describe '#github_id' do
+      subject { super().github_id }
+      it { should == 2860164 }
+    end
   end
 
   context "stub callbacks" do
-    before { skip_repository_callbacks }
-
     subject { create(:repository) }
 
     context "#clone_url" do
@@ -43,7 +65,7 @@ describe Repository do
 
     context "#generate_build" do
       it "should call run! for new build" do
-        Build.any_instance.expects(:run!)
+        expect_any_instance_of(Build).to receive(:run!)
         subject.generate_build("develop", {"id" => "9876543210", "message" => "commit message"})
       end
 

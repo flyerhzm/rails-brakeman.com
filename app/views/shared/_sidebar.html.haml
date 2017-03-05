@@ -1,7 +1,7 @@
 .well.sidebar-nav
   %h3 Public Repositories
   %ul.repositories
-    - @latest_repositories.each do |repository|
+    - latest_repositories.each do |repository|
       %li{class: cycle("odd", "even")}
         = link_to repository.name, user_repo_path(owner_name: repository.owner_name, repository_name: repository.name), class: 'current'
         - if repository.builds_count > 0

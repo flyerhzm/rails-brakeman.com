@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.19'
+gem 'rails', '4.2.8'
 
 gem 'pg'
 
@@ -11,7 +11,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'devise'
 gem 'oa-core'
-gem 'cancan'
+gem 'cancancan'
 
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
@@ -25,7 +25,6 @@ gem 'delayed_job_active_record'
 gem 'aasm'
 
 gem 'multiple_mailers'
-gem 'exception_notification'
 
 gem 'contact_us'
 gem 'high_voltage'
@@ -34,25 +33,23 @@ gem 'meta-tags', require: 'meta_tags'
 
 gem 'newrelic_rpm'
 
-gem 'cells'
-
 gem 'rails_admin'
 
 gem 'puma'
-
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'rollbar'
 
 gem 'jquery-rails'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano_colors'
-  gem 'rvm-capistrano'
-  gem 'turbo-sprockets-rails3'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano3-delayed-job', require: false
 
   gem 'guard'
   gem 'guard-bundler'
@@ -61,17 +58,11 @@ group :development do
   gem 'guard-delayed'
   gem 'annotate'
   gem 'guard-annotate'
-
-  gem 'quiet_assets'
 end
 
 group :test do
-  gem 'spork', '1.0.0.rc3'
-  gem 'spork-rails'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'rspec-cells'
-  gem 'mocha', require: false
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
@@ -84,6 +75,5 @@ group :test do
   gem 'fakefs', require: 'fakefs/safe'
   gem 'webmock'
 
-  gem 'guard-spork'
   gem 'guard-rspec'
 end

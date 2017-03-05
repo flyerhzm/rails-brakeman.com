@@ -2,31 +2,27 @@ module Support
   module BuildHelper
     def build_analyze_success
       path = Rails.root.join("builds/flyerhzm/test/commit/1234567890").to_s
-      File.expects(:exist?).with(path).returns(false)
-      FileUtils.expects(:mkdir_p).with(path)
-      FileUtils.expects(:cd).with(path)
+      expect(File).to receive(:exist?).with(path).and_return(false)
+      expect(FileUtils).to receive(:mkdir_p).with(path)
+      expect(FileUtils).to receive(:cd).with(path)
 
-      Git.expects(:clone).with("git://github.com/flyerhzm/test.git", "test")
-      Dir.expects(:chdir).with("test")
+      expect(Git).to receive(:clone).with("git://github.com/flyerhzm/test.git", "test")
+      expect(Dir).to receive(:chdir).with("test")
 
-      checks = stub
-      checks.expects(:all_warnings).returns([])
-      tracker = stub
-      tracker.expects(:checks).returns(checks)
-      Brakeman.expects(:run).
-               with(:app_path => "#{path}/test", output_formats: :html, output_files: ["#{path}/brakeman.html"]).
-               returns(tracker)
+      tracker = double(:tracker)
+      checks = double(:checks)
+      allow(tracker).to receive(:checks).and_return(checks)
+      allow(checks).to receive(:all_warnings).and_return([])
+      expect(Brakeman).to receive(:run).with(:app_path => "#{path}/test", output_formats: :html, output_files: ["#{path}/brakeman.html"]).and_return(tracker)
 
-      Build.any_instance.expects(:remove_brakeman_header)
-      FileUtils.expects(:rm_rf).with("#{path}/test")
+      expect_any_instance_of(Build).to receive(:remove_brakeman_header)
+      expect(FileUtils).to receive(:rm_rf).with("#{path}/test")
       work_off
     end
 
     def build_analyze_failure
-      File.expects(:exist?).raises()
-      exception_notification = stub
-      ExceptionNotifier::Notifier.expects(:background_exception_notification).returns(exception_notification)
-      exception_notification.expects(:deliver)
+      expect(File).to receive(:exist?).and_raise
+      expect(Rollbar).to receive(:error)
       work_off
     end
   end

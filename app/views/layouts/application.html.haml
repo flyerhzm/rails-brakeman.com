@@ -15,14 +15,14 @@
     %link(href="assets/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114")
 
   %body
-    = render_cell :header, :display, current_user
+    = render 'shared/header'
     %section#share= render "shared/addthis"
     #flash
       .container-fluid
         = notice_message
     .container-fluid
       .row-fluid
-        .span3= render_cell :sidebar, :display
+        .span3= render 'shared/sidebar'
         .span9
           .pledgie= render 'shared/pledgie'
           = yield

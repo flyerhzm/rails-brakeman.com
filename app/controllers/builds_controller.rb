@@ -1,7 +1,7 @@
 class BuildsController < ApplicationController
-  before_filter :load_repository
-  before_filter :load_build, only: :show
-  before_filter :load_builds, only: :index
+  before_action :load_repository
+  before_action :load_build, only: :show
+  before_action :load_builds, only: :index
   authorize_resource
 
   def show

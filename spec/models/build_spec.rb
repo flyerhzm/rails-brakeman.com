@@ -1,9 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Build do
-  it { should belong_to(:repository) }
-
-  before { skip_repository_callbacks }
+RSpec.describe Build, type: :model do
+  it { is_expected.to belong_to(:repository) }
 
   let(:repository) { create(:repository) }
   subject { create(:build, repository: repository) }
@@ -32,8 +30,14 @@ describe Build do
     end
   end
 
-  its(:analyze_file) { should == Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s }
-  its(:short_commit_id) { should == "1234567" }
+  describe '#analyze_file' do
+    subject { super().analyze_file }
+    it { should == Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s }
+  end
+  describe '#short_commit_id' do
+    subject { super().short_commit_id }
+    it { should == "1234567" }
+  end
 
   context "#badge_status" do
     it "should be passing" do

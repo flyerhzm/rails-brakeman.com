@@ -1,15 +1,15 @@
-mysql: &mysql
-  adapter: mysql2
+default: &default
+  adapter: postgresql
   host: localhost
-  port: 3306
-  username: root
+  port: 5432
+  username: postgres
   password:
   encoding: utf8
 
 development:
-  <<: *mysql
+  <<: *default
   database: rails_brakeman_com_development
 
 test:
-  <<: *mysql
+  <<: *default
   database: rails_brakeman_com_test

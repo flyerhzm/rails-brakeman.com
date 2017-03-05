@@ -1,19 +1,19 @@
 class RepositoriesController < ApplicationController
-  before_filter :load_resource, only: :show
+  before_action :load_resource, only: :show
   load_and_authorize_resource except: [:show, :sync]
-  skip_before_filter :set_current_user, only: :sync
-  before_filter :authenticate_user!, except: [:show, :sync]
-  before_filter :force_input_email, only: [:new, :create]
-  before_filter :check_github_authenticate, only: [:sync]
+  skip_before_action :set_current_user, only: :sync
+  before_action :authenticate_user!, except: [:show, :sync]
+  before_action :force_input_email, only: [:new, :create]
+  before_action :check_github_authenticate, only: [:sync]
 
   def new
     @repository = current_user.repositories.new
   end
 
   def create
-    github_name = params[:repository][:github_name]
+    github_name = repository_params[:github_name]
     if own_repository?(github_name) || org_repository?(github_name)
-      @repository = current_user.repositories.build(params[:repository])
+      @repository = current_user.repositories.build(repository_params)
       if @repository.save
         redirect_to [:edit, @repository]
       else
@@ -32,7 +32,7 @@ class RepositoriesController < ApplicationController
   end
 
   def update
-    if @repository.update_attributes(params[:repository])
+    if @repository.update_attributes(repository_params)
       redirect_to [:edit, @repository], notice: "Repository updated successfully"
     else
       render :edit
@@ -96,4 +96,8 @@ class RepositoriesController < ApplicationController
     def force_input_email
       raise UserNoEmailException if current_user.fakemail?
     end
+
+  def repository_params
+    params.require(:repository).permit(:description, :fork, :github_id, :github_name, :git_url, :html_url, :ssh_url, :name, :private, :visible, :rails, :pushed_at)
+  end
 end

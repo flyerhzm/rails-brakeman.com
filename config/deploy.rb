@@ -29,6 +29,6 @@ namespace :deploy do
   task :restart, roles: :app, except: { no_release: true } do
     migrate
     cleanup
-    run "cd #{current_path}; kill -HUP `cat tmp/pids/puma.pid`"
+    run "cd #{current_path}; bundle exec puma -q -d -e production -C config/puma/production.rb"
   end
 end

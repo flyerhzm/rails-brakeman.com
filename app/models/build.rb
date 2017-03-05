@@ -20,12 +20,11 @@ class Build < ActiveRecord::Base
   include AASM
 
   belongs_to :repository, counter_cache: true
-  attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
   before_create :set_position
   after_destroy :remove_analyze_file
 
-  scope :completed, where(aasm_state: "completed")
+  scope :completed, -> { where(aasm_state: "completed") }
 
   aasm do
     state :scheduled, initial: true
@@ -70,11 +69,11 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     self.repository.touch(:last_build_at)
-    UserMailer.notify_build_success(self).deliver if repository.user_email
+    UserMailer.notify_build_success(self).deliver_now if repository.user_email
     remove_brakeman_header
     complete!
   rescue => e
-    ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+    Rollbar.error(e)
     self.fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
