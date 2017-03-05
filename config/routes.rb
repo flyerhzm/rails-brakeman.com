@@ -8,10 +8,9 @@ RailsBrakemanCom::Application.routes.draw do
   resources :repositories, only: [:show, :new, :create, :edit, :update] do
     resources :builds, only: [:show, :index]
   end
-end
 
-RailsBrakemanCom::Application.routes.append do
   constraints owner_name: /[^\/]+/, repository_name: /[^\/]+/ do
+    get ":owner_name/:repository_name.png", to: "repositories#show", format: :png, as: :user_repo_badge
     get ":owner_name/:repository_name", to: "repositories#show", as: :user_repo
     get ":owner_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
     get ":owner_name/:repository_name/builds/:id", to: "builds#show", as: :user_repo_build
