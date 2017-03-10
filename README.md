@@ -1,7 +1,5 @@
 # rails-brakeman.com
 
-[![Build Status](https://secure.travis-ci.org/flyerhzm/rails-brakeman.com.png)](http://travis-ci.org/flyerhzm/rails-brakeman.com)
-
 [![Security Status](http://rails-brakeman.com/flyerhzm/rails-brakeman.com.png)](http://rails-brakeman.com/flyerhzm/rails-brakeman.com)
 
 [![Coderwall Endorse](http://api.coderwall.com/flyerhzm/endorsecount.png)](http://coderwall.com/flyerhzm)
