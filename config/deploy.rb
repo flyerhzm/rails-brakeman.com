@@ -1,5 +1,6 @@
 set :rvm_type, :user
 set :rvm_ruby_version, '2.3.3'
+set :rvm_map_bins, %w{gem rake ruby rails bundle}
 
 set :application, "rails-brakeman.com"
 set :repo_url,  "git@github.com:flyerhzm/rails-brakeman.com.git"
