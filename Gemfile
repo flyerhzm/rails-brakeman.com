@@ -27,7 +27,6 @@ gem 'aasm'
 gem 'multiple_mailers'
 
 gem 'contact_us'
-gem 'high_voltage'
 
 gem 'meta-tags', require: 'meta_tags'
 

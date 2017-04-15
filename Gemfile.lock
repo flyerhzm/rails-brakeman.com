@@ -171,7 +171,6 @@ GEM
       tilt
     hashdiff (0.3.2)
     hashie (3.5.5)
-    high_voltage (3.0.0)
     htmlentities (4.3.4)
     http_parser.rb (0.6.0)
     i18n (0.8.1)
@@ -417,7 +416,6 @@ DEPENDENCIES
   guard-rails
   guard-rspec
   haml
-  high_voltage
   jquery-rails
   meta-tags
   multiple_mailers
