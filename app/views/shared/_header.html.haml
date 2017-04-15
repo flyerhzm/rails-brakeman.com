@@ -11,7 +11,7 @@
       %ul.nav.navbar-nav
         %li= link_to 'Home', root_path
         %li= link_to 'About', page_path("about")
-        %li= link_to 'Contact', new_contact_path
+        %li= link_to 'Contact', '/contact-us'
       %ul.nav.navbar-nav.navbar-right
         - if current_user
           %li= link_to "Create Repository", new_repository_path
