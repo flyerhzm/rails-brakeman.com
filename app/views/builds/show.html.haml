@@ -1,11 +1,16 @@
 - title "Repository #{@repository.github_name} build ##{@build.position}"
 
-%h2= link_to @repository.github_name, @repository.html_url
+%h2= @repository.github_name
 
 .build
   - if @build.try(:completed?)
     = render 'builds/tabs', repository: @repository, build: @build, active_class_name: @active_class_name
-    = link_to image_tag(user_repo_badge_url(owner_name: @repository.owner_name, repository_name: @repository.name)), user_repo_url(owner_name: @repository.owner_name, repository_name: @repository.name)
-    = render 'builds/info', build: @build
+    .content
+      = link_to image_tag(user_repo_badge_url(owner_name: @repository.owner_name, repository_name: @repository.name)), user_repo_url(owner_name: @repository.owner_name, repository_name: @repository.name)
+      = render 'builds/info', build: @build
+      %iframe{src: analyze_file_repository_build_path(@repository, @build), width: '100%', frameborder: '0', scrolling: 'no', onload: 'resizeIframe(this)'}
 
-    = render inline: File.read(@build.analyze_file)
+:javascript
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }

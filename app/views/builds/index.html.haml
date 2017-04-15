@@ -1,24 +1,25 @@
 - title "Repository #{@repository.github_name} builds history"
 
-%h2= link_to @repository.github_name, @repository.html_url
+%h2= link_to @repository.github_name
 
 .build
   = render 'tabs', repository: @repository, active_class_name: @active_class_name
 
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Build
-        %th Commit
-        %th message
-        %th Duration
-        %th Finished
-    %tbody
-      - @builds.each do |build|
+  .content
+    %table.table.table-striped.table-condensed
+      %thead
         %tr
-          %td= link_to "##{build.position}", user_repo_build_path(owner_name: @repository.owner_name, repository_name: @repository.name, id: build.id)
-          %td= build.short_commit_id
-          %td= build.last_commit_message
-          %td #{build.duration} sec
-          %td
-            %abbr.timeago{title: build.finished_at.getutc.iso8601}=build.finished_at.to_s
+          %th Build
+          %th Commit
+          %th message
+          %th Duration
+          %th Finished
+      %tbody
+        - @builds.each do |build|
+          %tr
+            %td= link_to "##{build.position}", user_repo_build_path(owner_name: @repository.owner_name, repository_name: @repository.name, id: build.id)
+            %td= build.short_commit_id
+            %td= build.last_commit_message
+            %td #{build.duration} sec
+            %td
+              %abbr.timeago{title: build.finished_at.getutc.iso8601}=build.finished_at.to_s

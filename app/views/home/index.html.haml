@@ -1,38 +1,41 @@
 - title "Rails Brakeman Service"
 
-%h2 What's rails-brakeman.com?
-%p
-  rails-brakeman.com is an online service to find security issues in your rails projects. It works based on Justin's great gem
-  = link_to "brakeman", "https://github.com/presidentbeef/brakeman", target: "_blank"
-%h3 Why rails-brakeman.com?
-%p rails developers always write code fast, but sometimes they leave some security issues in their rails project.
-%p rails-brakeman.com is aimed to help them find out the security issues.
-%h3 Features
-%p
-  %strong Automatic to analyze source codes.
-  Every time you push to github, the service will be executed automatically.
-%p
-  %strong Easy to share analysis with collaborators.
-  You can easily share the analysis to your team collaborators, then talk and discuss together.
+.fluid
+  .sidebar= render 'repositories/public'
+  .content
+    %h2 What's rails-brakeman.com?
+    %p
+      rails-brakeman.com is an online service to find security issues in your rails projects. It works based on Justin's great gem
+      = link_to "brakeman", "https://github.com/presidentbeef/brakeman", target: "_blank"
+    %h3 Why rails-brakeman.com?
+    %p rails developers always write code fast, but sometimes they leave some security issues in their rails project.
+    %p rails-brakeman.com is aimed to help them find out the security issues.
+    %h3 Features
+    %p
+      %strong Automatic to analyze source codes.
+      Every time you push to github, the service will be executed automatically.
+    %p
+      %strong Easy to share analysis with collaborators.
+      You can easily share the analysis to your team collaborators, then talk and discuss together.
 
-%h3 Screenshot
-%p= image_tag("build_show.png")
+    %h3 Screenshot
+    %p= image_tag("build_show.png")
 
-%h3 How it works
-%ol
-  %li
-    Log in rails-brakeman.com
-  %li
-    Register your repository on github to rails-brakeman.com
-    = link_to "here", [:new, :repository]
-  %li
-    Then everytime you push code to github, you will see a new brakeman analysis result on rails-brakeman.com.
+    %h3 How it works
+    %ol
+      %li
+        Log in rails-brakeman.com
+      %li
+        Register your repository on github to rails-brakeman.com
+        = link_to "here", [:new, :repository]
+      %li
+        Then everytime you push code to github, you will see a new brakeman analysis result on rails-brakeman.com.
 
-%h3 Internal Setup
-%p
-  This service is open sourced, feel free to
-  = link_to "fork it on github", "https://github.com/flyerhzm/rails-brakeman.com", target: "_blank"
-%p
-  Read the
-  = link_to "document", "https://github.com/flyerhzm/rails-brakeman.com", target: "_blank"
-  on github
+    %h3 Internal Setup
+    %p
+      This service is open sourced, feel free to
+      = link_to "fork it on github", "https://github.com/flyerhzm/rails-brakeman.com", target: "_blank"
+    %p
+      Read the
+      = link_to "document", "https://github.com/flyerhzm/rails-brakeman.com", target: "_blank"
+      on github

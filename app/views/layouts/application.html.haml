@@ -16,15 +16,11 @@
 
   %body
     = render 'shared/header'
-    %section#share= render "shared/addthis"
-    #flash
-      .container-fluid
+    %section#primary
+      .pledgie= render 'shared/pledgie'
+      .share= render "shared/addthis"
+      .well
         = notice_message
-    .container-fluid
-      .row-fluid
-        .span3= render 'shared/sidebar'
-        .span9
-          .pledgie= render 'shared/pledgie'
-          = yield
+        = yield
     = render 'shared/footer'
     = javascript_include_tag "application", "https://s7.addthis.com/js/250/addthis_widget.js#pubid=flyerhzm"

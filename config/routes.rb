@@ -6,7 +6,11 @@ RailsBrakemanCom::Application.routes.draw do
   root to: "home#index"
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", omniauth_callbacks: "users/omniauth_callbacks" }
   resources :repositories, only: [:show, :new, :create, :edit, :update] do
-    resources :builds, only: [:show, :index]
+    resources :builds, only: [:show, :index] do
+      member do
+        get :analyze_file
+      end
+    end
   end
 
   constraints owner_name: /[^\/]+/, repository_name: /[^\/]+/ do

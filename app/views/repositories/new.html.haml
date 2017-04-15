@@ -2,12 +2,11 @@
 
 %h2 Create a repository
 
-= simple_form_for(@repository, html: {class: 'form-vertical'}) do |form|
-  = form.input :github_name, input_html: {class: "span5"}, hint: "if github repository url is https://github.com/flyerhzm/rails-brakeman.com, github name is flyerhzm/rails-brakeman.com.<br/>You must be the owner of a repository or the collaboarator of a organization repository.".html_safe
+= simple_form_for @repository do |form|
+  = form.input :github_name, hint: "if github repository url is https://github.com/flyerhzm/rails-brakeman.com, github name is flyerhzm/rails-brakeman.com.<br/>You must be the owner of a repository or the collaboarator of a organization repository.".html_safe
 
   %p
     rails-brakeman.com only supports public repositories on github, if you want to use it for your private repositories, feel free to
     = link_to "contact us", new_contact_path
 
-  .form-actions
-    = form.submit class: "btn btn-primary"
+  = form.button :submit

@@ -1,6 +1,6 @@
 class BuildsController < ApplicationController
   before_action :load_repository
-  before_action :load_build, only: :show
+  before_action :load_build, only: [:show, :analyze_file]
   before_action :load_builds, only: :index
   authorize_resource
 
@@ -14,6 +14,10 @@ class BuildsController < ApplicationController
     redirect_to user_repo_builds_path(owner_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if params[:repository_id]
 
     @active_class_name = "history"
+  end
+
+  def analyze_file
+    render inline: File.read(@build.analyze_file)
   end
 
   protected

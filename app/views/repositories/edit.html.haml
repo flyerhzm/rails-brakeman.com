@@ -2,21 +2,18 @@
 
 %h2 Edit a repository
 
-= link_to 'Show Builds', @repository, class: "edit btn btn-primary pull-right"
-
 .repository-info
+  = link_to 'Show Builds', @repository, class: "show-btn btn btn-default pull-right"
   %p
     %span Repository token
     = link_to "", "#", class: "question_mark_icon", rel: "tooltip", title: "repository token is used to authorized github hook, paste it to github railsbp hook"
     %b= @repository.authentication_token
 
-
-= simple_form_for(@repository, html: {class: 'form-horizontal'}) do |form|
-  = form.input :name, input_html: {class: "span5"}
-  = form.input :description, input_html: {class: "span5"}
-  = form.input :html_url, input_html: {class: "span5"}
-  = form.input :git_url, input_html: {class: "span5"}
-  = form.input :ssh_url, input_html: {class: "span5"}
-  = form.input :visible, hint: "if the repository is visible to everyone"
-  .form-actions
-    = form.submit class: "btn btn-primary"
+  = simple_form_for @repository do |form|
+    = form.input :name
+    = form.input :description
+    = form.input :html_url
+    = form.input :git_url
+    = form.input :ssh_url
+    = form.input :visible, hint: "if the repository is visible to everyone"
+    = form.button :submit

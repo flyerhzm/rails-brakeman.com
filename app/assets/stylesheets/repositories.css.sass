@@ -3,6 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .repository-info
+  .show-btn
+    margin-right: 20px
   padding: 10px 0
   p
     span
@@ -12,3 +14,48 @@
     b
       margin: 0 20px 0 10px
       font-weight: bold
+
+ul.repositories
+  list-style: none
+  border: 1px solid #ddd
+  border-radius: 5px
+  li
+    border-bottom: 1px solid #ddd
+    padding: 5px 10px
+    line-height: 24px
+    &.even
+      background-color: #f6f6f6
+    p
+      margin: 0
+    .build
+      float: right
+
+.edit_repository
+  .subtitle
+    font-size: 14px
+    font-weight: bold
+    margin: 10px 0 0
+  .input
+    margin-left: 100px
+  .inputs-list
+    margin-top: 5px
+    list-style: none
+    li
+      border-bottom: 1px solid #ddd
+    label
+      line-height: 30px
+    input[type=checkbox]
+      margin-top: 9px
+      float: left
+      margin-right: 10px
+    input[type=text]
+      height: 20px
+      width: 50px
+      display: inline-block
+    span.description
+      color: #aaa
+      margin: 0 0 0 10px
+    textarea
+      display: inline-block
+      margin-bottom: 10px
+      height: 50px

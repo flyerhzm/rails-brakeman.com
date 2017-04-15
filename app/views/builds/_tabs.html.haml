@@ -1,4 +1,4 @@
-= link_to 'Edit Repository', [:edit, repository], class: "edit btn btn-primary"
+= link_to 'Edit Repository', [:edit, repository], class: "edit-btn btn btn-default"
 %ul.nav.nav-tabs
   %li{class: active_class_name == "current" ? "active" : ""}
     = link_to "Current", user_repo_path(owner_name: repository.owner_name, repository_name: repository.name)

@@ -1,8 +1,8 @@
 - title "Repository #{@repository.github_name}"
 
-%h2= link_to @repository.github_name, @repository.html_url
+%h2= @repository.github_name
 
-= link_to 'Edit Repository', [:edit, @repository], class: "edit btn btn-primary pull-right"
+= link_to 'Edit Repository', [:edit, @repository], class: "edit btn btn-default pull-right"
 
 .hint
   %p There is no any build for this repository yet.
