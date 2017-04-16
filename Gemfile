@@ -12,6 +12,7 @@ gem 'omniauth-github'
 gem 'devise'
 gem 'oa-core'
 gem 'cancancan'
+gem 'dotenv-rails'
 
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
@@ -23,8 +24,6 @@ gem 'brakeman'
 gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'aasm'
-
-gem 'multiple_mailers'
 
 gem 'contact_us'
 

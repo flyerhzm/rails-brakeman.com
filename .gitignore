@@ -22,3 +22,5 @@ config/secrets.yml
 /builds
 /coverage
 brakeman.html
+.env
+.env.test

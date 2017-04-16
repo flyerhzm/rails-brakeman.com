@@ -1,6 +1,4 @@
 class UserMailer < ActionMailer::Base
-  mailer_account "notification"
-
   default from: "notification@rails-brakeman.com"
 
   def notify_build_success(build)

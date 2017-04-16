@@ -67,11 +67,13 @@ RailsBrakemanCom::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   config.action_mailer.default_url_options = { host: "rails-brakeman.com" }
 
-  config.after_initialize do
-    if ContactUs.const_defined? :ContactMailer
-      class ContactUs::ContactMailer
-        mailer_account "notification"
-      end
-    end
-  end
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              ENV['MAILGUN_SMTP_SERVER'],
+    port:                 ENV['MAILGUN_SMTP_PORT'],
+    domain:               ENV['DOMAIN_NAME'],
+    user_name:            ENV['MAILGUN_SMTP_LOGIN'],
+    password:             ENV['MAILGUN_SMTP_PASSWORD'],
+    authentication:       'plain'
+  }
 end
