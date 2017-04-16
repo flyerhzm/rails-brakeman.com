@@ -14,10 +14,6 @@
 /log/*.log
 /tmp
 
-config/database.yml
-config/github.yml
-config/mailers.yml
-config/secrets.yml
 .sass-cache/
 /builds
 /coverage
