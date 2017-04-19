@@ -49,39 +49,26 @@ class Build < ActiveRecord::Base
     end
   end
 
+  def analyze
+    AnalyzeBuildJob.perform_later(id)
+  end
+
   def analyze_file
     analyze_path + "/brakeman.html"
   end
 
-  def analyze
-    start_time = Time.now
-    FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
-    FileUtils.cd(analyze_path)
-    g = Git.clone(repository.clone_url, repository.name)
-    Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
-    tracker = Brakeman.run({
-      app_path: "#{analyze_path}/#{repository.name}",
-      output_formats: :html,
-      output_files: [analyze_file]
-    })
-    end_time = Time.now
-    self.warnings_count = tracker.checks.all_warnings.size
-    self.duration = end_time - start_time
-    self.finished_at = end_time
-    self.repository.touch(:last_build_at)
-    UserMailer.notify_build_success(self).deliver_now if repository.user_email
-    remove_brakeman_header
-    complete!
-  rescue => e
-    Rollbar.error(e)
-    self.fail!
-  ensure
-    FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
+  def analyze_path
+    Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
   end
-  handle_asynchronously :analyze
 
   def short_commit_id
     last_commit_id[0..6]
+  end
+
+  def remove_brakeman_header
+    content = File.read(analyze_file)
+    content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, "")
+    File.write(analyze_file, content)
   end
 
   def badge_state
@@ -92,22 +79,13 @@ class Build < ActiveRecord::Base
     end
   end
 
-  protected
-    def set_position
-      self.position = repository.builds_count + 1
-    end
+  private
 
-    def remove_analyze_file
-      FileUtils.rm(analyze_file) if File.exist?(analyze_file)
-    end
+  def set_position
+    self.position = repository.builds_count + 1
+  end
 
-    def analyze_path
-      Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
-    end
-
-    def remove_brakeman_header
-      content = File.read(analyze_file)
-      content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, "")
-      File.write(analyze_file, content)
-    end
+  def remove_analyze_file
+    FileUtils.rm(analyze_file) if File.exist?(analyze_file)
+  end
 end

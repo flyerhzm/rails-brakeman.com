@@ -16,6 +16,8 @@ Rails.logger.level = 4
 
 SimpleCov.start 'rails'
 
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
@@ -28,9 +30,7 @@ RSpec.configure do |config|
 
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
-  config.include Support::BuildHelper
   config.include Support::ControllerHelper
-  config.include Support::DelayedJobHelper
 
   config.before(:example) do
     DatabaseCleaner.start

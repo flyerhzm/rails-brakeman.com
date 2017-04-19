@@ -6,7 +6,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/puma'
-require 'capistrano/delayed_job'
+require 'capistrano/sidekiq'
 require 'capistrano-db-tasks'
 
 require "capistrano/scm/git"

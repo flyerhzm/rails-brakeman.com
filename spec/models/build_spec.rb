@@ -63,23 +63,12 @@ RSpec.describe Build, type: :model do
   end
 
   context "#run!" do
-    before do
-      @build = create(:build)
-      @build.run!
-    end
+    let(:build) { create :build }
 
-    it "should fetch remote git and analyze" do
-      build_analyze_success
-
-      @build.reload
-      expect(@build.aasm_state).to eq "completed"
-    end
-
-    it "should fail" do
-      build_analyze_failure
-
-      @build.reload
-      expect(@build.aasm_state).to eq "failed"
+    it "should trigger AnalyzeBuildJob" do
+      expect {
+        build.run!
+      }.to have_enqueued_job(AnalyzeBuildJob)
     end
   end
 end
