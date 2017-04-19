@@ -2,7 +2,7 @@ class BuildsController < ApplicationController
   before_action :load_repository
   before_action :load_build, only: [:show, :analyze_file]
   before_action :load_builds, only: :index
-  authorize_resource
+  authorize_resource except: :analyze_file
 
   def show
     redirect_to user_repo_build_path(owner_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: 301 and return if params[:repository_id]
