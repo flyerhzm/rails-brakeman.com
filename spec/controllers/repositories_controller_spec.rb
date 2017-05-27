@@ -112,7 +112,7 @@ RSpec.describe RepositoriesController, type: :controller do
         allow(controller).to receive(:render)
 
         @ability.can :read, Repository
-        get :show, owner_name: @user.nickname, repository_name: @repository.name, format: "png"
+        get :badge, owner_name: @user.nickname, repository_name: @repository.name
       end
     end
   end

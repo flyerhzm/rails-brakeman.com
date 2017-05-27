@@ -1,8 +1,8 @@
 class RepositoriesController < ApplicationController
-  before_action :load_resource, only: :show
-  load_and_authorize_resource except: [:show, :sync]
+  before_action :load_resource, only: [:show, :badge]
+  load_and_authorize_resource except: [:show, :badge, :sync]
   skip_before_action :set_current_user, only: :sync
-  before_action :authenticate_user!, except: [:show, :sync]
+  before_action :authenticate_user!, except: [:show, :badge, :sync]
   before_action :force_input_email, only: [:new, :create]
   before_action :check_github_authenticate, only: [:sync]
 
@@ -41,20 +41,23 @@ class RepositoriesController < ApplicationController
 
   def show
     redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
-
     @build = @repository.builds.completed.last
-    if request.format == "image/png"
-      if @build
-        send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
-      else
-        send_file Rails.root.join("public/images/unknown.png"), type: 'image/png', disposition: 'inline'
-      end
+
+    authorize! :read, @repository
+    if @build
+      @active_class_name = "current"
+      render 'builds/show' and return
+    end
+  end
+
+  def badge
+    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
+    @build = @repository.builds.completed.last
+
+    if @build
+      send_file Rails.root.join("public/images/#{@build.badge_state}.png"), type: 'image/png', disposition: 'inline'
     else
-      authorize! :read, @repository
-      if @build
-        @active_class_name = "current"
-        render 'builds/show' and return
-      end
+      send_file Rails.root.join("public/images/unknown.png"), type: 'image/png', disposition: 'inline'
     end
   end
 
