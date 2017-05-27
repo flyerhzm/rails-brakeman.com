@@ -45,7 +45,7 @@ GEM
       rake (>= 10.4, < 12.0)
     arel (6.0.4)
     bcrypt (3.1.11)
-    brakeman (3.5.0)
+    brakeman (3.6.2)
     builder (3.2.3)
     cancancan (1.16.0)
     capistrano (3.7.2)
@@ -448,4 +448,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.14.4
+   1.15.0
