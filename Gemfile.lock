@@ -36,7 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.5.0)
+    addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -110,10 +110,10 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
-    email_spec (2.1.0)
+    email_spec (2.1.1)
       htmlentities (~> 4.3.3)
       launchy (~> 2.1)
-      mail (~> 2.6.3)
+      mail (~> 2.6)
     erubis (2.7.0)
     eventmachine (1.2.3)
     execjs (2.7.0)
@@ -199,7 +199,7 @@ GEM
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.11)
-    mail (2.6.4)
+    mail (2.6.5)
       mime-types (>= 1.16, < 4)
     meta-tags (2.4.0)
       actionpack (>= 3.2.0, <= 5.1.0)
@@ -218,7 +218,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     newrelic_rpm (3.18.1.330)
-    nokogiri (1.7.0.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -448,4 +448,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.0
+   1.15.1
