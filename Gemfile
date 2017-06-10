@@ -10,7 +10,6 @@ gem 'sass'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'devise'
-gem 'oa-core'
 gem 'cancancan'
 gem 'dotenv-rails'
 
