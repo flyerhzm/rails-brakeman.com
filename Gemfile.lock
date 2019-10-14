@@ -125,7 +125,7 @@ GEM
     fakefs (0.10.2)
     faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.17)
+    ffi (1.11.1)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
     formatador (0.2.5)
