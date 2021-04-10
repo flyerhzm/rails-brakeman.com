@@ -67,7 +67,7 @@ class Build < ActiveRecord::Base
 
   def remove_brakeman_header
     content = File.read(analyze_file)
-    content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, "")
+    content.sub!(%r{<h1>.*?</h1>\n<table>.*?</table>}m, "")
     File.write(analyze_file, content)
   end
 

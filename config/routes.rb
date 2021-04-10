@@ -14,7 +14,7 @@ RailsBrakemanCom::Application.routes.draw do
     end
   end
 
-  constraints owner_name: /[^\/]+/, repository_name: /[^\/]+/ do
+  constraints owner_name: %r{[^/]+}, repository_name: %r{[^/]+} do
     get ":owner_name/:repository_name.png", to: "repositories#badge", as: :user_repo_badge
     get ":owner_name/:repository_name", to: "repositories#show", as: :user_repo
     get ":owner_name/:repository_name/builds", to: "builds#index", as: :user_repo_builds
