@@ -1,5 +1,5 @@
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'webmock/rspec'
 require 'database_cleaner'
@@ -9,7 +9,7 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Devise.stretches = 1
 Rails.logger.level = 4

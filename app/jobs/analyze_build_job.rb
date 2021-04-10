@@ -10,11 +10,14 @@ class AnalyzeBuildJob < ActiveJob::Base
       FileUtils.cd(build.analyze_path)
       g = Git.clone(repository.clone_url, repository.name)
       Dir.chdir(repository.name) { g.reset_hard(build.last_commit_id) }
-      tracker = Brakeman.run({
-        app_path: "#{build.analyze_path}/#{repository.name}",
-        output_formats: :html,
-        output_files: [build.analyze_file]
-      })
+      tracker =
+        Brakeman.run(
+          {
+            app_path: "#{build.analyze_path}/#{repository.name}",
+            output_formats: :html,
+            output_files: [build.analyze_file]
+          }
+        )
       end_time = Time.now
       build.warnings_count = tracker.checks.all_warnings.size
       build.duration = end_time - start_time

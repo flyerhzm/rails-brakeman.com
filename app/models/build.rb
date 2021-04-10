@@ -24,7 +24,7 @@ class Build < ActiveRecord::Base
   before_create :set_position
   after_destroy :remove_analyze_file
 
-  scope :completed, -> { where(aasm_state: "completed") }
+  scope :completed, -> { where(aasm_state: 'completed') }
 
   aasm do
     state :scheduled, initial: true
@@ -54,11 +54,11 @@ class Build < ActiveRecord::Base
   end
 
   def analyze_file
-    analyze_path + "/brakeman.html"
+    analyze_path + '/brakeman.html'
   end
 
   def analyze_path
-    Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
+    Rails.root.join('builds', repository.github_name, 'commit', last_commit_id).to_s
   end
 
   def short_commit_id
@@ -67,15 +67,15 @@ class Build < ActiveRecord::Base
 
   def remove_brakeman_header
     content = File.read(analyze_file)
-    content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, "")
+    content.sub!(/<h1>.*?<\/h1>\n<table>.*?<\/table>/m, '')
     File.write(analyze_file, content)
   end
 
   def badge_state
-    if "completed" == aasm_state
-      warnings_count > 0 ? "failing" : "passing"
+    if 'completed' == aasm_state
+      warnings_count > 0 ? 'failing' : 'passing'
     else
-      "unknown"
+      'unknown'
     end
   end
 

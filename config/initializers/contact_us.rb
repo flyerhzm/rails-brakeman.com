@@ -1,15 +1,14 @@
 # Use this hook to configure contact mailer.
 ContactUs.setup do |config|
-
   # ==> Mailer Configuration
 
   # Configure the e-mail address which email notifications should be sent from.  If emails must be sent from a verified email address you may set it here.
   # Example:
   # config.mailer_from = "contact@please-change-me.com"
-  config.mailer_from = "postmaster@rails-brakeman.com"
+  config.mailer_from = 'postmaster@rails-brakeman.com'
 
   # Configure the e-mail address which should receive the contact form email notifications.
-  config.mailer_to = "contact-us@rails-brakeman.com"
+  config.mailer_to = 'contact-us@rails-brakeman.com'
 
   # ==> Form Configuration
 
@@ -30,5 +29,4 @@ ContactUs.setup do |config|
   # Configure the parent action mailer
   # Example:
   # config.parent_mailer = "ActionMailer::Base"
-
 end
