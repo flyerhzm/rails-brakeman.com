@@ -32,11 +32,11 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include Support::ControllerHelper
 
-  config.before(:example) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:example) do
+  config.after do
     DatabaseCleaner.clean
   end
 
