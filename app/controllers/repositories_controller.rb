@@ -40,7 +40,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
+    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: :moved_permanently and return if params[:id]
     @build = @repository.builds.completed.last
 
     authorize! :read, @repository
@@ -51,7 +51,7 @@ class RepositoriesController < ApplicationController
   end
 
   def badge
-    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: 301 and return if params[:id]
+    redirect_to user_repo_path(owner_name: @repository.owner_name, repository_name: @repository.name), status: :moved_permanently and return if params[:id]
     @build = @repository.builds.completed.last
 
     if @build

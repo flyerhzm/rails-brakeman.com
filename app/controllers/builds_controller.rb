@@ -5,13 +5,13 @@ class BuildsController < ApplicationController
   authorize_resource except: :analyze_file
 
   def show
-    redirect_to user_repo_build_path(owner_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: 301 and return if params[:repository_id]
+    redirect_to user_repo_build_path(owner_name: @repository.user.nickname, repository_name: @repository.name, id: @build.id), status: :moved_permanently and return if params[:repository_id]
 
     @active_class_name = "build"
   end
 
   def index
-    redirect_to user_repo_builds_path(owner_name: @repository.user.nickname, repository_name: @repository.name), status: 301 and return if params[:repository_id]
+    redirect_to user_repo_builds_path(owner_name: @repository.user.nickname, repository_name: @repository.name), status: :moved_permanently and return if params[:repository_id]
 
     @active_class_name = "history"
   end
