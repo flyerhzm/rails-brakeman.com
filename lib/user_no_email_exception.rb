@@ -1,2 +1,2 @@
-class UserNoEmailException < Exception
+class UserNoEmailException < RuntimeError
 end
