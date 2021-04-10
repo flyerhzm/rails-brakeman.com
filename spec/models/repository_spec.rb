@@ -16,23 +16,23 @@ RSpec.describe Repository, type: :model do
 
     describe '#html_url' do
       subject { super().html_url }
-      it { should == "https://github.com/railsbp/railsbp.com" }
+      it { is_expected.to == "https://github.com/railsbp/railsbp.com" }
     end
     describe '#git_url' do
       subject { super().git_url }
-      it { should == "git://github.com/railsbp/railsbp.com.git" }
+      it { is_expected.to == "git://github.com/railsbp/railsbp.com.git" }
     end
     describe '#ssh_url' do
       subject { super().ssh_url }
-      it { should == "git@github.com:railsbp/railsbp.com.git" }
+      it { is_expected.to == "git@github.com:railsbp/railsbp.com.git" }
     end
     describe '#name' do
       subject { super().name }
-      it { should == "railsbp.com" }
+      it { is_expected.to == "railsbp.com" }
     end
     describe '#description' do
       subject { super().description }
-      it { should == "railsbp.com" }
+      it { is_expected.to == "railsbp.com" }
     end
     describe '#private' do
       subject { super().private }
@@ -44,7 +44,7 @@ RSpec.describe Repository, type: :model do
     end
     describe '#github_id' do
       subject { super().github_id }
-      it { should == 2860164 }
+      it { is_expected.to == 2860164 }
     end
   end
 
