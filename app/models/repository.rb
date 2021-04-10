@@ -42,7 +42,7 @@ class Repository < ActiveRecord::Base
   def generate_build(branch, commit)
     return unless commit
 
-    build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"])
+    build = builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"])
     if build.save
       build.run!
     end
@@ -82,7 +82,7 @@ class Repository < ActiveRecord::Base
 
     def setup_github_hook
       client = Octokit::Client.new(oauth_token: User.current.github_token)
-      client.create_hook(self.github_name, "railsbrakeman", {rails_brakeman_url: "http://rails-brakeman.com", token: self.authentication_token})
+      client.create_hook(github_name, "railsbrakeman", {rails_brakeman_url: "http://rails-brakeman.com", token: authentication_token})
       true
     end
 end
