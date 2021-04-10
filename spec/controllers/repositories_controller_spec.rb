@@ -9,7 +9,7 @@ RSpec.describe RepositoriesController, type: :controller do
   end
 
   context "GET :new" do
-    it "should assign repository" do
+    it "assigns repository" do
       @ability.can :new, Repository
       get :new
       expect(response).to be_ok
@@ -18,7 +18,7 @@ RSpec.describe RepositoriesController, type: :controller do
   end
 
   context "POST :create" do
-    it "should redirect to edit page if create successfully" do
+    it "redirects to edit page if create successfully" do
       @ability.can :create, Repository
       allow(controller).to receive(:own_repository?).and_return(true)
       allow(controller).to receive(:org_repository?).and_return(true)
@@ -27,7 +27,7 @@ RSpec.describe RepositoriesController, type: :controller do
       expect(response).to redirect_to([:edit, repository])
     end
 
-    it "should render new page if create failed" do
+    it "renders new page if create failed" do
       @ability.can :create, Repository
       allow(controller).to receive(:own_repository?).and_return(true)
       allow(controller).to receive(:org_repository?).and_return(true)
@@ -36,7 +36,7 @@ RSpec.describe RepositoriesController, type: :controller do
       expect(response).to render_template(:new)
     end
 
-    it "should redirect ot new if user is not owner" do
+    it "redirects ot new if user is not owner" do
       @ability.can :create, Repository
       allow(controller).to receive(:own_repository?).and_return(false)
       allow(controller).to receive(:org_repository?).and_return(false)
@@ -46,7 +46,7 @@ RSpec.describe RepositoriesController, type: :controller do
   end
 
   context "GET :edit" do
-    it "should assign repository" do
+    it "assigns repository" do
       @ability.can :edit, Repository
       get :edit, id: @repository.id
       expect(response).to be_ok
@@ -55,13 +55,13 @@ RSpec.describe RepositoriesController, type: :controller do
   end
 
   context "PUT :update" do
-    it "should redirecrt to edit page if update successfully" do
+    it "redirecrts to edit page if update successfully" do
       @ability.can :update, Repository
       put :update, id: @repository.id, repository: { name: 'rails-brakeman.com' }
       expect(response).to redirect_to([:edit, @repository])
     end
 
-    it "should render edit page if update failed" do
+    it "renders edit page if update failed" do
       @ability.can :update, Repository
       allow_any_instance_of(Repository).to receive(:update_attributes).and_return(false)
       put :update, id: @repository.id, repository: { name: 'rails-brakeman.com' }
@@ -71,7 +71,7 @@ RSpec.describe RepositoriesController, type: :controller do
 
   context "GET :show" do
     context "without build" do
-      it "should redirect with id" do
+      it "redirects with id" do
         @ability.can :read, Repository
         get :show, id: @repository.id
         expect(response).to redirect_to("/flyerhzm/rails-brakeman.com")
@@ -86,7 +86,7 @@ RSpec.describe RepositoriesController, type: :controller do
         expect(assigns(:repository)).not_to be_nil
       end
 
-      it "should render 404 if owner_name or repository_name does not exist" do
+      it "renders 404 if owner_name or repository_name does not exist" do
         get :show, owner_name: "flyerhzm", repository_name: "rails.com"
         expect(response).to be_not_found
         expect(assigns(:repository)).to be_nil
@@ -94,7 +94,7 @@ RSpec.describe RepositoriesController, type: :controller do
     end
 
     context "with build" do
-      it "should assign build" do
+      it "assigns build" do
         create :build, repository: @repository, aasm_state: 'completed'
 
         @ability.can :read, Repository
@@ -105,7 +105,7 @@ RSpec.describe RepositoriesController, type: :controller do
     end
 
     context "png" do
-      it "should send_file with badge" do
+      it "send_files with badge" do
         create(:build, repository: @repository, aasm_state: "completed")
 
         expect(controller).to receive(:send_file).with(Rails.root.join("public/images/passing.png"), type: 'image/png', disposition: 'inline')
@@ -133,34 +133,34 @@ RSpec.describe RepositoriesController, type: :controller do
     }
     let!(:repository) { create(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com") }
 
-    it "should generate build" do
+    it "generates build" do
       expect_any_instance_of(Repository).to receive(:generate_build).with("master", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "success"
     end
 
-    it "should not generate build if token is wrong" do
+    it "does not generate build if token is wrong" do
       post :sync, token: "987654321", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "not authenticate"
     end
 
-    it "should not generate build if url does not exist" do
+    it "does not generate build if url does not exist" do
       repository.update(html_url: "https://github.com/railsbp/rails-brakeman.com")
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "not authenticate"
     end
 
-    it "should not generate build if repository is private" do
+    it "does not generate build if repository is private" do
       repository.update(private: true)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok
       expect(response.body).to eq "no private repository"
     end
 
-    it "should not generate build if repository is not rails project" do
+    it "does not generate build if repository is not rails project" do
       repository.update(rails: false)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       expect(response).to be_ok

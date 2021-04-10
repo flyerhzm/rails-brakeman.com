@@ -21,7 +21,7 @@ RSpec.describe AnalyzeBuildJob do
       expect(FileUtils).to receive(:rm_rf).with("#{path}/test")
     end
 
-    it "should fetch remote git and analyze" do
+    it "fetches remote git and analyze" do
       AnalyzeBuildJob.new.perform(build.id)
       expect(build.reload.aasm_state).to eq "completed"
     end
@@ -33,7 +33,7 @@ RSpec.describe AnalyzeBuildJob do
       expect(Rollbar).to receive(:error)
     end
 
-    it "should fail" do
+    it "fails" do
       AnalyzeBuildJob.new.perform(build.id)
       expect(build.reload.aasm_state).to eq "failed"
     end

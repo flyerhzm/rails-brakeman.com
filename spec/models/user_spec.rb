@@ -17,11 +17,11 @@ RSpec.describe User, type: :model do
       })
     end
 
-    it "should create a new user if github_uid isn't existed" do
+    it "creates a new user if github_uid isn't existed" do
       expect { User.find_for_github_oauth(@data) }.to change(User, :count).by(1)
     end
 
-    it "should find the user if github_uid is existed" do
+    it "finds the user if github_uid is existed" do
       create(:user, github_uid: 12345)
       expect { User.find_for_github_oauth(@data) }.not_to change(User, :count)
     end

@@ -7,12 +7,12 @@ RSpec.describe Build, type: :model do
   subject { create(:build, repository: repository) }
 
   context "#set_position" do
-    it "should get position with 1 for first build" do
+    it "gets position with 1 for first build" do
       build = create(:build)
       expect(build.position).to eq 1
     end
 
-    it "should get +1 position" do
+    it "gets +1 position" do
       repository.reload
       old_position = create(:build, repository: repository).position
       repository.reload
@@ -22,7 +22,7 @@ RSpec.describe Build, type: :model do
   end
 
   context "#remove_analyze_file" do
-    it "should remove analyze_file after destroy" do
+    it "removes analyze_file after destroy" do
       FileUtils.mkdir_p(Rails.root.join("builds/flyerhzm/test/commit/1234567890/").to_s)
       FileUtils.touch(Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s)
       subject.destroy
@@ -40,17 +40,17 @@ RSpec.describe Build, type: :model do
   end
 
   context "#badge_status" do
-    it "should be passing" do
+    it "is passing" do
       build = build_stubbed(:build, aasm_state: "completed", warnings_count: 0)
       expect(build.badge_state).to eq "passing"
     end
 
-    it "should be failing" do
+    it "is failing" do
       build = build_stubbed(:build, aasm_state: "completed", warnings_count: 1)
       expect(build.badge_state).to eq "failing"
     end
 
-    it "should be unknown" do
+    it "is unknown" do
       build = build_stubbed(:build, aasm_state: "failed")
       expect(build.badge_state).to eq "unknown"
 
@@ -65,7 +65,7 @@ RSpec.describe Build, type: :model do
   context "#run!" do
     let(:build) { create :build }
 
-    it "should trigger AnalyzeBuildJob" do
+    it "triggers AnalyzeBuildJob" do
       expect {
         build.run!
       }.to have_enqueued_job(AnalyzeBuildJob)

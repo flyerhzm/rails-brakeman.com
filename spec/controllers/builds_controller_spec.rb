@@ -15,19 +15,19 @@ RSpec.describe BuildsController, type: :controller do
         @ability.can :read, Build
       end
 
-      it "should redirect with repository_id" do
+      it "redirects with repository_id" do
         get :show, id: @build.id, repository_id: @repository.id
         expect(response).to redirect_to("/flyerhzm/rails-brakeman.com/builds/#{@build.id}")
       end
 
-      it "should assign build with owner_name and repository_name" do
+      it "assigns build with owner_name and repository_name" do
         get :show, id: @build.id, owner_name: "flyerhzm", repository_name: "rails-brakeman.com"
         expect(response).to be_ok
         expect(assigns(:build)).to eq @build
       end
     end
 
-    it "should no access if repository is non visible" do
+    it "noes access if repository is non visible" do
       @repository.update(visible: false)
       @build = create(:build, repository: @repository)
 
@@ -35,20 +35,20 @@ RSpec.describe BuildsController, type: :controller do
       expect(response).not_to be_ok
     end
 
-    it "should render 404 if owner_name or repository_name does not exist" do
+    it "renders 404 if owner_name or repository_name does not exist" do
       get :show, id: 1, owner_name: "flyerhzm", repository_name: "rails.com"
       expect(response).to be_not_found
     end
   end
 
   context "GET :index" do
-    it "should redirect with repository_id" do
+    it "redirects with repository_id" do
       @ability.can :read, Build
       get :index, repository_id: @repository.id
       expect(response).to redirect_to("/flyerhzm/rails-brakeman.com/builds")
     end
 
-    it "should assign builds" do
+    it "assigns builds" do
       @build1 = create(:build, repository: @repository, aasm_state: 'completed')
       @build2 = create(:build, repository: @repository, aasm_state: 'completed')
 
@@ -58,7 +58,7 @@ RSpec.describe BuildsController, type: :controller do
       expect(assigns(:builds)).to eq [@build1, @build2]
     end
 
-    it "should render 404 if owner_name or repository_name does not exist" do
+    it "renders 404 if owner_name or repository_name does not exist" do
       get :index, owner_name: "flyerhzm", repository_name: "rails.com"
       expect(response).to be_not_found
     end

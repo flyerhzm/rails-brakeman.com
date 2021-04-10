@@ -52,24 +52,24 @@ RSpec.describe Repository, type: :model do
     subject { create(:repository) }
 
     context "#clone_url" do
-      it "should get ssh_url if private is true" do
+      it "gets ssh_url if private is true" do
         subject.private = true
         expect(subject.clone_url).to eq subject.ssh_url
       end
 
-      it "should get git_url if private is false" do
+      it "gets git_url if private is false" do
         subject.private = false
         expect(subject.clone_url).to eq subject.git_url
       end
     end
 
     context "#generate_build" do
-      it "should call run! for new build" do
+      it "calls run! for new build" do
         expect_any_instance_of(Build).to receive(:run!)
         subject.generate_build("develop", {"id" => "9876543210", "message" => "commit message"})
       end
 
-      it "should do nothing for nil commit" do
+      it "does nothing for nil commit" do
         expect(subject.generate_build("develop", nil)).to be_nil
       end
     end
