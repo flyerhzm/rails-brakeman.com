@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 environment 'production'
 daemonize
 pidfile '/home/deploy/sites/rails-brakeman.com/production/current/tmp/pids/puma.pid'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 set :rvm_type, :user
 set :rvm_ruby_version, '2.3.3'
 set :rvm_map_bins, %w{gem rake ruby rails bundle sidekiq sidekiqctl}

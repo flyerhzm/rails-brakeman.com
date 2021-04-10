@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetRailsAsTrueToRepositories < ActiveRecord::Migration
   def up
     change_column :repositories, :rails, :boolean, default: true, null: false

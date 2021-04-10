@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Support
   module ControllerHelper
     def stubs_current_user

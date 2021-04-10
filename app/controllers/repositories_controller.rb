@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RepositoriesController < ApplicationController
   before_action :load_resource, only: [:show, :badge]
   load_and_authorize_resource except: [:show, :badge, :sync]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this hook to configure contact mailer.
 ContactUs.setup do |config|
 

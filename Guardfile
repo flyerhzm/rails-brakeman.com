@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 guard 'annotate', :run_at_start => false do
   watch( 'db/schema.rb' )
 end

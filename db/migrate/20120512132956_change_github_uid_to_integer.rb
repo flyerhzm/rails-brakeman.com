@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeGithubUidToInteger < ActiveRecord::Migration
   def up
     change_column :users, :github_uid, 'integer USING CAST(github_uid AS integer)'

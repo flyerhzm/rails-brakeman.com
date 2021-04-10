@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :reload_rails_admin, if: :rails_admin_path?

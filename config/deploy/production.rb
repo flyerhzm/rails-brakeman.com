@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 set :stage, :production
 
 role :web, %w{deploy@xinminlabs.com}

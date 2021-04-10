@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BuildsController < ApplicationController
   before_action :load_repository
   before_action :load_build, only: [:show, :analyze_file]

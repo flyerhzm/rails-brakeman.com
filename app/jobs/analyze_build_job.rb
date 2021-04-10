@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnalyzeBuildJob < ActiveJob::Base
   queue_as :default
 
