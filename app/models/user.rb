@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
 
-  validates_uniqueness_of :github_uid
+  validates :github_uid, uniqueness: true
 
   def self.find_for_github_oauth(data)
     user = User.find_by(github_uid: data.uid) || User.new
