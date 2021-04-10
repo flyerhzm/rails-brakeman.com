@@ -23,7 +23,7 @@ class AnalyzeBuildJob < ActiveJob::Base
       UserMailer.notify_build_success(build).deliver_now if repository.user_email
       build.remove_brakeman_header
       build.complete!
-    rescue => e
+    rescue StandardError => e
       Rollbar.error(e)
       build.fail!
     ensure
