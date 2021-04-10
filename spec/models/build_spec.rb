@@ -32,11 +32,11 @@ RSpec.describe Build, type: :model do
 
   describe '#analyze_file' do
     subject { super().analyze_file }
-    it { should == Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s }
+    it { is_expected.to == Rails.root.join("builds/flyerhzm/test/commit/1234567890/brakeman.html").to_s }
   end
   describe '#short_commit_id' do
     subject { super().short_commit_id }
-    it { should == "1234567" }
+    it { is_expected.to == "1234567" }
   end
 
   context "#badge_status" do
