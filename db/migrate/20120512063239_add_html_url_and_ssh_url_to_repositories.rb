@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddHtmlUrlAndSshUrlToRepositories < ActiveRecord::Migration
   def change
     add_column :repositories, :html_url, :string

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :builds do
   task :reload_warnings_count => :environment do
     Build.completed.each do |build|

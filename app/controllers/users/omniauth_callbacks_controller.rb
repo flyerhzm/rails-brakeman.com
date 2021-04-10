@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
     @user = User.find_for_github_oauth(env["omniauth.auth"])

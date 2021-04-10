@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RailsBrakemanCom::Application.configure do
   config.eager_load = false
   # Settings specified here will take precedence over those in config/application.rb
