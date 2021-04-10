@@ -4,7 +4,7 @@ RSpec.describe Repository, type: :model do
   it { is_expected.to have_many :builds }
   it { is_expected.to belong_to :user }
 
-  context "#sync_github" do
+  describe "#sync_github" do
     before do
       User.current = create(:user)
       allow_any_instance_of(Repository).to receive(:sync_github).and_call_original
@@ -51,7 +51,7 @@ RSpec.describe Repository, type: :model do
   context "stub callbacks" do
     subject { create(:repository) }
 
-    context "#clone_url" do
+    describe "#clone_url" do
       it "should get ssh_url if private is true" do
         subject.private = true
         expect(subject.clone_url).to eq subject.ssh_url
@@ -63,7 +63,7 @@ RSpec.describe Repository, type: :model do
       end
     end
 
-    context "#generate_build" do
+    describe "#generate_build" do
       it "should call run! for new build" do
         expect_any_instance_of(Build).to receive(:run!)
         subject.generate_build("develop", {"id" => "9876543210", "message" => "commit message"})

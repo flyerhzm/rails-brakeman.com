@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { is_expected.to have_many :repositories }
 
-  context ".find_for_github_oauth" do
+  describe ".find_for_github_oauth" do
     before do
       @data = Hashie::Mash.new({
         uid: 12345,

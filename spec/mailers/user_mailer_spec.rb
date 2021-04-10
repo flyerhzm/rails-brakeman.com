@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-  context "#notify_build_success" do
+  describe "#notify_build_success" do
     before do
       @user = create(:user, email: "flyerhzm@gmail.com", nickname: "flyerhzm")
       @repository = create(:repository, github_name: "flyerhzm/rails-brakeman.com", name: "rails-brakeman.com", user: @user)
