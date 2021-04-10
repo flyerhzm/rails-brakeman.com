@@ -31,7 +31,7 @@ class Repository < ActiveRecord::Base
 
   validates_uniqueness_of :github_name
 
-  scope :latest, -> { where("visible = true and builds_count > 0").order("last_build_at desc") }
+  scope :latest, -> { where('visible = true and builds_count > 0').order('last_build_at desc') }
 
   delegate :email, to: :user, prefix: true
 
@@ -42,7 +42,7 @@ class Repository < ActiveRecord::Base
   def generate_build(branch, commit)
     return unless commit
 
-    build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"])
+    build = self.builds.build(branch: branch, last_commit_id: commit['id'], last_commit_message: commit['message'])
     if build.save
       build.run!
     end
@@ -53,36 +53,41 @@ class Repository < ActiveRecord::Base
   end
 
   def owner_name
-    github_name.split("/").first
+    github_name.split('/').first
   end
 
   protected
-    def sync_github
-      client = Octokit::Client.new(oauth_token: User.current.github_token)
-      repo = client.repository(github_name)
-      self.github_id = repo.id
-      self.name = repo.name
-      self.description = repo.description
-      self.git_url = repo.git_url
-      self.html_url = repo.html_url
-      self.ssh_url = repo.ssh_url
-      self.private = repo.private
-      self.fork = repo.fork
-      self.pushed_at = repo.pushed_at
-      true
-    end
 
-    def reset_authentication_token
-      self.authentication_token = Devise.friendly_token
-    end
+  def sync_github
+    client = Octokit::Client.new(oauth_token: User.current.github_token)
+    repo = client.repository(github_name)
+    self.github_id = repo.id
+    self.name = repo.name
+    self.description = repo.description
+    self.git_url = repo.git_url
+    self.html_url = repo.html_url
+    self.ssh_url = repo.ssh_url
+    self.private = repo.private
+    self.fork = repo.fork
+    self.pushed_at = repo.pushed_at
+    true
+  end
 
-    def touch_last_build_at
-      self.last_build_at = Time.now
-    end
+  def reset_authentication_token
+    self.authentication_token = Devise.friendly_token
+  end
 
-    def setup_github_hook
-      client = Octokit::Client.new(oauth_token: User.current.github_token)
-      client.create_hook(self.github_name, "railsbrakeman", {rails_brakeman_url: "http://rails-brakeman.com", token: self.authentication_token})
-      true
-    end
+  def touch_last_build_at
+    self.last_build_at = Time.now
+  end
+
+  def setup_github_hook
+    client = Octokit::Client.new(oauth_token: User.current.github_token)
+    client.create_hook(
+      self.github_name,
+      'railsbrakeman',
+      { rails_brakeman_url: 'http://rails-brakeman.com', token: self.authentication_token }
+    )
+    true
+  end
 end

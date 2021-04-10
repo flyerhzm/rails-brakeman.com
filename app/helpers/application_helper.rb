@@ -1,9 +1,5 @@
 module ApplicationHelper
-  ALERT_CLASS_NAMES = {
-    notice: :success,
-    alert: :danger,
-    error: :danger
-  }
+  ALERT_CLASS_NAMES = { notice: :success, alert: :danger, error: :danger }
   def notice_message
     flash_messages = []
 

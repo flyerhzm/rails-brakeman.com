@@ -3,4 +3,3 @@ class Devise::CustomFailure < Devise::FailureApp
     root_url
   end
 end
-

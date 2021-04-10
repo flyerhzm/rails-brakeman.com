@@ -9,4 +9,3 @@ ActiveSupport.on_load(:action_controller) do
 end
 
 # Disable root element in JSON by default.
-

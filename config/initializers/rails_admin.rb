@@ -2,12 +2,11 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
-
-
   ################  Global configuration  ################
 
   # Set the admin name here (optional second array element will appear in red). For example:
   config.main_app_name = ['Rails Brakeman Com', 'Admin']
+
   # or for a more dynamic name:
   # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }
 
@@ -35,7 +34,6 @@ RailsAdmin.config do |config|
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
-
   ################  Model configuration  ################
 
   # Each model configuration can alternatively:
@@ -46,11 +44,8 @@ RailsAdmin.config do |config|
   #   - This initializer is loaded once at startup (modifications will show up when restarting the application) but all RailsAdmin configuration would stay in one place.
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
 
-
   # Now you probably need to tour the wiki a bit: https://github.com/sferik/rails_admin/wiki
   # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
-
-
 
   ###  Build  ###
 
@@ -60,22 +55,22 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :repository, :belongs_to_association 
+  #     configure :repository, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :repository_id, :integer         # Hidden 
-  #     configure :last_commit_id, :string 
-  #     configure :last_commit_message, :string 
-  #     configure :position, :integer 
-  #     configure :duration, :integer 
-  #     configure :finished_at, :datetime 
-  #     configure :branch, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :aasm_state, :string 
-  #     configure :warnings_count, :integer 
+  #     configure :id, :integer
+  #     configure :repository_id, :integer         # Hidden
+  #     configure :last_commit_id, :string
+  #     configure :last_commit_message, :string
+  #     configure :position, :integer
+  #     configure :duration, :integer
+  #     configure :finished_at, :datetime
+  #     configure :branch, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :aasm_state, :string
+  #     configure :warnings_count, :integer
 
   #   # Cross-section configuration:
 
@@ -101,7 +96,6 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 
   ###  Repository  ###
 
@@ -111,30 +105,30 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :user, :belongs_to_association 
-  #     configure :builds, :has_many_association 
+  #     configure :user, :belongs_to_association
+  #     configure :builds, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :github_id, :integer 
-  #     configure :github_name, :string 
-  #     configure :name, :string 
-  #     configure :description, :string 
-  #     configure :git_url, :string 
-  #     configure :private, :boolean 
-  #     configure :fork, :boolean 
-  #     configure :pushed_at, :datetime 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :last_build_at, :datetime 
-  #     configure :html_url, :string 
-  #     configure :ssh_url, :string 
-  #     configure :builds_count, :integer 
-  #     configure :user_id, :integer         # Hidden 
-  #     configure :authentication_token, :string 
-  #     configure :visible, :boolean 
-  #     configure :rails, :boolean 
+  #     configure :id, :integer
+  #     configure :github_id, :integer
+  #     configure :github_name, :string
+  #     configure :name, :string
+  #     configure :description, :string
+  #     configure :git_url, :string
+  #     configure :private, :boolean
+  #     configure :fork, :boolean
+  #     configure :pushed_at, :datetime
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :last_build_at, :datetime
+  #     configure :html_url, :string
+  #     configure :ssh_url, :string
+  #     configure :builds_count, :integer
+  #     configure :user_id, :integer         # Hidden
+  #     configure :authentication_token, :string
+  #     configure :visible, :boolean
+  #     configure :rails, :boolean
 
   #   # Cross-section configuration:
 
@@ -160,7 +154,6 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 
   ###  User  ###
 
@@ -170,29 +163,29 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :repositories, :has_many_association 
+  #     configure :repositories, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :email, :string 
-  #     configure :password, :password         # Hidden 
-  #     configure :password_confirmation, :password         # Hidden 
-  #     configure :reset_password_token, :string         # Hidden 
-  #     configure :reset_password_sent_at, :datetime 
-  #     configure :remember_created_at, :datetime 
-  #     configure :sign_in_count, :integer 
-  #     configure :current_sign_in_at, :datetime 
-  #     configure :last_sign_in_at, :datetime 
-  #     configure :current_sign_in_ip, :string 
-  #     configure :last_sign_in_ip, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :github_uid, :integer 
-  #     configure :nickname, :string 
-  #     configure :name, :string 
-  #     configure :github_token, :string 
-  #     configure :admin, :boolean 
+  #     configure :id, :integer
+  #     configure :email, :string
+  #     configure :password, :password         # Hidden
+  #     configure :password_confirmation, :password         # Hidden
+  #     configure :reset_password_token, :string         # Hidden
+  #     configure :reset_password_sent_at, :datetime
+  #     configure :remember_created_at, :datetime
+  #     configure :sign_in_count, :integer
+  #     configure :current_sign_in_at, :datetime
+  #     configure :last_sign_in_at, :datetime
+  #     configure :current_sign_in_ip, :string
+  #     configure :last_sign_in_ip, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :github_uid, :integer
+  #     configure :nickname, :string
+  #     configure :name, :string
+  #     configure :github_token, :string
+  #     configure :admin, :boolean
 
   #   # Cross-section configuration:
 
@@ -218,5 +211,4 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 end

@@ -30,9 +30,7 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
 
@@ -47,8 +45,8 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.github_data"] && session["devise.github_data"]["user_info"]
-        user.email = data["email"]
+      if data = session['devise.github_data'] && session['devise.github_data']['user_info']
+        user.email = data['email']
       end
     end
   end
@@ -66,12 +64,13 @@ class User < ActiveRecord::Base
   end
 
   protected
-    def self.import_github_data(user, data)
-      user.email = data.info.email || "#{data.info.nickname}@fakemail.com"
-      user.password = Devise.friendly_token[0, 20]
-      user.github_uid = data.uid
-      user.github_token = data.credentials.token
-      user.name = data.info.name
-      user.nickname = data.info.nickname
-    end
+
+  def self.import_github_data(user, data)
+    user.email = data.info.email || "#{data.info.nickname}@fakemail.com"
+    user.password = Devise.friendly_token[0, 20]
+    user.github_uid = data.uid
+    user.github_token = data.credentials.token
+    user.name = data.info.name
+    user.nickname = data.info.nickname
+  end
 end
