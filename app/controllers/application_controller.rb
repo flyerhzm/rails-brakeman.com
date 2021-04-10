@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   private
     def reload_rails_admin
-      models = %W(User Build Repository)
+      models = %w(User Build Repository)
       models.each do |m|
         RailsAdmin::Config.reset_model(m)
       end
