@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to '/', alert: exception.message
   end
 
-  rescue_from UserNoEmailException do |exception|
+  rescue_from UserNoEmailException do |_exception|
     redirect_to edit_user_registration_path, alert: "Your must input your email before creating a repository! It is only used to receive notification."
   end
 
